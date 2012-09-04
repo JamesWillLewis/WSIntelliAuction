@@ -119,7 +119,7 @@ public class NetworkConnection {
 	 * 
 	 * @return Head of recieve queue
 	 */
-	private Message consumeMessage() {
+	public Message consumeMessage() {
 		Message m = null;
 		try {
 			m = receiveCache.take();
@@ -134,7 +134,7 @@ public class NetworkConnection {
 	 * @param m
 	 * @return true if successful, false is unsuccesful
 	 */
-	private boolean sendMessage(Message m) {
+	public boolean sendMessage(Message m) {
 		boolean success = false;
 		try {
 			dispatchCache.put(m);

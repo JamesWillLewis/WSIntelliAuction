@@ -74,7 +74,6 @@ public class MessageSocket {
 	 */
 	public Message readMessage() {
 		Message m = null;
-
 		try {
 			m = (Message) inputStream.readObject();
 		} catch (IOException e) {
