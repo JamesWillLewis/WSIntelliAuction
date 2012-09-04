@@ -150,7 +150,7 @@ public class NetworkConnection {
 			try {
 				Message sendNext = dispatchCache.take();
 				socket.writeMessage(sendNext);
-				
+
 			} catch (InterruptedException e) {
 				ErrorLogger.submitError(e.getMessage());
 			}
