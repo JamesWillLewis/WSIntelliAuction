@@ -6,7 +6,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import com.uct.cs.wsintelliauction.network_interface.message.TextMessage;
+import com.uct.cs.wsintelliauction.network.message.InfoMessage;
 
 /**
  * Code snippet for creating a server which can send and receive objects
@@ -27,7 +27,7 @@ public class ObjectIOServerSnippet {
 			ObjectInputStream stream = new ObjectInputStream(clientS.getInputStream());
 			
 			while(true){
-				TextMessage m = (TextMessage)stream.readObject();
+				InfoMessage m = (InfoMessage)stream.readObject();
 				System.out.println(m.getData());
 			}
 			

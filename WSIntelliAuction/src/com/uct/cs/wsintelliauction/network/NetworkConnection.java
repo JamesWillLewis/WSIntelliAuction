@@ -7,7 +7,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.uct.cs.wsintelliauction.network_interface.message.Message;
+import com.uct.cs.wsintelliauction.network.message.Message;
 import com.uct.cs.wsintelliauction.tools.ErrorLogger;
 import com.uct.cs.wsintelliauction.tools.ThreadManager;
 

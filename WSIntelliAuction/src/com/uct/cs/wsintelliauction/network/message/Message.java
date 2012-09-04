@@ -1,4 +1,4 @@
-package com.uct.cs.wsintelliauction.network_interface.message;
+package com.uct.cs.wsintelliauction.network.message;
 
 import java.io.Serializable;
 
@@ -34,11 +34,15 @@ public abstract class Message implements Serializable {
 	/**
 	 *	Enum defining message types used for network communication. 
 	 */
-	enum MessageType {
-		RAW, INFO, PLACEBID, QUERY, SOLUTION_OFFER, SOLUTION_ACCEPT, LEASE, CONFIRM_LEASE;
+	enum MessageTypes {
+		INFO, PLACEBID, QUERY, SOLUTION_OFFER, SOLUTION_ACCEPT, LEASE, CONFIRM_LEASE, GENERIC;
 	}
 	
-
+	public MessageTypes messageType;
+	
+	public Message() {
+		messageType = MessageTypes.GENERIC;
+	}
 	
 	
 

@@ -1,4 +1,4 @@
-package com.uct.cs.wsintelliauction.server.back_end;
+package com.uct.cs.wsintelliauction.server.backend;
 
 public class Driver {
 

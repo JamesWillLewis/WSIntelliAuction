@@ -3,7 +3,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.uct.cs.wsintelliauction.client.back_end.Driver;
+import com.uct.cs.wsintelliauction.client.backend.Driver;
 
 
 public class ClientTest {

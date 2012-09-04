@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.uct.cs.wsintelliauction.server.back_end.Driver;
+import com.uct.cs.wsintelliauction.server.backend.Driver;
 
 public class ServerTest {
 

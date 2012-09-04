@@ -5,7 +5,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import com.uct.cs.wsintelliauction.network_interface.message.TextMessage;
+import com.uct.cs.wsintelliauction.network.message.InfoMessage;
 
 /**
  * Code snippet for creating a client which can send and receive objects
@@ -26,7 +26,7 @@ public class ObjectIOClientSnippet {
 			while(true){
 				Thread.sleep(2000);
 				i++;
-				stream.writeObject(new TextMessage("hello " + i));
+				stream.writeObject(new InfoMessage("hello " + i));
 			}
 			
 		} catch (UnknownHostException e) {

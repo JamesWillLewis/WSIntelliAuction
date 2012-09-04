@@ -5,7 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import com.uct.cs.wsintelliauction.network_interface.message.Message;
+import com.uct.cs.wsintelliauction.network.message.Message;
 import com.uct.cs.wsintelliauction.tools.ErrorLogger;
 
 public class MessageSocket {
@@ -41,7 +41,7 @@ public class MessageSocket {
 		}
 	}
 
-	private void closeStreams() {
+	public void closeStreams() {
 		try {
 			inputStream.close();
 			outputStream.close();
