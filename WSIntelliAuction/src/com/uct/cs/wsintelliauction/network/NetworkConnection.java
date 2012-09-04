@@ -1,64 +1,125 @@
 package com.uct.cs.wsintelliauction.network;
 
-import java.io.BufferedReader;
+import java.io.IOException;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.uct.cs.wsintelliauction.network_interface.message.Message;
 import com.uct.cs.wsintelliauction.tools.ErrorLogger;
+import com.uct.cs.wsintelliauction.tools.ThreadManager;
 
 public class NetworkConnection {
 	/**
-	 * If this network connection is open
+	 * If this network connection is open.
 	 */
 	private boolean connectionActive;
 	/**
-	 * If this network connection is currently dispatching messages
+	 * If this network connection is currently dispatching messages.
 	 */
-	private boolean dispatchActive;
+	private AtomicBoolean dispatchActive;
 	/**
-	 * If this network connection is currently receiving messages
+	 * If this network connection is currently receiving messages.
 	 */
-	private boolean receiveActive;
+	private AtomicBoolean receiveActive;
 	/**
-	 * Size of the dispatch queue
+	 * Size of the dispatch queue.
 	 */
-	private final int DISPATCH_Q_SIZE = 32;
+	private final int DISPATCH_Q_SIZE = 128;
 	/**
-	 * Size of the receive queue
+	 * Size of the receive queue.
 	 */
-	private final int RECEIVE_Q_SIZE = 32;
+	private final int RECEIVE_Q_SIZE = 128;
 
 	/**
-	 * Synchronized blocking queue which holds messages waiting to be trasmitted
+	 * Synchronized blocking queue which holds messages waiting to be
+	 * trasmitted.
 	 */
 	private BlockingQueue<Message> dispatchCache;
 
 	/**
-	 * Synchronized blocking queue which holds messages which have been received
+	 * Synchronized blocking queue which holds messages which have been
+	 * received.
 	 */
 	private BlockingQueue<Message> receiveCache;
 
+	/**
+	 * The destination for this communication bridge.
+	 */
 	private Recipient recipient;
+	/**
+	 * Underlying message socket for this connection, allow parsing of IO
+	 * messages.
+	 */
+	private MessageSocket socket;
 
-	public NetworkConnection() {
+	/**
+	 * Establishes a network connection given a recipient. A new socket is
+	 * opened for the given recipient, and a connection is established.
+	 * 
+	 * @param recipient
+	 *            Defines the address of the socket.
+	 * @throws IOException
+	 *             If an error occurs while opening the socket.
+	 */
+	public NetworkConnection(Recipient recipient) throws IOException {
 		dispatchCache = new ArrayBlockingQueue<Message>(DISPATCH_Q_SIZE);
 		receiveCache = new ArrayBlockingQueue<Message>(RECEIVE_Q_SIZE);
+		this.recipient = recipient;
+		socket = new MessageSocket(recipient);
+		connectionActive = true;
+		dispatchActive = new AtomicBoolean(false);
+		receiveActive = new AtomicBoolean(false);
+	}
+
+	public NetworkConnection(Socket s) {
+		dispatchCache = new ArrayBlockingQueue<Message>(DISPATCH_Q_SIZE);
+		receiveCache = new ArrayBlockingQueue<Message>(RECEIVE_Q_SIZE);
+		socket = new MessageSocket(s);
+		connectionActive = true;
+		dispatchActive = new AtomicBoolean(false);
+		receiveActive = new AtomicBoolean(false);
 	}
 
 	/**
-	 * 
+	 * Begins the dispatch and receive loops, each in a worker thread allocated
+	 * from the global thread pool.
 	 */
-	private void openConnection() {
-		//init this connection
+	public void beginIOParsing() {
+		if (connectionActive) {
+			Runnable dispatchThread = new Runnable() {
+
+				@Override
+				public void run() {
+					dispatchActive = new AtomicBoolean(true);
+					dispatchCycle();
+				}
+			};
+			Runnable receiveThread = new Runnable() {
+
+				@Override
+				public void run() {
+					receiveActive = new AtomicBoolean(true);
+					receiveCycle();
+				}
+			};
+
+			ThreadManager.submitTask(dispatchThread);
+			ThreadManager.submitTask(receiveThread);
+
+		} else {
+			ErrorLogger
+					.submitError("Attempting to begin IO parsing on closed connection.");
+		}
 	}
 
 	/**
 	 * 
 	 * @return Head of recieve queue
 	 */
-	private Message consumeNextMessage() {
+	private Message consumeMessage() {
 		Message m = null;
 		try {
 			m = receiveCache.take();
@@ -68,36 +129,12 @@ public class NetworkConnection {
 		return m;
 	}
 
-	private void dispatchLoop() {
-		while (dispatchActive) {
-			try {
-				Message sendNext = dispatchCache.take();
-		
-				// send this message to a socket
-			} catch (InterruptedException e) {
-				ErrorLogger.submitError(e.getMessage());
-			}
-		}
-	}
-
-	private void receiveLoop() {
-		while (receiveActive) {
-			try {
-				Message m = null;
-				// fetch a message from the socket
-				receiveCache.put(m);
-			} catch (InterruptedException e) {
-				ErrorLogger.submitError(e.getMessage());
-			}
-		}
-	}
-
 	/**
 	 * 
 	 * @param m
 	 * @return true if successful, false is unsuccesful
 	 */
-	private boolean submitNextMessage(Message m) {
+	private boolean sendMessage(Message m) {
 		boolean success = false;
 		try {
 			dispatchCache.put(m);
@@ -106,6 +143,29 @@ public class NetworkConnection {
 			ErrorLogger.submitError(e.getMessage());
 		}
 		return success;
+	}
+
+	private void dispatchCycle() {
+		while (dispatchActive.get()) {
+			try {
+				Message sendNext = dispatchCache.take();
+				socket.writeMessage(sendNext);
+				
+			} catch (InterruptedException e) {
+				ErrorLogger.submitError(e.getMessage());
+			}
+		}
+	}
+
+	private void receiveCycle() {
+		while (receiveActive.get()) {
+			try {
+				Message m = socket.readMessage();
+				receiveCache.put(m);
+			} catch (InterruptedException e) {
+				ErrorLogger.submitError(e.getMessage());
+			}
+		}
 	}
 
 }

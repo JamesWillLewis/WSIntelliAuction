@@ -1,5 +1,7 @@
 package com.uct.cs.wsintelliauction.network_interface.message;
 
+import java.io.Serializable;
+
 /**
  * Super-class for all message types. A message is an object which 
  * is used for communication via a network connection.
@@ -22,7 +24,12 @@ package com.uct.cs.wsintelliauction.network_interface.message;
  * @author Matthew Marlin
  * 
  */
-public abstract class Message {
+public abstract class Message implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1963804590196708103L;
 
 	/**
 	 *	Enum defining message types used for network communication. 
@@ -31,11 +38,8 @@ public abstract class Message {
 		RAW, INFO, PLACEBID, QUERY, SOLUTION_OFFER, SOLUTION_ACCEPT, LEASE, CONFIRM_LEASE;
 	}
 	
-	private byte[] rawData;
+
 	
-	public byte[] getByteData(){
-		return rawData;
-	}
 	
 
 }

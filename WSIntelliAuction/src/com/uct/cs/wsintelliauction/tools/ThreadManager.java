@@ -10,7 +10,7 @@ public class ThreadManager {
 
 	public static final int THREAD_POOL_SIZE = 32;
 	private static final long SHUTDOWN_TIMEOUT_SECONDS = 8;
-	public static ExecutorService universalThreadPool;
+	private static ExecutorService universalThreadPool;
 
 	static {
 		universalThreadPool = Executors.newFixedThreadPool(THREAD_POOL_SIZE);	
