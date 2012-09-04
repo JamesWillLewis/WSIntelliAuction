@@ -10,14 +10,19 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ErrorLogger {
 
 	private static PrintWriter logOut;
-	private static final String errorLogFileName = "logs//error.log";
+	private static final String LOG_DIR = "logs//";
+	private static final String ERROR_LOG_FILE = "error.log";
 
 	static {
 		try {
-			File logFile = new File(errorLogFileName);
+			File logsDir = new File(LOG_DIR);
+			if(!logsDir.exists()){
+				logsDir.mkdir();
+			}		
+			File logFile = new File(logsDir.getPath() + "//" + ERROR_LOG_FILE);
 			logOut = new PrintWriter(new FileWriter(logFile, true), true);
 		} catch (IOException e) {
-			System.err.println("Error: Unable to open " + errorLogFileName);
+			System.err.println("Error: Unable to open " + ERROR_LOG_FILE);
 		}
 	}
 
