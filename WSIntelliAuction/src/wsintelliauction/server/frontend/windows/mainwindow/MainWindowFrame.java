@@ -1,8 +1,7 @@
-package wsintelliauction.server.frontend.windows;
+package wsintelliauction.server.frontend.windows.mainwindow;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -21,11 +20,13 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import wsintelliauction.gui.Window;
+import wsintelliauction.gui.WindowFrame;
 
+public class MainWindowFrame extends WindowFrame{
 
-public class PrimaryWindow extends Window {
-
+	/**
+	 * Window components
+	 */
 	private JPanel mainContentPane;
 	private JTable channelManagementTable;
 	private JTable clientManagementTable;
@@ -44,15 +45,19 @@ public class PrimaryWindow extends Window {
 
 
 	/**
-	 * Create the frame.
+	 * Create the application.
 	 */
-	public PrimaryWindow() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 673, 469);
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
-		
+	public MainWindowFrame() {
+		super();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 * @wbp.parser.entryPoint
+	 */
+	protected void initialize() {		
 		menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
+		frame.setJMenuBar(menuBar);
 		
 		mnFile = new JMenu("File");
 		menuBar.add(mnFile);
@@ -64,7 +69,7 @@ public class PrimaryWindow extends Window {
 		menuBar.add(mnHelp);
 		mainContentPane = new JPanel();
 		mainContentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(mainContentPane);
+		frame.setContentPane(mainContentPane);
 		GridBagLayout gbl_mainContentPane = new GridBagLayout();
 		gbl_mainContentPane.columnWidths = new int[]{0, 0, 0};
 		gbl_mainContentPane.rowHeights = new int[]{0, 0, 0};
@@ -101,6 +106,8 @@ public class PrimaryWindow extends Window {
 		channelManagementTable.setBackground(UIManager.getColor("InternalFrame.inactiveTitleGradient"));
 		channelManagementTable.setGridColor(Color.LIGHT_GRAY);
 		channelManagementTable.setFillsViewportHeight(true);
+		DefaultTableModel model = new DefaultTableModel();
+
 		channelManagementTable.setModel(new DefaultTableModel(
 			new Object[][] {
 				{"ch1", "10-20", "4", "pu1", "su1"},
@@ -183,6 +190,5 @@ public class PrimaryWindow extends Window {
 		CIManagementPanel = new JPanel();
 		biddingManagementPanel.addTab("CI Management", null, CIManagementPanel, null);
 	}
-
 
 }

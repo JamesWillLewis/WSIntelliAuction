@@ -1,13 +1,13 @@
 package wsintelliauction.gui;
 
-public class WindowManager {
+import java.util.Hashtable;
 
-	private Window[] windowList;
-	
-	public WindowManager(Window[] windowList) {
-		this.windowList = windowList;
+public abstract class WindowManager {
+
+	protected Window[] windows;
+
+	public WindowManager(int NUM_WINDOWS) {
+		windows = new Window[NUM_WINDOWS];
 	}
-	
-	
-	
+
 }
