@@ -1,4 +1,4 @@
-package wsintelliauction.gui;
+package wsintelliauction.windowing;
 
 public class Window {
 

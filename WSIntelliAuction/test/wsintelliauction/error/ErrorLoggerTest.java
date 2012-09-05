@@ -11,9 +11,9 @@ public class ErrorLoggerTest {
 
 	@Test
 	public final void test() {
-		ErrorLogger.submitError("TEST ERROR MESSAGE 1B");
-		ErrorLogger.submitError("TEST ERROR MESSAGE 2B");
-		ErrorLogger.submitError("TEST ERROR MESSAGE 3B");
+		ErrorLogger.log("TEST ERROR MESSAGE 1B");
+		ErrorLogger.log("TEST ERROR MESSAGE 2B");
+		ErrorLogger.log("TEST ERROR MESSAGE 3B");
 	}
 
 }

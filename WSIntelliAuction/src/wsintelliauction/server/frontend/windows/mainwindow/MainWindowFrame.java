@@ -20,7 +20,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import wsintelliauction.gui.WindowFrame;
+import wsintelliauction.windowing.WindowFrame;
 
 public class MainWindowFrame extends WindowFrame{
 

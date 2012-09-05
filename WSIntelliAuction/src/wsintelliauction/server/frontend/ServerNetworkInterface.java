@@ -49,7 +49,7 @@ public class ServerNetworkInterface extends NetworkInterface {
 			serverActive.set(true);
 			beginAcceptClientCycle();
 		} catch (IOException e) {
-			ErrorLogger.submitError(e.getMessage());
+			ErrorLogger.log(e.getMessage());
 		}
 	}
 
@@ -62,7 +62,7 @@ public class ServerNetworkInterface extends NetworkInterface {
 			try {
 				serverSocket.close();
 			} catch (IOException e) {
-				ErrorLogger.submitError(e.getMessage());
+				ErrorLogger.log(e.getMessage());
 			}
 		}
 	}
@@ -104,7 +104,7 @@ public class ServerNetworkInterface extends NetworkInterface {
 				break;
 			}
 			catch (IOException e) {
-				ErrorLogger.submitError(e.getMessage());
+				ErrorLogger.log(e.getMessage());
 
 			}
 		}

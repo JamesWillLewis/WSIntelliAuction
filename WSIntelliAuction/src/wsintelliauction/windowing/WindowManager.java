@@ -1,4 +1,4 @@
-package wsintelliauction.gui;
+package wsintelliauction.windowing;
 
 import java.util.Hashtable;
 

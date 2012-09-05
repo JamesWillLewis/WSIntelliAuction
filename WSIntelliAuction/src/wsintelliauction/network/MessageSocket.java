@@ -38,7 +38,7 @@ public class MessageSocket {
 			outputStream = new ObjectOutputStream(socket.getOutputStream());
 			inputStream = new ObjectInputStream(socket.getInputStream());
 		} catch (IOException e) {
-			ErrorLogger.submitError("Unable to open object IO socket streams.");
+			ErrorLogger.log("Unable to open object IO socket streams.");
 		}
 	}
 ;
@@ -48,7 +48,7 @@ public class MessageSocket {
 			outputStream.close();
 		} catch (IOException e) {
 			ErrorLogger
-					.submitError("Error while closing object IO socket streams.");
+					.log("Error while closing object IO socket streams.");
 		}
 	}
 
@@ -64,7 +64,7 @@ public class MessageSocket {
 			return true;
 		} catch (IOException e) {
 			ErrorLogger
-					.submitError("Error writing message to socket object output stream.");
+					.log("Error writing message to socket object output stream.");
 			return false;
 		}
 	}
@@ -79,10 +79,10 @@ public class MessageSocket {
 			m = (Message) inputStream.readObject();
 		} catch (IOException e) {
 			ErrorLogger
-					.submitError("Error reading message from socket object input stream.");
+					.log("Error reading message from socket object input stream.");
 		} catch (ClassNotFoundException e) {
 			ErrorLogger
-					.submitError("Class type of object message read from object input stream invalid.");
+					.log("Class type of object message read from object input stream invalid.");
 		}
 		return m;
 	}

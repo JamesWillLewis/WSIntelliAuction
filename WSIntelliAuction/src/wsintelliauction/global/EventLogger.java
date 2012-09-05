@@ -5,13 +5,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
-import java.util.concurrent.locks.ReentrantLock;
 
-public class ErrorLogger {
+public class EventLogger {
 
 	private static PrintWriter logOut;
 	private static final String LOG_DIR = "logs//";
-	private static final String ERROR_LOG_FILE = "error.log";
+	private static final String EVENT_LOG_FILE = "event.log";
 
 	static {
 		try {
@@ -19,23 +18,23 @@ public class ErrorLogger {
 			if(!logsDir.exists()){
 				logsDir.mkdir();
 			}		
-			File logFile = new File(logsDir.getPath() + "//" + ERROR_LOG_FILE);
+			File logFile = new File(logsDir.getPath() + "//" + EVENT_LOG_FILE);
 			logOut = new PrintWriter(new FileWriter(logFile, true), true);
 		} catch (IOException e) {
-			System.err.println("Error: Unable to open " + ERROR_LOG_FILE);
+			ErrorLogger.log(e.getMessage());
 		}
 	}
 
 	/**
-	 * Submits an error, writing it to the standard error IO
-	 * as well as recording the error in the error log, with a timestamp.
+	 * Submits an event, writing it to the standard IO
+	 * as well as recording the event in the event log, with a timestamp.
 	 * 
 	 * Synchronized to ensure atomicity.
 	 * 
 	 * @param message
 	 */
 	public static void log(String message) {
-		System.err.println("RUNTIME ERROR >> " + message.toUpperCase());
+		System.out.println(">>	" + message.toUpperCase());
 		logOut.println(Calendar.getInstance().getTime().toString() + " : "
 				+ message);
 	}

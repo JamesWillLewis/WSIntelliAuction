@@ -112,7 +112,7 @@ public class NetworkConnection {
 
 		} else {
 			ErrorLogger
-					.submitError("Attempting to begin IO parsing on closed connection.");
+					.log("Attempting to begin IO parsing on closed connection.");
 		}
 	}
 
@@ -125,7 +125,7 @@ public class NetworkConnection {
 		try {
 			m = receiveCache.take();
 		} catch (InterruptedException e) {
-			ErrorLogger.submitError(e.getMessage());
+			ErrorLogger.log(e.getMessage());
 		}
 		return m;
 	}
@@ -141,7 +141,7 @@ public class NetworkConnection {
 			dispatchCache.put(m);
 			success = true;
 		} catch (InterruptedException e) {
-			ErrorLogger.submitError(e.getMessage());
+			ErrorLogger.log(e.getMessage());
 		}
 		return success;
 	}
@@ -153,7 +153,7 @@ public class NetworkConnection {
 				socket.writeMessage(sendNext);
 
 			} catch (InterruptedException e) {
-				ErrorLogger.submitError(e.getMessage());
+				ErrorLogger.log(e.getMessage());
 			}
 		}
 	}
@@ -164,7 +164,7 @@ public class NetworkConnection {
 				Message m = socket.readMessage();
 				receiveCache.put(m);
 			} catch (InterruptedException e) {
-				ErrorLogger.submitError(e.getMessage());
+				ErrorLogger.log(e.getMessage());
 			}
 		}
 	}

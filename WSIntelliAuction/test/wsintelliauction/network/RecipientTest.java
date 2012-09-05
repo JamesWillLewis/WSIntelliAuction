@@ -33,7 +33,7 @@ public class RecipientTest {
 				.getInetAddress().getHostAddress());
 		}
 		catch (UnknownHostException e){
-			ErrorLogger.submitError("Unable to locate host: " +e.getMessage());
+			ErrorLogger.log("Unable to locate host: " +e.getMessage());
 		}
 		
 	}

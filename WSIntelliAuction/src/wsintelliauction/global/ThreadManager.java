@@ -29,7 +29,7 @@ public class ThreadManager {
 		try {
 			universalThreadPool.awaitTermination(SHUTDOWN_TIMEOUT_SECONDS, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
-			ErrorLogger.submitError(e.getMessage());
+			ErrorLogger.log(e.getMessage());
 		}
 	}
 

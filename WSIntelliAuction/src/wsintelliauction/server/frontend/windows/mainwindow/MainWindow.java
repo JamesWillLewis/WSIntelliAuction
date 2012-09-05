@@ -1,6 +1,6 @@
 package wsintelliauction.server.frontend.windows.mainwindow;
 
-import wsintelliauction.gui.Window;
+import wsintelliauction.windowing.Window;
 
 public class MainWindow extends Window {
 
