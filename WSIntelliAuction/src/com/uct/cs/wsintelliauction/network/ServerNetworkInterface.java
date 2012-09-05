@@ -9,9 +9,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.uct.cs.wsintelliauction.tools.ErrorLogger;
-import com.uct.cs.wsintelliauction.tools.GlobalConstants;
-import com.uct.cs.wsintelliauction.tools.ThreadManager;
+import com.uct.cs.wsintelliauction.global.ErrorLogger;
+import com.uct.cs.wsintelliauction.global.GlobalConstants;
+import com.uct.cs.wsintelliauction.global.ThreadManager;
 
 public class ServerNetworkInterface extends NetworkInterface {
 

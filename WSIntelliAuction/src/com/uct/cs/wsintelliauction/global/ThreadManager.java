@@ -1,4 +1,4 @@
-package com.uct.cs.wsintelliauction.tools;
+package com.uct.cs.wsintelliauction.global;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;

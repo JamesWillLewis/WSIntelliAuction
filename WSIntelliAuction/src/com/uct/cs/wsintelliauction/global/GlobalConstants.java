@@ -1,4 +1,4 @@
-package com.uct.cs.wsintelliauction.tools;
+package com.uct.cs.wsintelliauction.global;
 
 public class GlobalConstants {
 	

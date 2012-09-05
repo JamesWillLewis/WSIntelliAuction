@@ -5,8 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import com.uct.cs.wsintelliauction.global.ErrorLogger;
 import com.uct.cs.wsintelliauction.network.message.Message;
-import com.uct.cs.wsintelliauction.tools.ErrorLogger;
 
 public class MessageSocket {
 
@@ -40,7 +40,7 @@ public class MessageSocket {
 			ErrorLogger.submitError("Unable to open object IO socket streams.");
 		}
 	}
-
+;
 	public void closeStreams() {
 		try {
 			inputStream.close();

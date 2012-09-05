@@ -6,7 +6,7 @@ import java.net.UnknownHostException;
 
 import org.junit.Test;
 
-import com.uct.cs.wsintelliauction.tools.ErrorLogger;
+import com.uct.cs.wsintelliauction.global.ErrorLogger;
 
 public class RecipientTest {
 
