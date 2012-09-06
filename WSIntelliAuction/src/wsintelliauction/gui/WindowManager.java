@@ -1,13 +1,20 @@
 package wsintelliauction.gui;
 
-import java.util.Hashtable;
+import java.util.ArrayList;
+
+import wsintelliauction.server.engine.TaskBacklog;
 
 public abstract class WindowManager {
 
-	protected Window[] windows;
+	protected ArrayList<Window<?,?,?>> activeWindows;
+	
+	protected TaskBacklog backlog;
 
-	public WindowManager(int NUM_WINDOWS) {
-		windows = new Window[NUM_WINDOWS];
+	public WindowManager(int NUM_WINDOWS, TaskBacklog backlog) {
+		activeWindows = new ArrayList<Window<?,?,?>>(NUM_WINDOWS);
+		this.backlog = backlog;
 	}
+	
+	public abstract WindowData<?> launchNewWindow(int id);
 
 }

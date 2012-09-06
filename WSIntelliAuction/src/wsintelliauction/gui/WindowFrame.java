@@ -1,6 +1,7 @@
 package wsintelliauction.gui;
 
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
@@ -9,9 +10,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import wsintelliauction.ErrorLogger;
 
-public abstract class WindowFrame {
+public abstract class WindowFrame <E extends WindowHandle<?>> {
 
 	protected JFrame frame;
+	protected E handleRef;
 
 	static {
 		try {
@@ -27,17 +29,25 @@ public abstract class WindowFrame {
 		}
 	}
 
-	public WindowFrame(String windowName) {
-		frame = new JFrame(windowName);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		initialize();
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		screenSize.width *= 0.8;
-		screenSize.height *= 0.8;
-		frame.setPreferredSize(screenSize);
-		frame.pack();
-		frame.setLocationByPlatform(true);
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+	public WindowFrame(final String windowName) {
+		EventQueue.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				frame = new JFrame(windowName);
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				initialize();
+				Dimension screenSize = Toolkit.getDefaultToolkit()
+						.getScreenSize();
+				screenSize.width *= 0.8;
+				screenSize.height *= 0.8;
+				frame.setPreferredSize(screenSize);
+				frame.pack();
+				frame.setLocationByPlatform(true);
+				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				launch();
+			}
+		});
 	}
 
 	protected abstract void initialize();
@@ -48,6 +58,10 @@ public abstract class WindowFrame {
 
 	public void close() {
 		frame.setVisible(false);
+	}
+	
+	public void attachHandle(E handleRef){
+		this.handleRef = handleRef;
 	}
 
 }

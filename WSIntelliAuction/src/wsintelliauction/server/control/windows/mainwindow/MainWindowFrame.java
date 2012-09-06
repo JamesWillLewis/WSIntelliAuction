@@ -6,7 +6,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
@@ -22,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
 
 import wsintelliauction.gui.WindowFrame;
 
-public class MainWindowFrame extends WindowFrame{
+public class MainWindowFrame extends WindowFrame<MainWindowHandle>{
 
 	/**
 	 * Window components

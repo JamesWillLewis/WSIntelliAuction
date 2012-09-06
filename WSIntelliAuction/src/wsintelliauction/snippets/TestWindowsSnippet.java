@@ -14,10 +14,8 @@ import wsintelliauction.server.control.windows.mainwindow.MainWindowFrame;
 public class TestWindowsSnippet {
 
 	public static void main(String[] args){
-		ServerWindowManager uiManager = new ServerWindowManager();
-		//launch server-side primary window
-		uiManager.openWindow(ServerWindowManager.WINDOW_PRIMARY);
-		
+		ServerWindowManager manager = new ServerWindowManager(null);
+		manager.launchNewWindow(ServerWindowManager.WINDOW_MAIN);
 		
 		
 	}

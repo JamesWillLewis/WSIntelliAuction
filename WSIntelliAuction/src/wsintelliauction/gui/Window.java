@@ -1,42 +1,53 @@
 package wsintelliauction.gui;
 
-public class Window {
+/**
+ * 
+ * @author James
+ * 
+ * @param <FT>
+ *            WindowFrame type (must be subclass of WindowFrame)
+ * @param <DT>
+ *            WindowData type (must be subclass of WindowData)
+ * @param <HT>
+ *            WindowHandle type (must be subclass of WindowHandle)
+ */
+public abstract class Window<FT extends WindowFrame<HT>, DT extends WindowData<FT>, HT extends WindowHandle<DT>> {
 
-	private WindowFrame frame;
-	private WindowData data;
-	private WindowHandle handle;
+	protected FT frame;
+	protected DT data;
+	protected HT handle;
 	
-	public Window(WindowFrame frame, WindowData data, WindowHandle handle) {
-		super();
+	public Window(FT frame, DT data, HT handle){
 		this.frame = frame;
 		this.data = data;
 		this.handle = handle;
+		frame.attachHandle(handle);
+		data.attachFrame(frame);
+		handle.attachData(data);
 	}
 
-	public WindowFrame getFrame() {
+	public FT getFrame() {
 		return frame;
 	}
 
-	public void setFrame(WindowFrame frame) {
+	public void setFrame(FT frame) {
 		this.frame = frame;
 	}
 
-	public WindowData getData() {
+	public DT getData() {
 		return data;
 	}
 
-	public void setData(WindowData data) {
+	public void setData(DT data) {
 		this.data = data;
 	}
 
-	public WindowHandle getHandle() {
+	public HT getHandle() {
 		return handle;
 	}
 
-	public void setHandle(WindowHandle handle) {
+	public void setHandle(HT handle) {
 		this.handle = handle;
 	}
-	
-	
-	
+
 }
