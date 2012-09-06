@@ -5,7 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class ErrorLogger {
 

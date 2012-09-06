@@ -20,7 +20,7 @@ public class ThreadManager {
 		universalThreadPool.submit(r);
 	}
 
-	public static <E> Future<E> submitTask(Callable<E> r) {
+	public static <E> Future<E> assignThread(Callable<E> r) {
 		return universalThreadPool.submit(r);
 	}
 	

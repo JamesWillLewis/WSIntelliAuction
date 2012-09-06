@@ -1,11 +1,11 @@
 package wsintelliauction.app.server.control;
 
 import wsintelliauction.app.server.control.windows.mainwindow.MainWindow;
-import wsintelliauction.app.server.engine.TaskBacklog;
 import wsintelliauction.lib.gui.Window;
 import wsintelliauction.lib.gui.WindowData;
 import wsintelliauction.lib.gui.WindowManager;
 import wsintelliauction.lib.misc.ErrorLogger;
+import wsintelliauction.lib.task.TaskManager;
 
 public class ServerWindowManager extends WindowManager {
 
@@ -15,7 +15,7 @@ public class ServerWindowManager extends WindowManager {
 	 */
 	public static final int WINDOW_MAIN = 0;
 
-	public ServerWindowManager(TaskBacklog backlog) {
+	public ServerWindowManager(TaskManager backlog) {
 		super(NUM_WINDOWS, backlog); 
 	}
 

@@ -1,13 +1,13 @@
 package wsintelliauction.lib.gui;
 
-import wsintelliauction.app.server.engine.TaskBacklog;
+import wsintelliauction.lib.task.TaskManager;
 
 public abstract class WindowHandle<E extends WindowData<?>> {
 
 	protected E dataRef;
-	protected TaskBacklog backlog;
+	protected TaskManager backlog;
 
-	public WindowHandle(TaskBacklog backlog) {
+	public WindowHandle(TaskManager backlog) {
 		this.backlog = backlog;
 	}
 

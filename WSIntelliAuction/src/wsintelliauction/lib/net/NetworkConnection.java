@@ -66,8 +66,8 @@ public class NetworkConnection {
 	 *             If an error occurs while opening the socket.
 	 */
 	public NetworkConnection(Recipient recipient) throws IOException {
-		dispatchCache = new ArrayBlockingQueue<Message>(DISPATCH_Q_SIZE);
-		receiveCache = new ArrayBlockingQueue<Message>(RECEIVE_Q_SIZE);
+		dispatchCache = new ArrayBlockingQueue<Message>(DISPATCH_Q_SIZE, true);
+		receiveCache = new ArrayBlockingQueue<Message>(RECEIVE_Q_SIZE, true);
 		this.recipient = recipient;
 		socket = new MessageSocket(recipient);
 		connectionActive = true;

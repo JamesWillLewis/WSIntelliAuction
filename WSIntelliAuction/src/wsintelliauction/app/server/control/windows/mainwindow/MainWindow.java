@@ -1,14 +1,14 @@
 package wsintelliauction.app.server.control.windows.mainwindow;
 
-import wsintelliauction.app.server.engine.TaskBacklog;
 import wsintelliauction.lib.gui.Window;
+import wsintelliauction.lib.task.TaskManager;
 
 public class MainWindow extends
 		Window<MainWindowFrame, MainWindowData, MainWindowHandle> {
 
-	public MainWindow(TaskBacklog backlog) {
+	public MainWindow(TaskManager taskmanager) {
 		super(new MainWindowFrame(), new MainWindowData(),
-				new MainWindowHandle(backlog));
+				new MainWindowHandle(taskmanager));
 	}
 
 }
