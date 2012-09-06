@@ -1,4 +1,4 @@
-package wsintelliauction.app.test;
+package wsintelliauction.app;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -6,7 +6,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import wsintelliauction.lib.network.message.InfoMessage;
+import wsintelliauction.lib.net.message.InfoMessage;
 
 
 /**

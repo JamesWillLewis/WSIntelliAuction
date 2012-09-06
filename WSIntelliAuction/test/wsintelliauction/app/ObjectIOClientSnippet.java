@@ -1,11 +1,11 @@
-package wsintelliauction.app.test;
+package wsintelliauction.app;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import wsintelliauction.lib.network.message.InfoMessage;
+import wsintelliauction.lib.net.message.InfoMessage;
 
 
 /**

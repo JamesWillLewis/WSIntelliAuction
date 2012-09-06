@@ -1,7 +1,7 @@
 package wsintelliauction.app.client.control;
 
-import wsintelliauction.lib.network.NetworkConnection;
-import wsintelliauction.lib.network.NetworkInterface;
+import wsintelliauction.lib.net.NetworkConnection;
+import wsintelliauction.lib.net.NetworkInterface;
 
 public class ClientNetworkInterface extends NetworkInterface {
 

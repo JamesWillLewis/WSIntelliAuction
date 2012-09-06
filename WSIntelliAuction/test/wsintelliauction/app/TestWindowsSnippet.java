@@ -1,4 +1,4 @@
-package wsintelliauction.app.test;
+package wsintelliauction.app;
 
 import wsintelliauction.app.server.control.ServerWindowManager;
 import wsintelliauction.app.server.control.windows.mainwindow.MainWindowFrame;

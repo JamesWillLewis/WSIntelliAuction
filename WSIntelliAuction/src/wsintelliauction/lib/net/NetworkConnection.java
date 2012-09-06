@@ -1,4 +1,4 @@
-package wsintelliauction.lib.network;
+package wsintelliauction.lib.net;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import wsintelliauction.lib.misc.ErrorLogger;
 import wsintelliauction.lib.misc.ThreadManager;
-import wsintelliauction.lib.network.message.Message;
+import wsintelliauction.lib.net.message.Message;
 
 
 public class NetworkConnection {

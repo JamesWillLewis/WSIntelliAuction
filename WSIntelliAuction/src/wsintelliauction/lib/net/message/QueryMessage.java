@@ -1,4 +1,4 @@
-package wsintelliauction.lib.network.message;
+package wsintelliauction.lib.net.message;
 
 public class QueryMessage extends Message {
 

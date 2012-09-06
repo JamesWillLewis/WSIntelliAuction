@@ -1,4 +1,4 @@
-package wsintelliauction.lib.network;
+package wsintelliauction.lib.net;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -6,7 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import wsintelliauction.lib.misc.ErrorLogger;
-import wsintelliauction.lib.network.message.Message;
+import wsintelliauction.lib.net.message.Message;
 
 
 public class MessageSocket {

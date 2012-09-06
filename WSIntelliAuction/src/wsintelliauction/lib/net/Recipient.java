@@ -1,4 +1,4 @@
-package wsintelliauction.lib.network;
+package wsintelliauction.lib.net;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

@@ -12,8 +12,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import wsintelliauction.lib.misc.ErrorLogger;
 import wsintelliauction.lib.misc.GlobalConstants;
 import wsintelliauction.lib.misc.ThreadManager;
-import wsintelliauction.lib.network.NetworkConnection;
-import wsintelliauction.lib.network.NetworkInterface;
+import wsintelliauction.lib.net.NetworkConnection;
+import wsintelliauction.lib.net.NetworkInterface;
 
 
 public class ServerNetworkInterface extends NetworkInterface {
