@@ -13,10 +13,10 @@ import wsintelliauction.lib.misc.ErrorLogger;
 import wsintelliauction.lib.misc.GlobalConstants;
 import wsintelliauction.lib.misc.ThreadManager;
 import wsintelliauction.lib.net.NetworkConnection;
-import wsintelliauction.lib.net.NetworkInterface;
+import wsintelliauction.lib.net.NetworkManager;
 
 
-public class ServerNetworkInterface extends NetworkInterface {
+public class ServerNetworkManager extends NetworkManager {
 
 	private AtomicBoolean serverActive;
 	/**
@@ -31,7 +31,7 @@ public class ServerNetworkInterface extends NetworkInterface {
 
 	private ServerSocket serverSocket;
 
-	public ServerNetworkInterface() {
+	public ServerNetworkManager() {
 		clientObjects = Collections
 				.synchronizedList(new ArrayList<NetworkConnection>(
 						MAX_CLIENT_CONNECTIONS));
