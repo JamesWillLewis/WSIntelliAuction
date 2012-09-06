@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import wsintelliauction.global.ErrorLogger;
+import wsintelliauction.ErrorLogger;
 
 
 public class ErrorLoggerTest {

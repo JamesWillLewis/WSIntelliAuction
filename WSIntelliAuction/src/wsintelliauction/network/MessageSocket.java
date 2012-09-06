@@ -5,7 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import wsintelliauction.global.ErrorLogger;
+import wsintelliauction.ErrorLogger;
 import wsintelliauction.network.message.Message;
 
 

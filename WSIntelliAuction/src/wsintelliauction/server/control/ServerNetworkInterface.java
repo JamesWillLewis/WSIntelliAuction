@@ -1,4 +1,4 @@
-package wsintelliauction.server.frontend;
+package wsintelliauction.server.control;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -9,9 +9,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import wsintelliauction.global.ErrorLogger;
-import wsintelliauction.global.GlobalConstants;
-import wsintelliauction.global.ThreadManager;
+import wsintelliauction.ErrorLogger;
+import wsintelliauction.GlobalConstants;
+import wsintelliauction.ThreadManager;
 import wsintelliauction.network.NetworkConnection;
 import wsintelliauction.network.NetworkInterface;
 

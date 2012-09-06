@@ -6,7 +6,7 @@ import java.net.UnknownHostException;
 
 import org.junit.Test;
 
-import wsintelliauction.global.ErrorLogger;
+import wsintelliauction.ErrorLogger;
 import wsintelliauction.network.Recipient;
 
 

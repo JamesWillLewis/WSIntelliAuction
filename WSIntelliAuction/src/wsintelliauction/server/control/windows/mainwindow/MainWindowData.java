@@ -1,6 +1,6 @@
-package wsintelliauction.server.frontend.windows.mainwindow;
+package wsintelliauction.server.control.windows.mainwindow;
 
-import wsintelliauction.windowing.WindowData;
+import wsintelliauction.gui.WindowData;
 
 public class MainWindowData extends WindowData {
 

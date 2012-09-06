@@ -1,4 +1,4 @@
-package wsintelliauction.global;
+package wsintelliauction;
 
 public class GlobalConstants {
 	

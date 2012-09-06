@@ -1,7 +1,7 @@
 package wsintelliauction.snippets;
 
-import wsintelliauction.server.frontend.ServerWindowManager;
-import wsintelliauction.server.frontend.windows.mainwindow.MainWindowFrame;
+import wsintelliauction.server.control.ServerWindowManager;
+import wsintelliauction.server.control.windows.mainwindow.MainWindowFrame;
 
 /**
  * To test the various UI managers and their associated windows.

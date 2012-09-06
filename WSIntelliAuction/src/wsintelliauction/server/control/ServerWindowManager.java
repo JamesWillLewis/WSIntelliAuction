@@ -1,8 +1,8 @@
-package wsintelliauction.server.frontend;
+package wsintelliauction.server.control;
 
-import wsintelliauction.server.frontend.windows.mainwindow.MainWindow;
-import wsintelliauction.windowing.WindowData;
-import wsintelliauction.windowing.WindowManager;
+import wsintelliauction.gui.WindowData;
+import wsintelliauction.gui.WindowManager;
+import wsintelliauction.server.control.windows.mainwindow.MainWindow;
 
 public class ServerWindowManager extends WindowManager {
 	

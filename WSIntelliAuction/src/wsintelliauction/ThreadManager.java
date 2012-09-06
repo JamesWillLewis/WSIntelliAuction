@@ -1,4 +1,4 @@
-package wsintelliauction.global;
+package wsintelliauction;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;

@@ -7,8 +7,8 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import wsintelliauction.global.ErrorLogger;
-import wsintelliauction.global.ThreadManager;
+import wsintelliauction.ErrorLogger;
+import wsintelliauction.ThreadManager;
 import wsintelliauction.network.message.Message;
 
 

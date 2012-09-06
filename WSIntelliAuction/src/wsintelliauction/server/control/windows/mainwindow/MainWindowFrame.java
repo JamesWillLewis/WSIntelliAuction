@@ -1,4 +1,4 @@
-package wsintelliauction.server.frontend.windows.mainwindow;
+package wsintelliauction.server.control.windows.mainwindow;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -20,7 +20,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import wsintelliauction.windowing.WindowFrame;
+import wsintelliauction.gui.WindowFrame;
 
 public class MainWindowFrame extends WindowFrame{
 
@@ -48,7 +48,7 @@ public class MainWindowFrame extends WindowFrame{
 	 * Create the application.
 	 */
 	public MainWindowFrame() {
-		super();
+		super("Server Application");
 	}
 
 	/**

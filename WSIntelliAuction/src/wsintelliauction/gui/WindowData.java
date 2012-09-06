@@ -1,4 +1,4 @@
-package wsintelliauction.windowing;
+package wsintelliauction.gui;
 
 public abstract class WindowData {
 
