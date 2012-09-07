@@ -8,7 +8,13 @@ import java.net.Socket;
 import wsintelliauction.lib.misc.ErrorLogger;
 import wsintelliauction.lib.net.message.Message;
 
-
+/**
+ * Wraps a standard network socket, adding functionality for
+ * handling transission and reception of messages. 
+ * 
+ * @author James Lewis
+ *
+ */
 public class MessageSocket {
 
 	/**
@@ -24,15 +30,28 @@ public class MessageSocket {
 	 */
 	private ObjectInputStream inputStream;
 
+	/**
+	 * Construct the message socket, wrapping the given socket.
+	 * @param socket Destination.
+	 */
 	public MessageSocket(Socket socket) {
 		this.socket = socket;
 		initStreams();
 	}
 
+	/**
+	 * Construct a message socket, given a recipient. A socket for the
+	 * recipient is instantiated.
+	 * @param recipient Socket destination.
+	 * @throws IOException
+	 */
 	public MessageSocket(Recipient recipient) throws IOException {
 		this(new Socket(recipient.getInetAddress(), recipient.getPortNumber()));
 	}
 
+	/**
+	 * Initialize the input and output object streams.
+	 */
 	private void initStreams() {
 		try {
 			outputStream = new ObjectOutputStream(socket.getOutputStream());
@@ -41,7 +60,10 @@ public class MessageSocket {
 			ErrorLogger.log("Unable to open object IO socket streams.");
 		}
 	}
-;
+
+	/**
+	 * Close the input and output streams.
+	 */
 	public void closeStreams() {
 		try {
 			inputStream.close();
@@ -51,10 +73,21 @@ public class MessageSocket {
 					.log("Error while closing object IO socket streams.");
 		}
 	}
+	
+	/**
+	 * Close the socket.
+	 */
+	public void closeSocket(){
+		try {
+			socket.close();
+		} catch (IOException e) {
+			ErrorLogger.log(e.getMessage());
+		}
+	}
 
 	/**
-	 * 
-	 * @param m
+	 * Write the message to the socket's output.
+	 * @param m Message to write.
 	 * @return True if successful, false if write failed.
 	 */
 	public boolean writeMessage(Message m) {
@@ -70,7 +103,8 @@ public class MessageSocket {
 	}
 
 	/**
-	 * 
+	 * Read a message from the socket's input.
+	 * Will block if no messages immediatly in stream.
 	 * @return Next read message in stream, or null if failed.
 	 */
 	public Message readMessage() {

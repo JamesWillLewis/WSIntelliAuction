@@ -2,7 +2,6 @@ package wsintelliauction.lib.net;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -11,7 +10,18 @@ import wsintelliauction.lib.misc.ErrorLogger;
 import wsintelliauction.lib.misc.ThreadManager;
 import wsintelliauction.lib.net.message.Message;
 
-
+/**
+ * Represent a single network connection, linking one source (the application)
+ * to one destination (defined as a recipient). Handles creation of network
+ * socket, as well as dispatching and receiving messages. Dispatch and receive
+ * processes are fully concurrent. This class maintains 2 queues - dispatch and
+ * receive queue - which are used for storing messages waiting to be sent, or
+ * serviced (received from destination). The two queues are periodically polled
+ * by independent threads.
+ * 
+ * @author James Lewis
+ * 
+ */
 public class NetworkConnection {
 	/**
 	 * If this network connection is open.
@@ -47,10 +57,6 @@ public class NetworkConnection {
 	private BlockingQueue<Message> receiveCache;
 
 	/**
-	 * The destination for this communication bridge.
-	 */
-	private Recipient recipient;
-	/**
 	 * Underlying message socket for this connection, allow parsing of IO
 	 * messages.
 	 */
@@ -68,13 +74,21 @@ public class NetworkConnection {
 	public NetworkConnection(Recipient recipient) throws IOException {
 		dispatchCache = new ArrayBlockingQueue<Message>(DISPATCH_Q_SIZE, true);
 		receiveCache = new ArrayBlockingQueue<Message>(RECEIVE_Q_SIZE, true);
-		this.recipient = recipient;
 		socket = new MessageSocket(recipient);
 		connectionActive = true;
 		dispatchActive = new AtomicBoolean(false);
 		receiveActive = new AtomicBoolean(false);
 	}
 
+	/**
+	 * Establishes a network connection given a socket. A new socket is opened
+	 * for the given recipient, and a connection is established.
+	 * 
+	 * @param recipient
+	 *            Defines the address of the socket.
+	 * @throws IOException
+	 *             If an error occurs while opening the socket.
+	 */
 	public NetworkConnection(Socket s) {
 		dispatchCache = new ArrayBlockingQueue<Message>(DISPATCH_Q_SIZE);
 		receiveCache = new ArrayBlockingQueue<Message>(RECEIVE_Q_SIZE);
@@ -107,8 +121,8 @@ public class NetworkConnection {
 				}
 			};
 
-			ThreadManager.submitTask(dispatchThread);
-			ThreadManager.submitTask(receiveThread);
+			ThreadManager.assignThread(dispatchThread);
+			ThreadManager.assignThread(receiveThread);
 
 		} else {
 			ErrorLogger
@@ -117,6 +131,7 @@ public class NetworkConnection {
 	}
 
 	/**
+	 * Pops the next message (in FIFO order) which was received.
 	 * 
 	 * @return Head of recieve queue
 	 */
@@ -131,8 +146,10 @@ public class NetworkConnection {
 	}
 
 	/**
+	 * Places a message in the dispatch queue.
 	 * 
 	 * @param m
+	 *            Message to send.
 	 * @return true if successful, false is unsuccesful
 	 */
 	public boolean sendMessage(Message m) {
@@ -146,18 +163,25 @@ public class NetworkConnection {
 		return success;
 	}
 
+	/**
+	 * Poll the dispatch cache (waiting if neccesary for message to become
+	 * available) then and send message via message socket.
+	 */
 	private void dispatchCycle() {
 		while (dispatchActive.get()) {
 			try {
 				Message sendNext = dispatchCache.take();
 				socket.writeMessage(sendNext);
-
 			} catch (InterruptedException e) {
 				ErrorLogger.log(e.getMessage());
 			}
 		}
 	}
 
+	/**
+	 * Receive a message via the message socket (waiting if neccesary for a message to arrive)
+	 * and then place the message in the receive cache.
+	 */
 	private void receiveCycle() {
 		while (receiveActive.get()) {
 			try {
@@ -167,6 +191,16 @@ public class NetworkConnection {
 				ErrorLogger.log(e.getMessage());
 			}
 		}
+	}
+	
+	/**
+	 * Close this connection.
+	 */
+	public void closeConnection(){
+		this.receiveActive.set(false);
+		this.dispatchActive.set(false);
+		this.socket.closeSocket();
+		this.connectionActive = false;
 	}
 
 }

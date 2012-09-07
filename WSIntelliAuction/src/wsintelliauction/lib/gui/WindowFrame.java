@@ -11,10 +11,12 @@ import javax.swing.UnsupportedLookAndFeelException;
 import wsintelliauction.lib.misc.ErrorLogger;
 
 /**
+ * Contains, manages and lays out all component for a window.
  * 
- * @author James
+ * 
+ * @author James Lewis
  *
- * @param <E>
+ * @param <E> {@link WindowHandle} type.
  */
 public abstract class WindowFrame <E extends WindowHandle<?>> {
 
@@ -33,7 +35,6 @@ public abstract class WindowFrame <E extends WindowHandle<?>> {
 		} catch (UnsupportedLookAndFeelException e) {
 			ErrorLogger.log(e.getMessage());
 		}
-		
 	}
 
 	public WindowFrame(final String windowName) {

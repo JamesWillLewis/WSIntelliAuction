@@ -16,7 +16,7 @@ import wsintelliauction.lib.net.NetworkConnection;
 import wsintelliauction.lib.net.NetworkManager;
 
 
-public class ServerNetworkManager extends NetworkManager {
+public class ServerNetworkManager implements NetworkManager {
 
 	private AtomicBoolean serverActive;
 	/**
@@ -75,7 +75,7 @@ public class ServerNetworkManager extends NetworkManager {
 				acceptClientCycle();
 			}
 		};
-		ThreadManager.submitTask(acceptTask);
+		ThreadManager.assignThread(acceptTask);
 	}
 
 	private void acceptClientCycle() {

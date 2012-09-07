@@ -1,19 +1,24 @@
 package wsintelliauction.app.client.engine;
 
-public class Driver {
+import wsintelliauction.lib.misc.AbstractDriver;
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		System.out.println("Launching Client...");
+public class Driver extends AbstractDriver {
 
-		for(String arg: args){
-			System.out.println("PARAMETER: "+arg);
-		}
+	public Driver(String[] args) {
+		super(args, null);
+		// TO DO
+	}
+
+	@Override
+	public void exec() {
+		// TODO Auto-generated method stub
 		
 	}
-	
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
-

@@ -1,25 +1,21 @@
 package wsintelliauction.app.server.engine;
 
-import wsintelliauction.lib.misc.EventLogger;
+import wsintelliauction.app.server.engine.task.ServerTaskManager;
+import wsintelliauction.lib.misc.AbstractDriver;
 
-public class Driver {
+public class Driver extends AbstractDriver<ServerTaskManager> {
 
-	private String args[];
-	
-	public Driver(String args[]) {
-		this.args = args;
-		
+	public Driver(String[] args) {
+		super(args, new ServerTaskManager());
 	}
-	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		EventLogger.log("Server application launched.");
-		for(String arg: args){
-			System.out.println("PARAMETER: "+arg);
-		}
-		new Driver(args);
+
+	@Override
+	public void init() {
+	}
+
+	@Override
+	public void exec() {
+
 	}
 
 }

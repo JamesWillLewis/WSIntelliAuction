@@ -1,13 +1,23 @@
 package wsintelliauction.app.simulator.engine;
 
-public class Driver {
+import wsintelliauction.app.server.engine.task.ServerTaskManager;
+import wsintelliauction.lib.misc.AbstractDriver;
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
+public class Driver extends AbstractDriver{
+
+	public Driver(String[] args) {
+		super(args, null);
+	}
+
+	@Override
+	public void exec() {
+		
+	}
+
+	@Override
+	public void init() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 }
