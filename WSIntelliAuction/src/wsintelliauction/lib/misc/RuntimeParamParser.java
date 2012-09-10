@@ -24,4 +24,19 @@ public class RuntimeParamParser {
 		this.rawArgs = rawArgs;
 	}
 	
+	/**
+	 * Return argument at given parameter index.
+	 * @param index Parameter index.
+	 * @return Argument value.
+	 */
+	public String getArg(int index)
+	{
+		if(index >= 0 && index < rawArgs.length){
+			return rawArgs[index];
+		}
+		else{
+			ErrorLogger.log("Parameter parser array index out of bounds: "+ index);
+			return null;
+		}
+	}
 }

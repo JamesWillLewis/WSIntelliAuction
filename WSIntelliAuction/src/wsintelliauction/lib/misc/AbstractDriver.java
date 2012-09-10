@@ -1,6 +1,6 @@
 package wsintelliauction.lib.misc;
 
-import wsintelliauction.lib.task.TaskManager;
+import wsintelliauction.lib.task.TaskScheduler;
 
 /**
  * Driver superclass. All executable applications in the system
@@ -10,9 +10,9 @@ import wsintelliauction.lib.task.TaskManager;
  * 
  * @author James Lewis
  *
- * @param <TM> {@link TaskManager} type.
+ * @param <TM> {@link TaskScheduler} type.
  */
-public abstract class AbstractDriver<TM extends TaskManager> {
+public abstract class AbstractDriver{
 
 	/**
 	 * Parameter parser used for this driver.
@@ -21,7 +21,7 @@ public abstract class AbstractDriver<TM extends TaskManager> {
 	/**
 	 * Task manager implementation used for this driver.
 	 */
-	protected TM taskManager;
+	protected TaskScheduler taskManager;
 	
 	/**
 	 * Construct new driver.
@@ -29,7 +29,7 @@ public abstract class AbstractDriver<TM extends TaskManager> {
 	 * @param args Raw arguments.
 	 * @param taskManager Task manager to handle tasks.
 	 */
-	public AbstractDriver(String[] args, TM taskManager) {
+	public AbstractDriver(String[] args, TaskScheduler taskManager) {
 		this.paramParser = new RuntimeParamParser(args);
 		this.taskManager = taskManager;
 		init();

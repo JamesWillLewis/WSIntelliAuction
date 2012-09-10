@@ -24,6 +24,20 @@ public abstract class Task {
 	protected final String DESCRIPTOR;
 	
 	/**
+	 * Number of different priority types.
+	 */
+	public final static int PRIORITY_TYPES = 3;
+	
+	/**
+	 * Task priority categories.
+	 */
+	public enum Priority{
+		LOW, MEDIUM, HIGH;
+	}
+	
+	protected Priority taskPriority;
+	
+	/**
 	 * Super constructor.
 	 * 
 	 * @param DESCRIPTOR Task descriptor to set.
@@ -60,5 +74,13 @@ public abstract class Task {
 	@Override
 	public String toString() {
 		return DESCRIPTOR;
+	}
+	
+	/**
+	 * This task's priority (for scheduling purposes)
+	 * @return Task priority.
+	 */
+	public Priority getTaskPriority() {
+		return taskPriority;
 	}
 }

@@ -1,7 +1,5 @@
 package wsintelliauction.app;
 
-import wsintelliauction.app.server.control.ServerWindowManager;
-import wsintelliauction.app.server.control.windows.mainwindow.MainWindowFrame;
 
 /**
  * To test the various UI managers and their associated windows.
@@ -14,8 +12,7 @@ import wsintelliauction.app.server.control.windows.mainwindow.MainWindowFrame;
 public class TestWindowsSnippet {
 
 	public static void main(String[] args){
-		ServerWindowManager manager = new ServerWindowManager(null);
-		manager.launchNewWindow(ServerWindowManager.WINDOW_MAIN);
+	
 		
 		
 	}

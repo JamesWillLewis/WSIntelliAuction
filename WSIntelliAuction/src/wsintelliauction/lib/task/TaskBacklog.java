@@ -6,8 +6,8 @@ import java.util.concurrent.BlockingQueue;
 import wsintelliauction.lib.misc.ErrorLogger;
 
 /**
- * Wraps a synchronized blocking queue which holds tasks.
- * Handles synchronization, initialization, and put/get access functions.
+ * Wraps a synchronised blocking queue which holds tasks.
+ * Handles synchronisation, initialisation, and put/get access functions.
  * 
  * @author James Lewis
  *
@@ -18,13 +18,14 @@ public class TaskBacklog {
 	 * Synchronous queue of backlog tasks.
 	 */
 	private BlockingQueue<Task> backLog;
+	
 	/**
 	 * Maximum tasks that can be in the backlog.
 	 */
 	public final int BACKLOG_CAPACITY;
 	
 	/**
-	 * Initialize task backlog.
+	 * Initialise task backlog.
 	 * 
 	 * @param BACKLOG_CAPACITY Maximum tasks that can be in the backlog.
 	 */

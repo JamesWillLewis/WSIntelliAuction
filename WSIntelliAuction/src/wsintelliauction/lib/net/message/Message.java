@@ -27,7 +27,7 @@ import java.io.Serializable;
 public abstract class Message implements Serializable {
 
 	/**
-	 * 
+	 *	Serial version ID for object serialisation. 
 	 */
 	private static final long serialVersionUID = 1963804590196708103L;
 
@@ -38,8 +38,14 @@ public abstract class Message implements Serializable {
 		INFO, PLACEBID, QUERY, SOLUTION_OFFER, SOLUTION_ACCEPT, LEASE, CONFIRM_LEASE, GENERIC;
 	}
 	
+	/**
+	 *	For defining message time (enumeration selection)
+	 */
 	public MessageTypes messageType;
 	
+	/**
+	 *	Construct this message with generic type.	
+	 */
 	public Message() {
 		messageType = MessageTypes.GENERIC;
 	}

@@ -11,17 +11,21 @@ import javax.swing.UnsupportedLookAndFeelException;
 import wsintelliauction.lib.misc.ErrorLogger;
 
 /**
- * Contains, manages and lays out all component for a window.
- * 
+ * Contains, manages and lays out all components for a window.
  * 
  * @author James Lewis
- *
- * @param <E> {@link WindowHandle} type.
+ * 
  */
-public abstract class WindowFrame <E extends WindowHandle<?>> {
+public abstract class WindowFrame {
 
+	/**
+	 * Master window Frame.
+	 */
 	protected JFrame frame;
-	protected E handleRef;
+	/**
+	 * Reference to containing window.
+	 */
+	protected Window<?, ?, ?> windowRef;
 
 	static {
 		try {
@@ -37,39 +41,56 @@ public abstract class WindowFrame <E extends WindowHandle<?>> {
 		}
 	}
 
+	/**
+	 * Construct a new window frame, and set some default standard properties.
+	 * @param windowName Window title.
+	 */
 	public WindowFrame(final String windowName) {
-		EventQueue.invokeLater(new Runnable() {
+		frame = new JFrame(windowName);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//initialize frame components
+		initialize();
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		screenSize.width *= 0.8;
+		screenSize.height *= 0.8;
+		frame.setPreferredSize(screenSize);
+		frame.pack();
+		frame.setLocationByPlatform(true);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+	}
+
+	/**
+	 * Contains all code for initialisation, configuration and positioning of frame components.
+	 */
+	protected abstract void initialize();
+
+	/**
+	 * Launch the frame (in a new thread)
+	 */
+	public void launch() {
+		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				frame = new JFrame(windowName);
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				initialize();
-				Dimension screenSize = Toolkit.getDefaultToolkit()
-						.getScreenSize();
-				screenSize.width *= 0.8;
-				screenSize.height *= 0.8;
-				frame.setPreferredSize(screenSize);
-				frame.pack();
-				frame.setLocationByPlatform(true);
-				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-				launch();
+				frame.setVisible(true);
 			}
 		});
 	}
 
-	protected abstract void initialize();
-
-	public void launch() {
-		frame.setVisible(true);
-	}
-
+	/**
+	 * Set frame visibility to false.
+	 */
 	public void close() {
 		frame.setVisible(false);
 	}
-	
-	public void attachHandle(E handleRef){
-		this.handleRef = handleRef;
-	}
 
+	/**
+	 * Sets window reference.
+	 * 
+	 * @param windowRef
+	 *            Window reference.
+	 */
+	public void setWindowRef(Window<?, ?, ?> windowRef) {
+		this.windowRef = windowRef;
+	}
 }

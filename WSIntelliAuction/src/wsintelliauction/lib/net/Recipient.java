@@ -5,8 +5,8 @@ import java.net.UnknownHostException;
 
 /**
  * Represents a recipient of messages in the network communication link, i.e.
- * the destination for a message sent from the initializer of this object, which
- * is the source for all messages sent. If the initializer sends a message, this
+ * the destination for a message sent from the initialiser of this object, which
+ * is the source for all messages sent. If the initialiser sends a message, this
  * recipient object defines the destination for that message, where the host is
  * the source.
  * 

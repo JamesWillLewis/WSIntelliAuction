@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
 
 import wsintelliauction.lib.gui.WindowFrame;
 
-public class MainWindowFrame extends WindowFrame<MainWindowHandle>{
+public class MainWindowFrame extends WindowFrame{
 
 	/**
 	 * Window components
