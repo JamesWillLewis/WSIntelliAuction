@@ -66,4 +66,13 @@ public class TaskBacklog {
 		return next;
 	}
 	
+	/**
+	 * Number of backlog tasks remaining in the queue.
+	 * 
+	 * @return Number of backlog tasks remaining in the queue.
+	 */
+	public int getBacklogTasksLeft(){
+		return backLog.size();
+	}
+	
 }

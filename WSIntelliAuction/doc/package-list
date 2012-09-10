@@ -1,10 +1,13 @@
 wsintelliauction.app
+wsintelliauction.app.client
 wsintelliauction.app.client.control
 wsintelliauction.app.client.control.windows
 wsintelliauction.app.client.engine
+wsintelliauction.app.server
 wsintelliauction.app.server.control
 wsintelliauction.app.server.control.windows.mainwindow
 wsintelliauction.app.server.engine
+wsintelliauction.app.simulator
 wsintelliauction.app.simulator.engine
 wsintelliauction.lib.ci
 wsintelliauction.lib.db
