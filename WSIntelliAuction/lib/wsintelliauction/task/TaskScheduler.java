@@ -6,7 +6,6 @@ import wsintelliauction.misc.ErrorLogger;
 import wsintelliauction.misc.EventLogger;
 import wsintelliauction.misc.ThreadManager;
 
-
 /**
  * General task manager for all application task managers. Used in conjunction
  * with a task backlog implementation (or just the default super class) as well
@@ -31,18 +30,15 @@ public class TaskScheduler {
 	 */
 	private AtomicBoolean isAccepting;
 
-	protected final TaskProcessor taskProcessor;
-
 	/**
 	 * Construct a new task scheduler with the specified capacity.
 	 * 
 	 * @param BACKLOG_CAPACITY
 	 */
-	public TaskScheduler(final int BACKLOG_CAPACITY, TaskProcessor taskProcessor) {
+	public TaskScheduler(final int BACKLOG_CAPACITY) {
 		backlog = new TaskBacklog(BACKLOG_CAPACITY);
 		isServicing = new AtomicBoolean(false);
 		isAccepting = new AtomicBoolean(false);
-		this.taskProcessor = taskProcessor;
 	}
 
 	/**
@@ -91,9 +87,12 @@ public class TaskScheduler {
 			if (backlog.getBacklogTasksLeft() < 1 && !isAccepting.get()) {
 				isServicing.set(false);
 			} else {
-				Task toDo = backlog.dequeue();
-				if (!(toDo instanceof NullTask))
-					taskProcessor.service(toDo);
+				Task t = backlog.dequeue();
+				if(t.perform()){
+					EventLogger.log("TASK ["+t.toString()+"] performed successfully.");
+				} else{
+					ErrorLogger.log("TASK ["+t.toString()+"] failed.");
+				}
 			}
 		}
 	}

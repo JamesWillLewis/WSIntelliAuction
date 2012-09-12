@@ -13,10 +13,6 @@ import wsintelliauction.task.TaskScheduler;
 public class ServerWindowManager extends WindowManager {
 
 	public static final int NUM_WINDOWS = 1;
-	/**
-	 * List of all window array indices
-	 */
-	public static final int WINDOW_MAIN = 0;
 
 	/**
 	 * Construct new window manager.
@@ -26,12 +22,6 @@ public class ServerWindowManager extends WindowManager {
 		super(NUM_WINDOWS, taskmanager); 
 	}
 	
-	/**
-	 * Launch a new main window.
-	 */
-	public void launchMainWindow(){
-		appendAndLaunchWindow(new MainWindow(taskmanager));
-	}
 
 
 }

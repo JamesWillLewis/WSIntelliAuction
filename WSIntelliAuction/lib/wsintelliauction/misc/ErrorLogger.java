@@ -53,7 +53,7 @@ public class ErrorLogger {
 	 *            Message to log.
 	 */
 	public static void log(String message) {
-		System.err.println("RUNTIME ERROR >> " + message.toUpperCase());
+		System.out.println("RUNTIME ERROR >> " + message.toUpperCase());
 		logOut.println(Calendar.getInstance().getTime().toString() + " : "
 				+ message);
 	}

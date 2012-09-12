@@ -1,9 +1,10 @@
 package wsintelliauction.server.engine;
 
+import wsintelliauction.gui.task.LaunchWindowTask;
 import wsintelliauction.misc.AbstractDriver;
+import wsintelliauction.server.control.ServerNetworkManager;
 import wsintelliauction.server.control.ServerWindowManager;
-import wsintelliauction.task.Task;
-import wsintelliauction.task.TaskProcessor;
+import wsintelliauction.server.control.windows.mainwindow.MainWindow;
 import wsintelliauction.task.TaskScheduler;
 
 public class Driver extends AbstractDriver {
@@ -13,6 +14,10 @@ public class Driver extends AbstractDriver {
 	 */
 	private ServerWindowManager serverWindowManager;
 	
+	private ServerNetworkManager serverNetworkManager;
+	
+	private TaskScheduler taskScheduler;
+	
 	/**
 	 * 
 	 * @param args
@@ -20,24 +25,32 @@ public class Driver extends AbstractDriver {
 	public static final int BACKLOG_CAPACITY = 64;
 	
 	public Driver(String[] args) {
-		super(args, new TaskScheduler(BACKLOG_CAPACITY, new TaskProcessor() {
-			
-			@Override
-			public void service(Task t) {
-				// TODO Auto-generated method stub
-				
-			}
-		}));
+		super(args);
 	}
 
 	@Override
 	public void init() {
-		serverWindowManager = new ServerWindowManager(taskManager);
+		//init the managers
+		taskScheduler = new TaskScheduler(64);
+		serverWindowManager = new ServerWindowManager(taskScheduler);
+		serverNetworkManager = new ServerNetworkManager();
+		
+		//set task static references
+		LaunchWindowTask.setWindowManager(serverWindowManager);
+		
+		//begin servicing
+		taskScheduler.beginServiceRoutine();
 	}
 
 	@Override
 	public void exec() {
-	
+		LaunchWindowTask launchMainWindow = new LaunchWindowTask(new MainWindow(taskScheduler));
+		taskScheduler.submitTask(launchMainWindow);
+	}
+
+	@Override
+	public void end() {
+		taskScheduler.endServiceRoutine();
 	}
 
 }

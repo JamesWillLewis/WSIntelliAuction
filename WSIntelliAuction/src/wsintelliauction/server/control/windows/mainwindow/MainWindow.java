@@ -10,5 +10,10 @@ public class MainWindow extends
 		super(new MainWindowFrame(), new MainWindowData(),
 				new MainWindowHandle(taskmanager));
 	}
+	
+	@Override
+	public String toString() {
+		return "Main";
+	}
 
 }
