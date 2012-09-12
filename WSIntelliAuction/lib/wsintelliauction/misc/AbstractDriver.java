@@ -18,27 +18,22 @@ public abstract class AbstractDriver{
 	 * Parameter parser used for this driver.
 	 */
 	protected RuntimeParamParser paramParser;
-	/**
-	 * Task manager implementation used for this driver.
-	 */
-	protected TaskScheduler taskManager;
-	
+
 	/**
 	 * Construct new driver.
 	 * 
 	 * @param args Raw arguments.
 	 * @param taskManager Task manager to handle tasks.
 	 */
-	public AbstractDriver(String[] args, TaskScheduler taskManager) {
+	public AbstractDriver(String[] args) {
 		this.paramParser = new RuntimeParamParser(args);
-		this.taskManager = taskManager;
 		init();
 	}
 	
 	/**
 	 * Initiate the driver.
 	 * Always called by the super constructor,
-	 * to ensure program can't be executed before initiation has occured.
+	 * to ensure program can't be executed before initiation has occurred.
 	 */
 	protected abstract void init();
 	
@@ -47,5 +42,12 @@ public abstract class AbstractDriver{
 	 * has been initiated, usually from the application point of entry.
 	 */
 	public abstract void exec();
+	
+	/**
+	 * Ends the program, shutting down various services and destroying
+	 * resources, closing streams, etc. All post-execution operations
+	 * are done here.
+	 */
+	public abstract void end();
 	
 }
