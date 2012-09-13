@@ -1,4 +1,4 @@
-package wsintelliauction.server.control.windows.mainwindow;
+package wsintelliauction.server.control.mvc.mainwindow;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -19,9 +19,9 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import wsintelliauction.gui.WindowFrame;
+import wsintelliauction.gui.View;
 
-public class MainWindowFrame extends WindowFrame{
+public class MainView extends View<MainModel>{
 
 	/**
 	 * Window components
@@ -46,17 +46,18 @@ public class MainWindowFrame extends WindowFrame{
 	/**
 	 * Create the application.
 	 */
-	public MainWindowFrame() {
-		super("Server Application");
+	public MainView(MainModel model) {
+		super(model);
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialise the contents of the frame.
 	 * @wbp.parser.entryPoint
 	 */
-	protected void initialize() {		
+	protected void initialize() {
+		setTitle("WSIntelliAuction Server");
 		menuBar = new JMenuBar();
-		frame.setJMenuBar(menuBar);
+		setJMenuBar(menuBar);
 		
 		mnFile = new JMenu("File");
 		menuBar.add(mnFile);
@@ -68,7 +69,7 @@ public class MainWindowFrame extends WindowFrame{
 		menuBar.add(mnHelp);
 		mainContentPane = new JPanel();
 		mainContentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		frame.setContentPane(mainContentPane);
+		setContentPane(mainContentPane);
 		GridBagLayout gbl_mainContentPane = new GridBagLayout();
 		gbl_mainContentPane.columnWidths = new int[]{0, 0, 0};
 		gbl_mainContentPane.rowHeights = new int[]{0, 0, 0};

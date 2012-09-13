@@ -47,8 +47,6 @@ public class ErrorLogger {
 	 * Submits an error, writing it to the standard error IO as well as
 	 * recording the error in the error log, with a timestamp.
 	 * 
-	 * Synchronized to ensure atomicity.
-	 * 
 	 * @param message
 	 *            Message to log.
 	 */

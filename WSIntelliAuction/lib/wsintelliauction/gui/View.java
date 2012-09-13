@@ -11,22 +11,20 @@ import javax.swing.UnsupportedLookAndFeelException;
 import wsintelliauction.misc.ErrorLogger;
 
 /**
- * Contains, manages and lays out all components for a window.
+ * A view initialises and organises the actual visible components of a window.
+ * The view inherits from JFrame, and uses SWING windowing.
+ * A view maintains a reference to a model, which it uses to set the values/states
+ * of it's components.
+ * Each view must provide methods for assigning listeners/observers to it's components,
+ * which a controller will use to observe user input.
  * 
  * @author James Lewis
  * 
  */
-public abstract class WindowFrame {
+public abstract class View<M extends Model> extends JFrame {
 
-	/**
-	 * Master window Frame.
-	 */
-	protected JFrame frame;
-	/**
-	 * Reference to containing window.
-	 */
-	protected Window<?, ?, ?> windowRef;
-
+	protected M model;
+	
 	static {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -40,39 +38,39 @@ public abstract class WindowFrame {
 			ErrorLogger.log(e.getMessage());
 		}
 	}
+	
 
 	/**
 	 * Construct a new window frame, and set some default standard properties.
 	 * @param windowName Window title.
 	 */
-	public WindowFrame(final String windowName) {
-		frame = new JFrame(windowName);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public View(M model) {
+		this.model = model;
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//initialize frame components
 		initialize();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		screenSize.width *= 0.8;
 		screenSize.height *= 0.8;
-		frame.setPreferredSize(screenSize);
-		frame.pack();
-		frame.setLocationByPlatform(true);
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
+		setPreferredSize(screenSize);
+		pack();
+		setLocationByPlatform(true);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 
 	/**
-	 * Contains all code for initialisation, configuration and positioning of frame components.
+	 * Contains all code for initialisation, configuration and positioning of view components.
 	 */
 	protected abstract void initialize();
 
 	/**
-	 * Launch the frame (in a new thread)
+	 * Launch this view in a new thread.
 	 */
 	public void launch() {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				frame.setVisible(true);
+				setVisible(true);
 			}
 		});
 	}
@@ -81,16 +79,7 @@ public abstract class WindowFrame {
 	 * Set frame visibility to false.
 	 */
 	public void close() {
-		frame.setVisible(false);
+		setVisible(false);
 	}
 
-	/**
-	 * Sets window reference.
-	 * 
-	 * @param windowRef
-	 *            Window reference.
-	 */
-	public void setWindowRef(Window<?, ?, ?> windowRef) {
-		this.windowRef = windowRef;
-	}
 }

@@ -47,8 +47,6 @@ public class EventLogger {
 	 * Submits an event, writing it to the standard IO as well as recording the
 	 * event in the event log, with a timestamp.
 	 * 
-	 * Synchronized to ensure atomicity.
-	 * 
 	 * @param message
 	 *            Message to log.
 	 */

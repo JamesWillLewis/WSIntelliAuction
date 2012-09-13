@@ -22,7 +22,7 @@ public abstract class WindowManager {
 	/**
 	 * List of active windows.
 	 */
-	protected ArrayList<Window<?, ?, ?>> activeWindows;
+	protected ArrayList<MVC<?, ?, ?>> windows;
 
 	/**
 	 * Reference to task backlog (for parsing control to windows)
@@ -38,7 +38,7 @@ public abstract class WindowManager {
 	 *            Reference to task backlog.
 	 */
 	public WindowManager(int NUM_WINDOWS, TaskManager taskmanager) {
-		activeWindows = new ArrayList<Window<?, ?, ?>>(NUM_WINDOWS);
+		// activeWindows = new ArrayList<Window<?, ?, ?>>(NUM_WINDOWS);
 		this.taskmanager = taskmanager;
 	}
 
@@ -49,15 +49,15 @@ public abstract class WindowManager {
 	 * @param w
 	 *            New window to launch.
 	 */
-	protected void appendAndLaunchWindow(Window<?, ?, ?> w) {
+	protected void appendAndLaunchWindow(MVC<?, ?, ?> w) {
 		if (w != null) {
-			activeWindows.add(w);
-			w.launchWindow();
+			// activeWindows.add(w);
+			w.launchMVC();
 			EventLogger.log("New window launched: " + w.getClass());
-		} else{
+		} else {
 			ErrorLogger.log("Cannot load NULL window");
 		}
-		
+
 	}
 
 	/**
@@ -66,10 +66,10 @@ public abstract class WindowManager {
 	 * @param w
 	 *            Window to close.
 	 */
-	protected void closeAndRemoveWindow(Window<?, ?, ?> w) {
-		w.closeWindow();
-		if (activeWindows.contains(w))
-			activeWindows.remove(w);
+	protected void closeAndRemoveWindow(MVC<?, ?, ?> w) {
+		w.closeMVC();
+		if (windows.contains(w))
+			windows.remove(w);
 		else
 			ErrorLogger.log("Window manager does not contain window: "
 					+ w.getClass());
