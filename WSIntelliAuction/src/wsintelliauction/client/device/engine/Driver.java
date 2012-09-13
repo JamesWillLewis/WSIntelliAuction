@@ -2,35 +2,47 @@ package wsintelliauction.client.device.engine;
 
 import wsintelliauction.misc.AbstractDriver;
 
-public class Driver extends AbstractDriver implements Runnable  
+
+/**
+ *  This class serves as 
+ * 
+ */
+public class Driver extends AbstractDriver implements Runnable
 {
-	public Driver(String[] args)
+
+	public Driver(String[] args) 
 	{
 		super(args);
-		// TODO Auto-generated constructor stub
 	}
 
+	private boolean Running = false;
+	private Thread t;
 	@Override
 	public void run() 
 	{
-		// TODO Auto-generated method stub	
+		while(Running)
+		{
+			//TODO Do our client stuff
+		}
 	}
 
 	@Override
 	protected void init() 
 	{
-		// TODO Auto-generated method stub	
+		t = new Thread(this);
+		// TODO Initialize our variables
 	}
 
 	@Override
 	public void exec() 
 	{
-		// TODO Auto-generated method stub	
+		t.start();
 	}
 
 	@Override
 	public void end() 
 	{
-		// TODO Auto-generated method stub	
+		t.interrupt();	
 	}
+
 }
