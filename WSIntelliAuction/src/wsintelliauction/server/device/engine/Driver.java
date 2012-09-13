@@ -32,7 +32,7 @@ public class Driver extends AbstractDriver implements Runnable
 	 */
 	public void exec() 
 	{
-		t = new Thread(this);
+		t = new Thread(this); // USE MY THREAD MANAGER! Its there for a reason !
 		t.start();
 	}
 
