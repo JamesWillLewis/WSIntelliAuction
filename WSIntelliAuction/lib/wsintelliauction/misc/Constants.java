@@ -6,7 +6,7 @@ package wsintelliauction.misc;
  * @author James Lewis
  *
  */
-public class GlobalConstants {
+public class Constants {
 	
 	/**
 	 * Port number used for this application.

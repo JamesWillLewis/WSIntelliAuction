@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import wsintelliauction.misc.ErrorLogger;
-import wsintelliauction.misc.GlobalConstants;
+import wsintelliauction.misc.Constants;
 import wsintelliauction.misc.ThreadManager;
 import wsintelliauction.net.NetworkConnection;
 import wsintelliauction.net.NetworkManager;
@@ -44,7 +44,7 @@ public class ServerNetworkManager implements NetworkManager {
 	 */
 	public void startServer() {
 		try {
-			serverSocket = new ServerSocket(GlobalConstants.PORT_NUMBER,
+			serverSocket = new ServerSocket(Constants.PORT_NUMBER,
 					MAX_CLIENT_CONNECTIONS);
 			serverActive.set(true);
 			beginAcceptClientCycle();

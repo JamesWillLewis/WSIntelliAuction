@@ -13,9 +13,13 @@ public class Driver extends AbstractDriver {
 	 * Window manager for server-side administrator GUI.
 	 */
 	private ServerWindowManager serverWindowManager;
-	
+	/**
+	 * Server network manager.
+	 */
 	private ServerNetworkManager serverNetworkManager;
-	
+	/**
+	 * Task scheduler for this application.
+	 */
 	private TaskScheduler taskScheduler;
 	
 	/**
@@ -30,10 +34,12 @@ public class Driver extends AbstractDriver {
 
 	@Override
 	public void init() {
+	
 		//init the managers
 		taskScheduler = new TaskScheduler(64);
 		serverWindowManager = new ServerWindowManager(taskScheduler);
 		serverNetworkManager = new ServerNetworkManager();
+		
 		
 		//set task static references
 		LaunchWindowTask.setWindowManager(serverWindowManager);

@@ -16,3 +16,45 @@ Wed Sep 12 17:28:19 CAT 2012 : TASK [Launch new window. Type=Main] failed.
 Wed Sep 12 17:28:43 CAT 2012 : TASK [Launch new window. Type=Main] failed.
 Wed Sep 12 17:28:48 CAT 2012 : TASK [Launch new window. Type=Main] failed.
 Wed Sep 12 17:28:59 CAT 2012 : TASK [Launch new window. Type=Main] failed.
+Thu Sep 13 14:32:20 CAT 2012 : Invalid parameter id: debug
+Thu Sep 13 14:46:55 CAT 2012 : Unrecognised option : hvalue
+Thu Sep 13 14:46:55 CAT 2012 : Missing value for mode option.
+Thu Sep 13 14:46:55 CAT 2012 : Invalid option: -x
+Thu Sep 13 14:48:38 CAT 2012 : Unrecognised option : hvalue
+Thu Sep 13 14:48:38 CAT 2012 : Missing value for mode option.
+Thu Sep 13 14:48:38 CAT 2012 : Invalid option: -x
+Thu Sep 13 14:49:14 CAT 2012 : Unrecognised option : hvalue
+Thu Sep 13 14:49:14 CAT 2012 : Missing value for mode option.
+Thu Sep 13 14:49:14 CAT 2012 : Invalid option: -x
+Thu Sep 13 14:55:05 CAT 2012 : Unrecognised option : hvalue
+Thu Sep 13 14:55:05 CAT 2012 : Missing value for mode option.
+Thu Sep 13 14:55:05 CAT 2012 : Invalid option: -x
+Thu Sep 13 14:56:53 CAT 2012 : Invalid option: -x
+Thu Sep 13 14:56:53 CAT 2012 : Unrecognised option : hvalue
+Thu Sep 13 14:56:53 CAT 2012 : Missing value for mode option.
+Thu Sep 13 14:57:23 CAT 2012 : Missing value for mode option.
+Thu Sep 13 14:57:23 CAT 2012 : Unrecognised option : hvalue
+Thu Sep 13 14:57:40 CAT 2012 : Invalid option: -x
+Thu Sep 13 14:57:40 CAT 2012 : Unrecognised option : hvalue
+Thu Sep 13 14:57:40 CAT 2012 : Missing value for mode option.
+Thu Sep 13 14:58:03 CAT 2012 : Invalid option: -x
+Thu Sep 13 14:58:17 CAT 2012 : Invalid option: -x
+Thu Sep 13 14:58:22 CAT 2012 : Invalid option: -x
+Thu Sep 13 14:58:37 CAT 2012 : Unrecognised option : hvalue
+Thu Sep 13 14:58:37 CAT 2012 : Missing value for mode option.
+Thu Sep 13 14:58:37 CAT 2012 : Invalid option: -x
+Thu Sep 13 15:03:05 CAT 2012 : Unrecognised option : hvalue
+Thu Sep 13 15:03:05 CAT 2012 : Missing value for mode option.
+Thu Sep 13 15:03:05 CAT 2012 : Invalid option: -x
+Thu Sep 13 15:03:07 CAT 2012 : Invalid option: -x
+Thu Sep 13 15:03:07 CAT 2012 : Unrecognised option : hvalue
+Thu Sep 13 15:03:07 CAT 2012 : Missing value for mode option.
+Thu Sep 13 15:03:08 CAT 2012 : Unrecognised option : hvalue
+Thu Sep 13 15:03:08 CAT 2012 : Missing value for mode option.
+Thu Sep 13 15:03:08 CAT 2012 : Invalid option: -x
+Thu Sep 13 15:03:18 CAT 2012 : Invalid option: -x
+Thu Sep 13 15:03:18 CAT 2012 : Unrecognised option : hvalue
+Thu Sep 13 15:03:18 CAT 2012 : Missing value for mode option.
+Thu Sep 13 15:27:15 CAT 2012 : Invalid option: -x
+Thu Sep 13 15:27:15 CAT 2012 : Unrecognised option : hvalue
+Thu Sep 13 15:27:15 CAT 2012 : Missing value for mode option.
