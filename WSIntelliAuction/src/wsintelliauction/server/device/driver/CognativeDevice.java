@@ -1,4 +1,4 @@
-package wsintelliauction.device.driver;
+package wsintelliauction.server.device.driver;
 
 public class CognativeDevice implements DeviceDriver 
 {
