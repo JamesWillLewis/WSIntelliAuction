@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import wsintelliauction.misc.ErrorLogger;
 import wsintelliauction.misc.EventLogger;
-import wsintelliauction.task.TaskScheduler;
+import wsintelliauction.task.TaskManager;
 
 /**
  * 
@@ -27,7 +27,7 @@ public abstract class WindowManager {
 	/**
 	 * Reference to task backlog (for parsing control to windows)
 	 */
-	protected TaskScheduler taskmanager;
+	protected TaskManager taskmanager;
 
 	/**
 	 * Construct the window manager and initialise window list.
@@ -37,7 +37,7 @@ public abstract class WindowManager {
 	 * @param backlog
 	 *            Reference to task backlog.
 	 */
-	public WindowManager(int NUM_WINDOWS, TaskScheduler taskmanager) {
+	public WindowManager(int NUM_WINDOWS, TaskManager taskmanager) {
 		activeWindows = new ArrayList<Window<?, ?, ?>>(NUM_WINDOWS);
 		this.taskmanager = taskmanager;
 	}
@@ -49,7 +49,7 @@ public abstract class WindowManager {
 	 * @param w
 	 *            New window to launch.
 	 */
-	public void appendAndLaunchWindow(Window<?, ?, ?> w) {
+	protected void appendAndLaunchWindow(Window<?, ?, ?> w) {
 		if (w != null) {
 			activeWindows.add(w);
 			w.launchWindow();
@@ -66,7 +66,7 @@ public abstract class WindowManager {
 	 * @param w
 	 *            Window to close.
 	 */
-	public void closeAndRemoveWindow(Window<?, ?, ?> w) {
+	protected void closeAndRemoveWindow(Window<?, ?, ?> w) {
 		w.closeWindow();
 		if (activeWindows.contains(w))
 			activeWindows.remove(w);

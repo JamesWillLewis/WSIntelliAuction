@@ -2,7 +2,7 @@ package wsintelliauction.server.control;
 
 import wsintelliauction.gui.WindowManager;
 import wsintelliauction.server.control.windows.mainwindow.MainWindow;
-import wsintelliauction.task.TaskScheduler;
+import wsintelliauction.task.TaskManager;
 
 /**
  * Implementation of 
@@ -18,10 +18,12 @@ public class ServerWindowManager extends WindowManager {
 	 * Construct new window manager.
 	 * @param taskmanager Task manager.
 	 */
-	public ServerWindowManager(TaskScheduler taskmanager) {
+	public ServerWindowManager(TaskManager taskmanager) {
 		super(NUM_WINDOWS, taskmanager); 
 	}
 	
-
+	public void launchMainWindow(){
+		appendAndLaunchWindow(new MainWindow(this.taskmanager));
+	}
 
 }

@@ -1,6 +1,6 @@
 package wsintelliauction.misc;
 
-import wsintelliauction.task.TaskScheduler;
+import wsintelliauction.task.TaskManager;
 
 /**
  * Driver superclass. All executable applications in the system must derive an
@@ -11,7 +11,7 @@ import wsintelliauction.task.TaskScheduler;
  * @author James Lewis
  * 
  * @param <TM>
- *            {@link TaskScheduler} type.
+ *            {@link TaskManager} type.
  */
 public abstract class AbstractDriver {
 

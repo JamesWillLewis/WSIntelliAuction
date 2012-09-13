@@ -1,26 +1,25 @@
 package wsintelliauction.server.engine;
 
-import wsintelliauction.gui.task.LaunchWindowTask;
 import wsintelliauction.misc.AbstractDriver;
+import wsintelliauction.misc.ThreadManager;
 import wsintelliauction.server.control.ServerNetworkManager;
 import wsintelliauction.server.control.ServerWindowManager;
-import wsintelliauction.server.control.windows.mainwindow.MainWindow;
-import wsintelliauction.task.TaskScheduler;
+import wsintelliauction.task.TaskManager;
 
 public class Driver extends AbstractDriver {
 
 	/**
 	 * Window manager for server-side administrator GUI.
 	 */
-	private ServerWindowManager serverWindowManager;
+	private ServerWindowManager windowManager;
 	/**
 	 * Server network manager.
 	 */
-	private ServerNetworkManager serverNetworkManager;
+	private ServerNetworkManager networkManager;
 	/**
 	 * Task scheduler for this application.
 	 */
-	private TaskScheduler taskScheduler;
+	private TaskManager taskManager;
 	
 	/**
 	 * 
@@ -34,29 +33,22 @@ public class Driver extends AbstractDriver {
 
 	@Override
 	public void init() {
-	
 		//init the managers
-		taskScheduler = new TaskScheduler(64);
-		serverWindowManager = new ServerWindowManager(taskScheduler);
-		serverNetworkManager = new ServerNetworkManager();
-		
-		
-		//set task static references
-		LaunchWindowTask.setWindowManager(serverWindowManager);
-		
-		//begin servicing
-		taskScheduler.beginServiceRoutine();
+		taskManager = new TaskManager(64);
+		windowManager = new ServerWindowManager(taskManager);
+		networkManager = new ServerNetworkManager();
 	}
 
 	@Override
 	public void exec() {
-		LaunchWindowTask launchMainWindow = new LaunchWindowTask(new MainWindow(taskScheduler));
-		taskScheduler.submitTask(launchMainWindow);
+		taskManager.beginServiceRoutine();
+		windowManager.launchMainWindow();
 	}
 
 	@Override
 	public void end() {
-		taskScheduler.endServiceRoutine();
+		taskManager.endServiceRoutine();
+		ThreadManager.closeThreads();
 	}
 
 }

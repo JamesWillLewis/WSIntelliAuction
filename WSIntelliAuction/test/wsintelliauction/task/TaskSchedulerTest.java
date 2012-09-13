@@ -9,7 +9,7 @@ public class TaskSchedulerTest {
 	@Test
 	public final void testBeginServiceRoutine() {
 
-		TaskScheduler taskScheduler = new TaskScheduler(32);
+		TaskManager taskScheduler = new TaskManager(32);
 		
 		//write some code here to generate lots of tasks and submit them
 		

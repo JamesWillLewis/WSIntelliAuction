@@ -1,6 +1,6 @@
 package wsintelliauction.gui;
 
-import wsintelliauction.task.TaskScheduler;
+import wsintelliauction.task.TaskManager;
 
 /**
  * Window handle super class. Each window is paired with a window handle, which
@@ -20,14 +20,14 @@ public abstract class WindowHandle {
 	/**
 	 * Reference to the applications global task manager.
 	 */
-	protected TaskScheduler taskManager;
+	protected TaskManager taskManager;
 
 	/**
 	 * Constructs a new window handle.
 	 * 
 	 * @param taskManager Task manager reference.
 	 */
-	public WindowHandle(TaskScheduler taskManager) {
+	public WindowHandle(TaskManager taskManager) {
 		this.taskManager = taskManager;
 	}
 

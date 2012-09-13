@@ -1,11 +1,11 @@
 package wsintelliauction.server.control.windows.mainwindow;
 
 import wsintelliauction.gui.WindowHandle;
-import wsintelliauction.task.TaskScheduler;
+import wsintelliauction.task.TaskManager;
 
 public class MainWindowHandle extends WindowHandle{
 
-	public MainWindowHandle(TaskScheduler backlog) {
+	public MainWindowHandle(TaskManager backlog) {
 		super(backlog);
 	}
 

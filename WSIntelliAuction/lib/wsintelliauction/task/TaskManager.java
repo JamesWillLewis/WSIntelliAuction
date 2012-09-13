@@ -14,7 +14,7 @@ import wsintelliauction.misc.ThreadManager;
  * @author James Lewis
  * 
  */
-public class TaskScheduler {
+public class TaskManager {
 
 	/**
 	 * Underlying task backlog queue.
@@ -35,7 +35,7 @@ public class TaskScheduler {
 	 * 
 	 * @param BACKLOG_CAPACITY
 	 */
-	public TaskScheduler(final int BACKLOG_CAPACITY) {
+	public TaskManager(final int BACKLOG_CAPACITY) {
 		backlog = new TaskBacklog(BACKLOG_CAPACITY);
 		isServicing = new AtomicBoolean(false);
 		isAccepting = new AtomicBoolean(false);

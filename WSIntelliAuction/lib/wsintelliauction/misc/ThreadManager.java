@@ -74,7 +74,7 @@ public final class ThreadManager {
 	 * 
 	 * @return Boolean True if able to shutdown threads, false if failed.
 	 */
-	public boolean closeThreads() {
+	public static boolean closeThreads() {
 		universalThreadPool.shutdown();
 		try {
 			universalThreadPool.awaitTermination(SHUTDOWN_TIMEOUT_SECONDS,

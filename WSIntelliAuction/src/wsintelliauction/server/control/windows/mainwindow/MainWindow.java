@@ -1,12 +1,12 @@
 package wsintelliauction.server.control.windows.mainwindow;
 
 import wsintelliauction.gui.Window;
-import wsintelliauction.task.TaskScheduler;
+import wsintelliauction.task.TaskManager;
 
 public class MainWindow extends
 		Window<MainWindowFrame, MainWindowData, MainWindowHandle> {
 	
-	public MainWindow(TaskScheduler taskmanager) {
+	public MainWindow(TaskManager taskmanager) {
 		super(new MainWindowFrame(), new MainWindowData(),
 				new MainWindowHandle(taskmanager));
 	}
