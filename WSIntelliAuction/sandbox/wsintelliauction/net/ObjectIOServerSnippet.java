@@ -1,4 +1,4 @@
-package wsintelliauction;
+package wsintelliauction.net;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
