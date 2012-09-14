@@ -7,6 +7,13 @@ public class MainController extends Controller<MainModel, MainView>{
 
 	public MainController(MainView view, MainModel model, TaskManager taskManager) {
 		super(view, model, taskManager);
+		
+	}
+
+	@Override
+	protected void assignListeners() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

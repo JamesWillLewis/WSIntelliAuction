@@ -34,7 +34,6 @@ public class MainView extends View<MainModel>{
 	private JPanel brokerManagementPanel;
 	private JPanel CIManagementPanel;
 	private JScrollPane scrollPane;
-	private JTextArea txtrChannelPartitioning;
 	private JMenuBar menuBar;
 	private JMenu mnFile;
 	private JMenu mnSettings;
@@ -124,7 +123,7 @@ public class MainView extends View<MainModel>{
 		channelManagementScrollPane.setViewportView(channelManagementTable);
 		
 		clientManagementPanel = new JPanel();
-		clientManagementPanel.setBorder(new TitledBorder(null, "Client Management", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		clientManagementPanel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Connected Clients", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_clientManagementPanel = new GridBagConstraints();
 		gbc_clientManagementPanel.fill = GridBagConstraints.BOTH;
 		gbc_clientManagementPanel.insets = new Insets(5, 0, 5, 5);
@@ -179,10 +178,6 @@ public class MainView extends View<MainModel>{
 		
 		scrollPane = new JScrollPane();
 		consolePanel.add(scrollPane, BorderLayout.CENTER);
-		
-		txtrChannelPartitioning = new JTextArea();
-		txtrChannelPartitioning.setText("  <Auction for channel 14 has begun>\r\n-- Channel Partitioning Commencing --\r\n-- Bids Have been Ammounced to client --\r\n-- Time Remaining in Bid ...\r\n-- Time Remaining in Bid ...\r\n\t.\r\n\t.\r\n-- Bids have closed! --\r\n-- CI is best solutions calculating solutions --\r\n-- Solution Verified --\r\n-- Announcing Winners --\r\n-- Signining Leases --\r\n  <Auction for channel 14 Closed>\r\n");
-		scrollPane.setViewportView(txtrChannelPartitioning);
 		
 		brokerManagementPanel = new JPanel();
 		biddingManagementPanel.addTab("Broker Management", null, brokerManagementPanel, null);

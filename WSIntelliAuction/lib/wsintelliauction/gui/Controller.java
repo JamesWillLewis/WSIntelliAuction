@@ -31,8 +31,12 @@ public abstract class Controller<M extends Model, V extends View> {
 		this.view = view;
 		this.model = model;
 		this.taskManager = taskManager;
+		assignListeners();
 	}
 	
-	
+	/**
+	 * Assigns listeners to controllable components of the associated view.
+	 */
+	protected abstract void assignListeners();
 
 }
