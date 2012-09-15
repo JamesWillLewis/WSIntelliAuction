@@ -1,4 +1,4 @@
-package wsintelliauction.client.control;
+package wsintelliauction.client.frontend;
 
 import wsintelliauction.net.NetworkConnection;
 import wsintelliauction.net.NetworkManager;

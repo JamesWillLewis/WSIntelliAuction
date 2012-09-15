@@ -1,4 +1,4 @@
-package wsintelliauction.server.control;
+package wsintelliauction.server.frontend;
 
 import java.io.IOException;
 import java.net.ServerSocket;

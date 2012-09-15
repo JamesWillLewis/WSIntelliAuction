@@ -1,4 +1,4 @@
-package wsintelliauction.server.control.mvc.mainwindow;
+package wsintelliauction.server.frontend.mvc.mainwindow;
 
 import wsintelliauction.gui.Model;
 

@@ -1,7 +1,7 @@
-package wsintelliauction.server.control;
+package wsintelliauction.server.frontend;
 
 import wsintelliauction.gui.WindowManager;
-import wsintelliauction.server.control.mvc.mainwindow.MainMVC;
+import wsintelliauction.server.frontend.mvc.mainwindow.MainMVC;
 import wsintelliauction.task.TaskManager;
 
 /**
