@@ -10,38 +10,49 @@ public class CognativeDevice implements DeviceDriver
 
 	private final int AMOUNT_CHANNELS = 30;
 	private final int DEFAULT_UPDATE_SPEED = 100;
-	private final int AMOUNT_STATUS_BITS = 5;
 	private final int MAX_POWER_LIMITATION = 2000;
 	private final int FREQUENCY_DIVISIONS = 25;
-	private final int MINIMUM_TIME_OFFLINE_BEFORE_COMING_ONLINE = 5000;
+	private final int RECONNECTION_THREASHOLD = 5000;
+	private final float PROBABILITY_OF_PU_STATE_SWITCH = 0.5f;
 	
-	private int[][] Channel;			//Holds the current information about the channels and their status
-	private int[][] PreviousChannel;	//Stores the heuristics information for the channel, i.e to detect if the channel has changed!
+	private Channel Channel[];				//Holds the current information about the channels and their status
+	private ChannelShadow ChannelShadow[];	//Stores the heuristics information for the channel, i.e to detect if the channel has changed!
 	
 	public CognativeDevice()
 	{
+		Channel = new Channel[AMOUNT_CHANNELS];
 		//Setup the device with the appropriate information
-		Channel = new int[AMOUNT_CHANNELS][AMOUNT_STATUS_BITS];
-		for(int i = Channel.length ; i >= 0 ; i--)
+		for(int i = AMOUNT_CHANNELS; i >= 0 ; i--)
 		{
-			Channel[i][0] = i;	//Initialize the channel numbers
-			Channel[i][2] = i * FREQUENCY_DIVISIONS;	//Split Channels into appropriate frequency range
-			Channel[i][3] = i * FREQUENCY_DIVISIONS + FREQUENCY_DIVISIONS;
-			Channel[i][4] = (int) (Math.random() * MAX_POWER_LIMITATION);	//Randomly assign a power limitation
+			Channel[i] = new Channel( i, true, i * FREQUENCY_DIVISIONS, (i * FREQUENCY_DIVISIONS + FREQUENCY_DIVISIONS), (Math.random() * MAX_POWER_LIMITATION));	//Randomly assign a power limitation
 			
-			PreviousChannel[i][0] = 1; //Initially all users are online.
-			PreviousChannel[i][1] = (int) System.currentTimeMillis(); //Mark the last time a change happened.
+			//Create a new channel shadow. All PU are initially active and marked with their last connect time.
+			ChannelShadow[i] = new ChannelShadow(true, System.currentTimeMillis());
 		}
 		
 	}
 	
-	@Override	//Return the amount of channels.
+	/**
+	 *Returns the amount of channels connected to the device.
+	 *@return Number (int) of channels connected. 
+	 */
+	@Override	
 	public int getAmountChannels() { return  AMOUNT_CHANNELS; }
 	
-	@Override	//Return the status of that channel.
-	public int[] getChannelStatus(int index){ return Channel[index]; }
+	/**
+	 * Gets the specified channel from the device.
+	 * @return the desired Channel
+	 */
+	@Override	
+	public Channel getChannelStatus(int index){ return Channel[index]; }
 	
-	@Override	//Return the default operating speed of the device.
+	/**
+	 * Gets the default update speed of the device to help perform 
+	 * in the desired manner.
+	 * 
+	 * @return the speed the device operates at on default settings (int)
+	 */
+	@Override
 	public int getDefaultUpdateSpeed() { return DEFAULT_UPDATE_SPEED; }
 	
 	/**
@@ -52,18 +63,20 @@ public class CognativeDevice implements DeviceDriver
 	 */
 	public void update()
 	{
-		for(int i = 0 ; i < AMOUNT_CHANNELS ; ++i)
+		for(int i = 0 ; i < AMOUNT_CHANNELS ; ++i) //For all channels
 		{
-			if(PreviousChannel[i][0] == 0)
-			{
-				if((System.currentTimeMillis() - PreviousChannel[i][1]) > MINIMUM_TIME_OFFLINE_BEFORE_COMING_ONLINE)			
+			if(!ChannelShadow[i].getPUState()) //If the PU was previously off-line, then they are reconnecting 
+			{							   	   //and the threshold limit must apply..
+				
+				//if the PU has been off-line for longer than the reconnect threshold, then they have passed the threshold test and 
+				if((System.currentTimeMillis() - ChannelShadow[i].getTimeStamp()) > RECONNECTION_THREASHOLD) 			
 				{
-					Channel[i][1] = Math.round( (float) Math.random()); //50 - 50 chance of user going off-line and online.
+					Channel[i].setPUState(Math.random() > PROBABILITY_OF_PU_STATE_SWITCH); //there is a PROBABILITY_OF_PU_STATE_SWITCH chance of user changing states (connected/disconnected)
 				}
 			}
-			else if(PreviousChannel[i][0] == 1)
+			else //Otherwise if the user was online, then no threshold exists
 			{
-				Channel[i][1] = Math.round( (float) Math.random()); //50 - 50 chance of user going off-line and online.
+				Channel[i].setPUState(Math.random() > PROBABILITY_OF_PU_STATE_SWITCH); //PROBABILITY_OF_PU_STATE_SWITCH chance of user going off-line and online.
 			}
 		}
 		
@@ -71,18 +84,14 @@ public class CognativeDevice implements DeviceDriver
 
 	public boolean hasChanged(int index) 
 	{
-		
-		if((Channel[index][1] == 1 && PreviousChannel[index][0] == 0)) 
-		{
-			PreviousChannel[index][0] = 1;
-			return true;
-		}
-		else if(Channel[index][1] == 0 && PreviousChannel[index][0] == 1)
-		{
-			PreviousChannel[index][0] = 0;
-			return true;
+		//if the users state has changed 
+		if(Channel[index].getPUState() != ChannelShadow[index].getPUState()) 
+		{	
+			ChannelShadow[index].setPUState(Channel[index].getPUState()); //Change the channel heuristics appropriately.
+			return true;	
 		}
 		
+		//Otherwise nothing has changed
 		return false;
 	}
 	
