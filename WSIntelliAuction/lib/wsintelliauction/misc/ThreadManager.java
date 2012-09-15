@@ -31,6 +31,11 @@ public final class ThreadManager {
 	private static final ExecutorService universalThreadPool;
 
 	/**
+	 * Number of milliseconds per second.
+	 */
+	public static final long MILLIS_PER_SECONDS = 1000;
+
+	/**
 	 * Prevent construction of this class.
 	 */
 	private ThreadManager() {
@@ -104,6 +109,105 @@ public final class ThreadManager {
 			ErrorLogger.log(e.getMessage());
 		}
 		return false;
+	}
+
+	/**
+	 * Pauses the thread which calls this method for a certain length of time.
+	 * The pause may be interrupted if another thread calls an interrupt on the
+	 * thread being paused.
+	 * 
+	 * @param milliseconds
+	 *            Length of time in MILLISECONDS to pause.
+	 * @return True if the pause was successful, false if interrupted.
+	 */
+	public static boolean pauseThisForMillis(long milliseconds) {
+		try {
+			Thread.sleep(milliseconds);
+			return true;
+		} catch (InterruptedException e) {
+			ErrorLogger.log("Thread " + Thread.currentThread().toString()
+					+ " failed to sleep for " + milliseconds
+					+ " milliseconds because of an interruption.");
+			return false;
+		}
+	}
+
+	/**
+	 * Pauses the thread which calls this method for a certain length of time.
+	 * The pause may be interrupted if another thread calls an interrupt on the
+	 * thread being paused.
+	 * 
+	 * @param seconds
+	 *            Length of time in SECONDS to pause.
+	 * @return True if the pause was successful, false if interrupted.
+	 */
+	public static boolean pauseThisForSeconds(int seconds) {
+		return pauseThisForMillis(seconds * MILLIS_PER_SECONDS);
+	}
+
+	/**
+	 * Pauses the thread which calls this method for a certain length of time.
+	 * The pause may be interrupted if another thread calls an interrupt on the
+	 * thread being paused.
+	 * 
+	 * @param seconds
+	 *            Length of time in SECONDS to pause.
+	 * @param millis
+	 *            Additional milliseconds to pause.
+	 * @return True if the pause was successful, false if interrupted.
+	 */
+	public static boolean pauseThisForSecondsAndMillis(int seconds, long millis) {
+		return pauseThisForMillis((seconds * MILLIS_PER_SECONDS) + millis);
+	}
+
+	/**
+	 * Pauses the thread which calls this method for a certain length of time.
+	 * The pause ignores all interrupts. This method guarantees that the delay
+	 * time will not be interrupted, and will delay >= delay time specified.
+	 * 
+	 * @param millis
+	 *            Length of time in MILLISECONDS to pause.
+	 */
+	public static void pauseThisForMillisIgnoreInterupt(long millis) {
+		long start = System.currentTimeMillis();
+		long delayedTotal = 0;
+		while (delayedTotal < millis) {
+			try {
+				Thread.sleep(millis - delayedTotal);
+			} catch (InterruptedException e) {
+				// ignore interupt
+			} finally {
+				delayedTotal = System.currentTimeMillis() - start;
+			}
+		}
+	}
+
+	/**
+	 * Pauses the thread which calls this method for a certain length of time.
+	 * The pause ignores all interrupts. This method guarantees that the delay
+	 * time will not be interrupted, and will delay >= delay time specified.
+	 * 
+	 * @param seconds
+	 *            Length of time in SECONDS to pause.
+	 */
+	public static void pauseThisForSecondsIgnoreInterupt(int seconds) {
+		pauseThisForMillisIgnoreInterupt(seconds * MILLIS_PER_SECONDS);
+	}
+
+	/**
+	 * Pauses the thread which calls this method for a certain length of time.
+	 * The pause ignores all interrupts. This method guarantees that the delay
+	 * time will not be interrupted, and will delay >= delay time specified.
+	 * 
+	 * @param seconds
+	 *            Length of time in SECONDS to pause.
+	 * @param millis
+	 *            Additional milliseconds to pause.
+	 */
+	public static void pauseThisForSecondsAndMillisIgnoreInterupt(int seconds,
+			long millis) {
+		pauseThisForMillisIgnoreInterupt((seconds * MILLIS_PER_SECONDS)
+				+ millis);
 	}
 
 }

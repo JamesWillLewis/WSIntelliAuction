@@ -61,3 +61,9 @@ Thu Sep 13 15:27:15 CAT 2012 : Missing value for mode option.
 Thu Sep 13 16:19:35 CAT 2012 : Missing value for mode option.
 Thu Sep 13 16:19:35 CAT 2012 : Unrecognised option : hvalue
 Thu Sep 13 16:19:35 CAT 2012 : Invalid option: -x
+Sat Sep 15 15:23:53 CAT 2012 : Thread Thread[pool-1-thread-1,5,main] failed to sleep for 10000 milliseconds because of an interruption.
+Sat Sep 15 15:24:35 CAT 2012 : Thread Thread[pool-1-thread-1,5,main] failed to sleep for 10000 milliseconds because of an interruption.
+Sat Sep 15 15:25:03 CAT 2012 : Thread Thread[pool-1-thread-1,5,main] failed to sleep for 5000 milliseconds because of an interruption.
+Sat Sep 15 15:26:47 CAT 2012 : Thread Thread[pool-1-thread-1,5,main] failed to sleep for 5000 milliseconds because of an interruption.
+Sat Sep 15 15:27:00 CAT 2012 : Thread Thread[pool-1-thread-1,5,main] failed to sleep for 5000 milliseconds because of an interruption.
+Sat Sep 15 15:27:14 CAT 2012 : Thread Thread[pool-1-thread-1,5,main] failed to sleep for 5000 milliseconds because of an interruption.
