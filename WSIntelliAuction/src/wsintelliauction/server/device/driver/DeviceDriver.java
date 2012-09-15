@@ -17,22 +17,12 @@ public interface DeviceDriver
 	public int getAmountChannels();
 	
 	/**
-	 * Gets the status information for a specific channel.
-	 * The returned array follows a specific order for the status information;
-	 * <h1>Defined as:</h1>
-	 * <ul> 	
-	 * <li>			0	Channel Number		-	Specific integer number of channel </li>
-	 * <li>			1	PU Present			-	Boolean flag for PU presence </li>
-	 * <li>			2	Lower Frequency		-	Integer Lower Frequency Bound in Hz</li> 
-	 * <li>			3	Upper Frequency		-	Integer Upper Frequency Bound in Hz</li>
-	 * <li>			4	Power Limitation	-	Integer Power Limitation in mW</li>
-	 * </ul>
-	 * 		@TODO	More to be added later most probably  
+	 * Gets the specified channel, so we can extract the status information..
 	 * 				
 	 * @param index
-	 * @return String Array of status information
+	 * @return Specified channel
 	 */
-	public int[] getChannelStatus(int index); 
+	public Channel getChannelStatus(int index); 
 	
 	/**
 	 * Returns the default device refresh speed in Hz.

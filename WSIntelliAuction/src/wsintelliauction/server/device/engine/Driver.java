@@ -67,6 +67,7 @@ public class Driver extends AbstractDriver implements Runnable
 				//Update the database only if there is a change.
 				if(Dev.hasChanged(i))
 				{
+					//Retrieve the channel object
 					Dev.getChannelStatus(i);
 				}
 			}
