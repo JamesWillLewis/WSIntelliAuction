@@ -32,6 +32,12 @@ public interface DeviceDriver
 	 * @param index
 	 * @return String Array of status information
 	 */
-	public String[] getChannelStatus(int index); 
+	public int[] getChannelStatus(int index); 
+	
+	/**
+	 * Returns the default device refresh speed in Hz.
+	 * @return Integer - DeviceSpeed in Hz
+	 */
+	public int getDefaultUpdateSpeed();
 
 }
