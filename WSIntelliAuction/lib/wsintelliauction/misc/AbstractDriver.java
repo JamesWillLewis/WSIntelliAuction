@@ -1,5 +1,7 @@
 package wsintelliauction.misc;
 
+import java.util.Properties;
+
 import wsintelliauction.task.TaskManager;
 
 /**

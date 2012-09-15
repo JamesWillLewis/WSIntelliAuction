@@ -22,6 +22,7 @@ public class ObjectIOServerSnippet {
 		try {
 			ServerSocket server = new ServerSocket(1024);
 			System.out.println("Server opened : " + InetAddress.getLocalHost().getHostName());
+			System.out.println("Server opened : " + InetAddress.getLocalHost().getCanonicalHostName());
 			Socket clientS = server.accept();
 			System.out.println("Client connected to: "+clientS.getInetAddress().getHostName());
 			

@@ -8,26 +8,39 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import wsintelliauction.misc.Configuration;
 import wsintelliauction.misc.ErrorLogger;
 
 /**
- * A view initialises and organises the actual visible components of a window.
- * The view inherits from JFrame, and uses SWING windowing.
- * A view maintains a reference to a model, which it uses to set the values/states
- * of it's components.
- * Each view must provide methods for assigning listeners/observers to it's components,
- * which a controller will use to observe user input.
+ * A view initializes and organizes the actual visible components of a window.
+ * The view inherits from JFrame, and uses SWING windowing. A view maintains a
+ * reference to a model, which it uses to set the values/states of it's
+ * components. Each view must provide methods for assigning listeners/observers
+ * to it's components, which a controller will use to observe user input.
+ * 
+ * <h1>Look & Feel class paths.</h1>
+ * <ul>
+ * <li> {@link com.jtattoo.plaf.hifi.HiFiLookAndFeel}</li>
+ * <li> {@link com.jtattoo.plaf.acryl.AcrylLookAndFeel}</li>
+ * <li> {@link com.jtattoo.plaf.aero.AeroLookAndFeel}</li>
+ * </ul>
  * 
  * @author James Lewis
  * 
  */
 public abstract class View<M extends Model> extends JFrame {
 
+	/**
+	 * Serial version number.
+	 */
+	private static final long serialVersionUID = -7002345541190407724L;
+
 	protected M model;
-	
+
 	static {
 		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
+			UIManager.setLookAndFeel(Configuration.getProperty("ui"));
 		} catch (ClassNotFoundException e) {
 			ErrorLogger.log(e.getMessage());
 		} catch (InstantiationException e) {
@@ -38,28 +51,25 @@ public abstract class View<M extends Model> extends JFrame {
 			ErrorLogger.log(e.getMessage());
 		}
 	}
-	
 
 	/**
 	 * Construct a new window frame, and set some default standard properties.
-	 * @param windowName Window title.
+	 * 
+	 * @param windowName
+	 *            Window title.
 	 */
 	public View(M model) {
 		this.model = model;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//initialize frame components
+		// initialize frame components
 		initialize();
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		screenSize.width *= 0.8;
-		screenSize.height *= 0.8;
-		setPreferredSize(screenSize);
 		pack();
 		setLocationByPlatform(true);
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 
 	/**
-	 * Contains all code for initialisation, configuration and positioning of view components.
+	 * Contains all code for initialisation, configuration and positioning of
+	 * view components.
 	 */
 	protected abstract void initialize();
 

@@ -71,3 +71,4 @@ Sat Sep 15 15:34:20 CAT 2012 : Thread Thread[pool-1-thread-1,5,main] failed to s
 Sat Sep 15 15:34:33 CAT 2012 : Thread Thread[pool-1-thread-1,5,main] failed to sleep for 5000 milliseconds because of an interruption.
 Sat Sep 15 15:41:38 CAT 2012 : Thread Thread[pool-1-thread-1,5,main] failed to sleep for 5000 milliseconds because of an interruption.
 Sat Sep 15 17:18:16 CAT 2012 : Thread Thread[pool-1-thread-1,5,main] failed to sleep for 5000 milliseconds because of an interruption.
+Sun Sep 16 00:36:14 CAT 2012 : Error loading properties file
