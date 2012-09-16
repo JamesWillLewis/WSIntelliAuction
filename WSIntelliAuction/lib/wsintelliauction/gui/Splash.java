@@ -31,7 +31,6 @@ public class Splash implements Runnable
         g.fillRect(90, 238, 400, 16);
         
         g.setColor(Color.BLUE);
-        System.out.println(PercentageComplete);
         g.fillRect(90, 238, (int) ((400*(PercentageComplete/100))), 16);
         
         g.setColor(Color.WHITE);
