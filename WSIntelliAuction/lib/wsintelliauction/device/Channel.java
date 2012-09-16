@@ -1,4 +1,4 @@
-package wsintelliauction.server.device.driver;
+package wsintelliauction.device;
 
 public class Channel 
 {

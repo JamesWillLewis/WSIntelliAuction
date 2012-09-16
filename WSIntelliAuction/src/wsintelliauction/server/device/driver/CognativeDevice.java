@@ -1,5 +1,8 @@
 package wsintelliauction.server.device.driver;
 
+import wsintelliauction.device.Channel;
+import wsintelliauction.device.ChannelShadow;
+
 /**
  * This class serves as the simulator for the cognitive device we would use.
  * In a real situation this class/package would be replaced by the appropriate device drivers

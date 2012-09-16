@@ -72,3 +72,9 @@ Sat Sep 15 15:34:33 CAT 2012 : Thread Thread[pool-1-thread-1,5,main] failed to s
 Sat Sep 15 15:41:38 CAT 2012 : Thread Thread[pool-1-thread-1,5,main] failed to sleep for 5000 milliseconds because of an interruption.
 Sat Sep 15 17:18:16 CAT 2012 : Thread Thread[pool-1-thread-1,5,main] failed to sleep for 5000 milliseconds because of an interruption.
 Sun Sep 16 00:36:14 CAT 2012 : Error loading properties file
+Sun Sep 16 04:30:23 CAT 2012 : Unrecognised option : java
+Sun Sep 16 04:30:23 CAT 2012 : Unrecognised option : -splash:res\images\splash.png
+Sun Sep 16 04:30:23 CAT 2012 : Unrecognised option : Main.java
+Sun Sep 16 04:32:11 CAT 2012 : Unrecognised option : java
+Sun Sep 16 04:32:11 CAT 2012 : Unrecognised option : -splash:res/images/splash.png
+Sun Sep 16 04:32:11 CAT 2012 : Unrecognised option : Main.java
