@@ -1,4 +1,4 @@
-package wsintelliauction.server.device.driver;
+package wsintelliauction.device;
 
 /**
  * A Channel Shadow is a hueristics platform for the channels we use.

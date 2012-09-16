@@ -1,5 +1,7 @@
 package wsintelliauction.server.device.driver;
 
+import wsintelliauction.device.Channel;
+
 
 /**
  * This is the driver interface. All drivers for the Channel detection hardware should follow his guide for 
