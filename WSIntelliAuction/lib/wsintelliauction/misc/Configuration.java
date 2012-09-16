@@ -20,7 +20,7 @@ public class Configuration {
 
 	private final static File propertiesFile;
 
-	public final static String PROPERTIES_FILE_NAME = "config.xml";
+	public final static String PROPERTIES_FILE_NAME = "config.properties";
 
 	static {
 		propertiesFile = new File(PROPERTIES_FILE_NAME);
@@ -35,11 +35,12 @@ public class Configuration {
 
 	public static void setProperty(String key, String value) {
 		properties.setProperty(key, value);
+		store();
 	}
 
 	public static void load() {
 		try {
-			properties.loadFromXML(new FileInputStream(propertiesFile));
+			properties.load(new FileInputStream(propertiesFile));
 		} catch (FileNotFoundException e) {
 			ErrorLogger.log("Error loading properties file");
 		} catch (IOException e) {
@@ -47,9 +48,9 @@ public class Configuration {
 		}
 	}
 
-	public static void store() {
+	private static void store() {
 		try {
-			properties.storeToXML(new FileOutputStream(propertiesFile),
+			properties.store(new FileOutputStream(propertiesFile),
 					"Configuration Properties");
 		} catch (IOException e) {
 			ErrorLogger.log("Error writing properties file");

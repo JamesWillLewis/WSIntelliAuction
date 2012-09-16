@@ -18,11 +18,25 @@ import wsintelliauction.misc.ErrorLogger;
  * components. Each view must provide methods for assigning listeners/observers
  * to it's components, which a controller will use to observe user input.
  * 
- * <h1>Look & Feel class paths.</h1>
+ * The UI look&feel skin which the interfaces uses can be set in the config.properties
+ * file, under the property 'skin'. The value of the 'skin' key must be a valid
+ * look&feel class path. The following are available(From the JTattoo library):
+ * 
+ * <h1>Look&Feel class paths.</h1>
  * <ul>
- * <li> {@link com.jtattoo.plaf.hifi.HiFiLookAndFeel}</li>
- * <li> {@link com.jtattoo.plaf.acryl.AcrylLookAndFeel}</li>
- * <li> {@link com.jtattoo.plaf.aero.AeroLookAndFeel}</li>
+ * <li>com.jtattoo.plaf.acryl.AcrylLookAndFeel</li>
+ * <li>com.jtattoo.plaf.aero.AeroLookAndFeel</li>
+ * <li>com.jtattoo.plaf.aluminium.AluminiumLookAndFeel</li>
+ * <li>com.jtattoo.plaf.bernstein.BernsteinLookAndFeel</li>
+ * <li>com.jtattoo.plaf.fast.FastLookAndFeel</li>
+ * <li>com.jtattoo.plaf.graphite.GraphiteLookAndFeel</li>
+ * <li>com.jtattoo.plaf.hifi.HiFiLookAndFeel</li>
+ * <li>com.jtattoo.plaf.luna.LunaLookAndFeel</li>
+ * <li>com.jtattoo.plaf.mcwin.McWinLookAndFeel</li>
+ * <li>com.jtattoo.plaf.mint.MintLookAndFeel</li>
+ * <li>com.jtattoo.plaf.noire.NoireLookAndFeel</li>
+ * <li>com.jtattoo.plaf.smart.SmartLookAndFeel</li>
+ * <li>com.jtattoo.plaf.texture.TextureLookAndFeel</li>
  * </ul>
  * 
  * @author James Lewis
@@ -35,12 +49,17 @@ public abstract class View<M extends Model> extends JFrame {
 	 */
 	private static final long serialVersionUID = -7002345541190407724L;
 
+	/**
+	 * Reference to data model.
+	 */
 	protected M model;
 
+	/**
+	 * Set the look and feel on runtime
+	 */
 	static {
 		try {
-
-			UIManager.setLookAndFeel(Configuration.getProperty("ui"));
+			UIManager.setLookAndFeel(Configuration.getProperty("skin"));
 		} catch (ClassNotFoundException e) {
 			ErrorLogger.log(e.getMessage());
 		} catch (InstantiationException e) {
