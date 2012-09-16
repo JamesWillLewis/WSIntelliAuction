@@ -10,6 +10,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import javax.swing.ButtonGroup;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.SwingConstants;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class ChannelsTab extends JPanel {
 	private JTable table;
@@ -21,10 +24,17 @@ public class ChannelsTab extends JPanel {
 	
 	private void init(){
 		setBorder(new TitledBorder(null, "Channel Management", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		setLayout(new MigLayout("", "[grow]", "[grow][]"));
+		setLayout(new MigLayout("", "[grow]", "[][grow]"));
+		
+		JLabel lblFilter = new JLabel("Filter:");
+		add(lblFilter, "flowx,cell 0 0");
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"All", "Available", "Unavailable", "Leased"}));
+		add(comboBox, "cell 0 0,alignx left");
 		
 		JScrollPane scrollPane = new JScrollPane();
-		add(scrollPane, "cell 0 0,grow");
+		add(scrollPane, "cell 0 1,grow");
 		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
@@ -42,25 +52,6 @@ public class ChannelsTab extends JPanel {
 		table.getColumnModel().getColumn(3).setPreferredWidth(137);
 		table.getColumnModel().getColumn(4).setPreferredWidth(139);
 		scrollPane.setViewportView(table);
-		
-		JLabel lblShow = new JLabel("Show:");
-		add(lblShow, "flowx,cell 0 1");
-		
-		JRadioButton rdbtnAll = new JRadioButton("All");
-		filterButtonGroup.add(rdbtnAll);
-		add(rdbtnAll, "cell 0 1");
-		
-		JRadioButton rdbtnAvailable = new JRadioButton("Available");
-		filterButtonGroup.add(rdbtnAvailable);
-		add(rdbtnAvailable, "cell 0 1");
-		
-		JRadioButton rdbtnUnavailable = new JRadioButton("Unavailable");
-		filterButtonGroup.add(rdbtnUnavailable);
-		add(rdbtnUnavailable, "cell 0 1");
-		
-		JRadioButton rdbtnLeased = new JRadioButton("Leased");
-		filterButtonGroup.add(rdbtnLeased);
-		add(rdbtnLeased, "cell 0 1");
 	}
 	
 	@Override

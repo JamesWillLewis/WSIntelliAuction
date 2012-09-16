@@ -9,12 +9,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import wsintelliauction.misc.Configuration;
 import wsintelliauction.misc.ErrorLogger;
-import wsintelliauction.misc.Constants;
 import wsintelliauction.misc.ThreadManager;
 import wsintelliauction.net.NetworkConnection;
 import wsintelliauction.net.NetworkManager;
-
 
 public class ServerNetworkManager implements NetworkManager {
 
@@ -39,13 +38,13 @@ public class ServerNetworkManager implements NetworkManager {
 	}
 
 	/**
-	 * Initializes and launches the server, and begins accepting
-	 * incoming client connection requests. 
+	 * Initializes and launches the server, and begins accepting incoming client
+	 * connection requests.
 	 */
 	public void startServer() {
 		try {
-			serverSocket = new ServerSocket(Constants.PORT_NUMBER,
-					MAX_CLIENT_CONNECTIONS);
+			serverSocket = new ServerSocket(Integer.parseInt(Configuration
+					.getProperty("port")), MAX_CLIENT_CONNECTIONS);
 			serverActive.set(true);
 			beginAcceptClientCycle();
 		} catch (IOException e) {
@@ -83,12 +82,13 @@ public class ServerNetworkManager implements NetworkManager {
 			try {
 				Socket incoming = serverSocket.accept();
 				/*
-				 * Will reject the connection if the connection exceeds the allowable
-				 * number of concurrent connections, OR if the server active state is
-				 * false - in case the server active state changed state while waiting
-				 * on an incoming connection.
+				 * Will reject the connection if the connection exceeds the
+				 * allowable number of concurrent connections, OR if the server
+				 * active state is false - in case the server active state
+				 * changed state while waiting on an incoming connection.
 				 */
-				if (clientObjects.size() < MAX_CLIENT_CONNECTIONS && serverActive.get()) {
+				if (clientObjects.size() < MAX_CLIENT_CONNECTIONS
+						&& serverActive.get()) {
 					// accept the connection
 					NetworkConnection connection = new NetworkConnection(
 							incoming);
@@ -98,12 +98,10 @@ public class ServerNetworkManager implements NetworkManager {
 					// reject the connection
 					incoming.close();
 				}
-			}
-			catch (SocketException e){
-				//server shutdown while thread blocked waiting for connection
+			} catch (SocketException e) {
+				// server shutdown while thread blocked waiting for connection
 				break;
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				ErrorLogger.log(e.getMessage());
 
 			}
@@ -113,7 +111,5 @@ public class ServerNetworkManager implements NetworkManager {
 	public List<NetworkConnection> getClientConnections() {
 		return clientObjects;
 	}
-	
-	
 
 }
