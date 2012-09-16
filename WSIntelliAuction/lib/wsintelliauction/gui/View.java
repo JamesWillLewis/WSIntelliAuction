@@ -2,7 +2,6 @@ package wsintelliauction.gui;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -82,8 +81,9 @@ public abstract class View<M extends Model> extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// initialize frame components
 		initialize();
+		setPreferredSize(new Dimension(800, 600));
 		pack();
-		setLocationByPlatform(true);
+		setLocationRelativeTo(null);
 	}
 
 	/**

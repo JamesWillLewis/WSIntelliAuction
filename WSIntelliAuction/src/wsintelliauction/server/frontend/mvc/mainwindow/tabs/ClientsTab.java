@@ -38,15 +38,6 @@ public class ClientsTab extends JPanel {
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
 			},
 			new String[] {
 				"Secondary User ID", "Bids Placed", "Leases Held", "Status", "Hostname"

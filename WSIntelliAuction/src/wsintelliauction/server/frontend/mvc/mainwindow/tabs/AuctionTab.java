@@ -22,7 +22,7 @@ public class AuctionTab extends JPanel {
 	private void init() {
 		setBorder(new TitledBorder(null, "Auction Management",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		setLayout(new MigLayout("", "[grow]", "[][grow][grow]"));
+		setLayout(new MigLayout("", "[grow]", "[][grow][]"));
 
 		JLabel lblFilter = new JLabel("Filter:");
 		add(lblFilter, "flowx,cell 0 0");
@@ -31,19 +31,14 @@ public class AuctionTab extends JPanel {
 		add(scrollPane, "cell 0 1,grow");
 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] {
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null }, }, new String[] {
-				"Bid #", "Time placed", "Time outstanding", "Secondary User",
-				"Frequency Band Requested", "Power Limit Requested", "Status" }));
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, null, null},
+			},
+			new String[] {
+				"Bid #", "Time placed", "Time outstanding", "Secondary User", "Frequency Band Requested", "Power Limit Requested", "Status"
+			}
+		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(67);
 		table.getColumnModel().getColumn(2).setPreferredWidth(113);
 		table.getColumnModel().getColumn(3).setPreferredWidth(114);
@@ -61,13 +56,12 @@ public class AuctionTab extends JPanel {
 				"Auction Settings", TitledBorder.LEADING, TitledBorder.TOP,
 				null, null));
 		add(auctionControlPanel, "cell 0 2,grow");
-		auctionControlPanel.setLayout(new MigLayout("", "[251.00px]",
-				"[25px][]"));
+		auctionControlPanel.setLayout(new MigLayout("", "[251.00px]", "[25px,bottom]"));
 
 		JCheckBox chckbxNewCheckBox = new JCheckBox("Automatic Broker");
 		chckbxNewCheckBox.setSelected(true);
 		auctionControlPanel.add(chckbxNewCheckBox,
-				"cell 0 0,alignx left,aligny top");
+				"cell 0 0,alignx left,aligny center");
 	}
 
 	@Override

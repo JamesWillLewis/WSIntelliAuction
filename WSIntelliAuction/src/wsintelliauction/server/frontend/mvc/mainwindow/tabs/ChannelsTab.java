@@ -40,8 +40,6 @@ public class ChannelsTab extends JPanel {
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
 			},
 			new String[] {
 				"Channel ID", "Frequency Band", "Power Limitation", "Primary User", "Secondary User"
