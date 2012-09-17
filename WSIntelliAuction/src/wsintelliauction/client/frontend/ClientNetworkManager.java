@@ -1,15 +1,27 @@
 package wsintelliauction.client.frontend;
 
-import wsintelliauction.net.NetworkConnection;
+import java.net.Socket;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import wsintelliauction.net.NetworkManager;
 
 public class ClientNetworkManager implements NetworkManager {
 
-	private NetworkConnection serverConnection;
+	private Socket serverConnection;
+	
+	private AtomicBoolean isConnected;
 	
 	public ClientNetworkManager() {
-		// TODO Auto-generated constructor stub
+		isConnected.set(false);
+		serverConnection = new Socket();
 	}
+	
+	public boolean connectTo(String hostAddress){
+		
+		serverConnection.
+	}
+	
+	
 	
 	
 }

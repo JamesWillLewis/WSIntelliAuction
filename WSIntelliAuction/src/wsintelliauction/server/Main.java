@@ -27,21 +27,48 @@ public class Main extends Splash {
 	 */
 	public void simulateOurWorkLoad() {
 		for (int i = 0; i < 100; ++i) {
-			Main.PercentageComplete++;
-			if (i < 50)
-				Main.Message = "Hell fucking yeah";
-			else
-				Main.Message = "Niggas be hating";
+			Main.percentageComplete++;
+			switch (i) {
+			case 0:
+				Main.displayMessage = "Loading JRE 1.6 runtime environment";
+				break;
+			case 10:
+				Main.displayMessage = "Loading bootstrap classes";
+				break;
+			case 20:
+				Main.displayMessage = "Loading Java SE 1.7 library";
+				break;
+			case 30:
+				Main.displayMessage = "Resolving external references";
+				break;
+			case 40:
+				Main.displayMessage = "Loading third party libraries";
+				break;
+			case 50:
+				Main.displayMessage = "Linking libraries";
+				break;
+			case 60:
+				Main.displayMessage = "Scanning program file-system";
+				break;
+			case 70:
+				Main.displayMessage = "Loading resources";
+				break;
+			case 80:
+				Main.displayMessage = "Initializing JRE runtime engine";
+				break;
+			case 90:
+				Main.displayMessage = "Launching application";
+				break;
+			}
 
 			try {
-				Thread.sleep(71); 
+				Thread.sleep(71);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
-	
 
 	/**
 	 * please note that the program Must have a VM environment flag set, for

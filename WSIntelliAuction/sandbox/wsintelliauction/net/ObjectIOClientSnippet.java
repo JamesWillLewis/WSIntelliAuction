@@ -17,26 +17,8 @@ import wsintelliauction.net.message.InfoMessage;
  */
 public class ObjectIOClientSnippet {
 
-	public static void main(String[] args) throws InterruptedException {
-		try {
-			Socket s = new Socket("James-PC",1024);
-			System.out.println("Client connected to: "+s.getInetAddress().getHostName());
-			
-			ObjectOutputStream stream = new ObjectOutputStream(s.getOutputStream());
-			int i = 0;
-			while(true){
-				Thread.sleep(2000);
-				i++;
-				stream.writeObject(new InfoMessage("hello " + i));
-			}
-			
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public static void main(String[] args) {
+		
 	}
 
 }

@@ -43,6 +43,7 @@ public class ServerNetworkManager implements NetworkManager {
 	 */
 	public void startServer() {
 		try {
+			//launch the server
 			serverSocket = new ServerSocket(Integer.parseInt(Configuration
 					.getProperty("port")), MAX_CLIENT_CONNECTIONS);
 			serverActive.set(true);
@@ -66,6 +67,10 @@ public class ServerNetworkManager implements NetworkManager {
 		}
 	}
 
+	/**
+	 * Initiate a new thread for the accept client cycle
+	 * and submit it to the thread manager.
+	 */
 	private void beginAcceptClientCycle() {
 		Runnable acceptTask = new Runnable() {
 
@@ -77,6 +82,10 @@ public class ServerNetworkManager implements NetworkManager {
 		ThreadManager.assignThread(acceptTask);
 	}
 
+	/**
+	 * While the server is active, accept incoming connections
+	 * and append to the client list.
+	 */
 	private void acceptClientCycle() {
 		while (serverActive.get()) {
 			try {

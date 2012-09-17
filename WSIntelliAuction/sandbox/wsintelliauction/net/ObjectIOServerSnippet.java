@@ -18,26 +18,8 @@ import wsintelliauction.net.message.InfoMessage;
  */
 public class ObjectIOServerSnippet {
 
-	public static void main(String[] args) throws ClassNotFoundException {
-		try {
-			ServerSocket server = new ServerSocket(1024);
-			System.out.println("Server opened : " + InetAddress.getLocalHost().getHostName());
-			System.out.println("Server opened : " + InetAddress.getLocalHost().getCanonicalHostName());
-			Socket clientS = server.accept();
-			System.out.println("Client connected to: "+clientS.getInetAddress().getHostName());
-			
-			ObjectInputStream stream = new ObjectInputStream(clientS.getInputStream());
-			
-			while(true){
-				InfoMessage m = (InfoMessage)stream.readObject();
-				System.out.println(m.getData());
-			}
-			
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public static void main(String[] args) {
+		
 	}
 
 }

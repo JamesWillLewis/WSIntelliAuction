@@ -16,8 +16,8 @@ public class Main extends Splash
 	{
 		for(int i = 0 ; i < 100 ; ++i)
 		{
-			Main.PercentageComplete++;
-			Main.Message = "Hell Fucking Yeah";
+			Main.percentageComplete++;
+			Main.displayMessage = "Hell Fucking Yeah";
 			try 
 			{
 				Thread.sleep(71);

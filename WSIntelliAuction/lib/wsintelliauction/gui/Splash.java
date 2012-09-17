@@ -29,8 +29,8 @@ public class Splash implements Runnable
 	 */
 	private static final long UPDATE_SPEED = 31;	//Keep it Prime
 	
-	protected static volatile String Message = "";	
-	protected static double PercentageComplete = 0;
+	protected static volatile String displayMessage = "";	
+	protected static double percentageComplete = 0;
 	
 	/*
 	 * More Variables
@@ -58,12 +58,12 @@ public class Splash implements Runnable
         
         //Then we paint the blue loading bar
         g.setColor(Color.BLUE);
-        g.fillRect(90, 238, (int) ((400*(PercentageComplete/100))), 16);
+        g.fillRect(90, 238, (int) ((400*(percentageComplete/100))), 16);
         
         //Then the white text over the loading bar
         g.setColor(Color.WHITE);
         g.setFont(new Font("Harabara",Font.PLAIN, 14));
-        g.drawString(Message, 100, 250);
+        g.drawString(displayMessage, 100, 250);
         
         //Finally update the splash screen
         Splash.update();
@@ -110,7 +110,7 @@ public class Splash implements Runnable
 	public void run() 
 	{
 			//While the program is still loading
-	        while(PercentageComplete < 100)
+	        while(percentageComplete < 100)
 	        {
 	        	//Render the splash frame
 	            renderSplashFrame(g);

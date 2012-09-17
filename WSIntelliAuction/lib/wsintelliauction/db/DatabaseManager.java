@@ -29,8 +29,10 @@ public class DatabaseManager{
 		this.DBName = DBName;
 		this.UserName = UserName;
 		this.Password = Password;
+	
 		
 		startConnection();
+
 		Queue<String[]> Temp = getResultSet("SELECT * FROM employee11");
 		
 		for(String[] t:Temp){
@@ -77,7 +79,7 @@ public class DatabaseManager{
 	
 	public void updateQuery(String Query)
 	{
-		//Query = "CREATE TABLE Employee11(Emp_code integer, Emp_name varchar(10))";
+		
 		
 		try 
 		{
@@ -128,7 +130,7 @@ public class DatabaseManager{
 		    	String Temp[] = new String[AmtCols];
 		        
 		    	//Iterate through the columns expected
-		    	for(int i = 1 ; i < AmtCols+1 ; i++)
+		    	for(int i = 1 ; i < AmtCols ; i++)
 		        	Temp[i-1] = Results.getString(i);
 		        
 		        //Add it to the queue
