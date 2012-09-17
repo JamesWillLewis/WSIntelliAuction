@@ -69,6 +69,16 @@ public class Driver extends AbstractDriver implements Runnable
 				{
 					//Retrieve the channel object
 					Dev.getChannelStatus(i);
+					
+					
+					/***
+					 * TODO
+					 * 
+					 * HERE WE CHANGE THE DATABASE..
+					 * 
+					 */
+					
+					
 				}
 			}
 		}

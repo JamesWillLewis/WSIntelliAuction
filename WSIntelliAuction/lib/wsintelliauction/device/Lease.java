@@ -79,7 +79,7 @@ public class Lease
 	
 	/**
 	 * The public Key associated with this channel
-	 * @return Returns a Special MAGIC LAZER BEAM, PEW PEW that guards against all foe.
+	 * @return Returns a Special MAGIC LAZER BEAM, that guards against all foe. PEW PEW
 	 */
 	public String getPublicKey() {
 		return PublicKey;

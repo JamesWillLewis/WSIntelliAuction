@@ -10,7 +10,7 @@ import wsintelliauction.net.message.Message;
 
 /**
  * Wraps a standard network socket, adding functionality for
- * handling transission and reception of messages. 
+ * handling transmission and reception of messages. 
  * 
  * @author James Lewis
  *
