@@ -7,10 +7,13 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import wsintelliauction.misc.Configuration;
 import wsintelliauction.misc.ErrorLogger;
+import wsintelliauction.misc.EventLogger;
 import wsintelliauction.misc.ThreadManager;
 import wsintelliauction.net.NetworkConnection;
 import wsintelliauction.net.NetworkManager;
@@ -21,19 +24,17 @@ public class ServerNetworkManager implements NetworkManager {
 	/**
 	 * Arraylist of client connections wrapped in a synchronized container.
 	 */
-	private List<NetworkConnection> clientObjects;
+	private BlockingQueue<NetworkConnection> clientObjects;
 
 	/**
 	 * Maximum amount of concurrently connected clients
 	 */
-	public final static int MAX_CLIENT_CONNECTIONS = 64;
+	public final static int MAX_CLIENT_CONNECTIONS = 128;
 
 	private ServerSocket serverSocket;
 
 	public ServerNetworkManager() {
-		clientObjects = Collections
-				.synchronizedList(new ArrayList<NetworkConnection>(
-						MAX_CLIENT_CONNECTIONS));
+		clientObjects = new ArrayBlockingQueue<>(MAX_CLIENT_CONNECTIONS, true);
 		serverActive = new AtomicBoolean(false);
 	}
 
@@ -43,9 +44,12 @@ public class ServerNetworkManager implements NetworkManager {
 	 */
 	public void startServer() {
 		try {
-			//launch the server
+			// launch the server
 			serverSocket = new ServerSocket(Integer.parseInt(Configuration
 					.getProperty("port")), MAX_CLIENT_CONNECTIONS);
+			EventLogger.log("Server now running on host-address: "
+					+ serverSocket.getInetAddress().getHostName()
+					+ " on port: " + serverSocket.getLocalPort());
 			serverActive.set(true);
 			beginAcceptClientCycle();
 		} catch (IOException e) {
@@ -61,6 +65,8 @@ public class ServerNetworkManager implements NetworkManager {
 			serverActive.set(false);
 			try {
 				serverSocket.close();
+				
+				//add code to disconnect each client socket
 			} catch (IOException e) {
 				ErrorLogger.log(e.getMessage());
 			}
@@ -68,8 +74,8 @@ public class ServerNetworkManager implements NetworkManager {
 	}
 
 	/**
-	 * Initiate a new thread for the accept client cycle
-	 * and submit it to the thread manager.
+	 * Initiate a new thread for the accept client cycle and submit it to the
+	 * thread manager.
 	 */
 	private void beginAcceptClientCycle() {
 		Runnable acceptTask = new Runnable() {
@@ -83,13 +89,15 @@ public class ServerNetworkManager implements NetworkManager {
 	}
 
 	/**
-	 * While the server is active, accept incoming connections
-	 * and append to the client list.
+	 * While the server is active, accept incoming connections and append to the
+	 * client list.
 	 */
 	private void acceptClientCycle() {
 		while (serverActive.get()) {
 			try {
 				Socket incoming = serverSocket.accept();
+				EventLogger.log("Client connected: "
+						+ incoming.getInetAddress().getHostAddress());
 				/*
 				 * Will reject the connection if the connection exceeds the
 				 * allowable number of concurrent connections, OR if the server
@@ -102,14 +110,16 @@ public class ServerNetworkManager implements NetworkManager {
 					NetworkConnection connection = new NetworkConnection(
 							incoming);
 					clientObjects.add(connection);
-					connection.beginIOParsing();
+					
 				} else {
 					// reject the connection
 					incoming.close();
 				}
 			} catch (SocketException e) {
-				// server shutdown while thread blocked waiting for connection
-				break;
+				if(serverSocket.isClosed())
+					break;
+				else
+					ErrorLogger.log(e.getMessage());
 			} catch (IOException e) {
 				ErrorLogger.log(e.getMessage());
 
@@ -117,8 +127,17 @@ public class ServerNetworkManager implements NetworkManager {
 		}
 	}
 
-	public List<NetworkConnection> getClientConnections() {
-		return clientObjects;
+	/**
+	 * Returns the next client from the client connect queue.
+	 * @return
+	 */
+	public NetworkConnection pollNextClient() {
+		try {
+			return clientObjects.take();
+		} catch (InterruptedException e) {
+			// clients queue is closed
+			return null;
+		}
 	}
 
 }

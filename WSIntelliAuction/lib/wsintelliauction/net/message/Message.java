@@ -27,27 +27,13 @@ import java.io.Serializable;
 public abstract class Message implements Serializable {
 
 	/**
-	 *	Serial version ID for object serialisation. 
+	 * 
 	 */
-	private static final long serialVersionUID = 1963804590196708103L;
-
-	/**
-	 *	Enum defining message types used for network communication. 
-	 */
-	enum MessageTypes {
-		INFO, PLACEBID, QUERY, SOLUTION_OFFER, SOLUTION_ACCEPT, LEASE, CONFIRM_LEASE, GENERIC;
-	}
+	private static final long serialVersionUID = 557081199679689238L;
 	
-	/**
-	 *	For defining message time (enumeration selection)
-	 */
-	public MessageTypes messageType;
-	
-	/**
-	 *	Construct this message with generic type.	
-	 */
-	public Message() {
-		messageType = MessageTypes.GENERIC;
+	@Override
+	public String toString() {
+		return "[Default Message]";
 	}
 	
 	

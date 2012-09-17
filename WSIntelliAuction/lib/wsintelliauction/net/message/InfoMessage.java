@@ -3,16 +3,18 @@ package wsintelliauction.net.message;
 public class InfoMessage extends Message{
 
 
-	private static final long serialVersionUID = 1988739302576718985L;
-
-	private String data;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2123976424211453936L;
+	private final String data;
 	
 	public InfoMessage(String data) {
 		this.data = data;
-		messageType = MessageTypes.INFO;
 	}
 	
-	public String getData() {
+	@Override
+	public String toString() {
 		return data;
 	}
 	

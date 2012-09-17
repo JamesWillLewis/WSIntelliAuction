@@ -38,11 +38,11 @@ public class NetworkConnection {
 	/**
 	 * Size of the dispatch queue.
 	 */
-	private final int DISPATCH_Q_SIZE = 128;
+	private final int DISPATCH_Q_SIZE = 512;
 	/**
 	 * Size of the receive queue.
 	 */
-	private final int RECEIVE_Q_SIZE = 128;
+	private final int RECEIVE_Q_SIZE = 512;
 
 	/**
 	 * Synchronized blocking queue which holds messages waiting to be
@@ -62,6 +62,7 @@ public class NetworkConnection {
 	 */
 	private MessageSocket socket;
 
+	
 	/**
 	 * Establishes a network connection given a recipient. A new socket is
 	 * opened for the given recipient, and a connection is established.
@@ -78,11 +79,12 @@ public class NetworkConnection {
 		connectionActive = true;
 		dispatchActive = new AtomicBoolean(false);
 		receiveActive = new AtomicBoolean(false);
+		beginIOParsing();
 	}
 
 	/**
-	 * Establishes a network connection given a socket. A new message socket is created
-	 * for the given recipient, and a connection is established.
+	 * Establishes a network connection given a socket. A new message socket is
+	 * created for the given recipient, and a connection is established.
 	 * 
 	 * @param recipient
 	 *            Defines the address of the socket.
@@ -96,19 +98,20 @@ public class NetworkConnection {
 		connectionActive = true;
 		dispatchActive = new AtomicBoolean(false);
 		receiveActive = new AtomicBoolean(false);
+		beginIOParsing();
 	}
 
 	/**
 	 * Begins the dispatch and receive loops, each in a worker thread allocated
 	 * from the global thread pool.
 	 */
-	public void beginIOParsing() {
-		if (connectionActive) {
+	private void beginIOParsing() {
+		if (connectionActive && !dispatchActive.get() && !receiveActive.get()) {
 			Runnable dispatchThread = new Runnable() {
 
 				@Override
 				public void run() {
-					dispatchActive = new AtomicBoolean(true);
+					dispatchActive.set(true);
 					dispatchCycle();
 				}
 			};
@@ -116,7 +119,7 @@ public class NetworkConnection {
 
 				@Override
 				public void run() {
-					receiveActive = new AtomicBoolean(true);
+					receiveActive.set(true);
 					receiveCycle();
 				}
 			};
@@ -140,7 +143,7 @@ public class NetworkConnection {
 		try {
 			m = receiveCache.take();
 		} catch (InterruptedException e) {
-			ErrorLogger.log(e.getMessage());
+			//receive cache closed
 		}
 		return m;
 	}
@@ -158,13 +161,13 @@ public class NetworkConnection {
 			dispatchCache.put(m);
 			success = true;
 		} catch (InterruptedException e) {
-			ErrorLogger.log(e.getMessage());
+			//dispatch cache closed
 		}
 		return success;
 	}
 
 	/**
-	 * Poll the dispatch cache (waiting if neccesary for message to become
+	 * Poll the dispatch cache (waiting if necessary for message to become
 	 * available) then and send message via message socket.
 	 */
 	private void dispatchCycle() {
@@ -173,14 +176,14 @@ public class NetworkConnection {
 				Message sendNext = dispatchCache.take();
 				socket.writeMessage(sendNext);
 			} catch (InterruptedException e) {
-				ErrorLogger.log(e.getMessage());
+				//dispatch cache closed
 			}
 		}
 	}
 
 	/**
-	 * Receive a message via the message socket (waiting if neccesary for a message to arrive)
-	 * and then place the message in the receive cache.
+	 * Receive a message via the message socket (waiting if necessary for a
+	 * message to arrive) and then place the message in the receive cache.
 	 */
 	private void receiveCycle() {
 		while (receiveActive.get()) {
@@ -188,17 +191,19 @@ public class NetworkConnection {
 				Message m = socket.readMessage();
 				receiveCache.put(m);
 			} catch (InterruptedException e) {
-				ErrorLogger.log(e.getMessage());
+				//receive cache closed
 			}
 		}
 	}
-	
+
 	/**
 	 * Close this connection.
 	 */
-	public void closeConnection(){
+	public void closeConnection() {
 		this.receiveActive.set(false);
 		this.dispatchActive.set(false);
+		dispatchCache.notify();
+		receiveCache.notify();
 		this.socket.closeSocket();
 		this.connectionActive = false;
 	}
