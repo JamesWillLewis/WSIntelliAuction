@@ -81,7 +81,7 @@ public class NetworkConnection {
 	}
 
 	/**
-	 * Establishes a network connection given a socket. A new socket is opened
+	 * Establishes a network connection given a socket. A new message socket is created
 	 * for the given recipient, and a connection is established.
 	 * 
 	 * @param recipient
