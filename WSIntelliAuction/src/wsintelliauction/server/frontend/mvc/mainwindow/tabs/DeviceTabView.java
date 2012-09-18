@@ -16,10 +16,10 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
-public class DeviceTab extends JPanel {
+public class DeviceTabView extends JPanel {
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 
-	public DeviceTab() {
+	public DeviceTabView() {
 		setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Cognitive Device Manager", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new BorderLayout(0, 0));
 		

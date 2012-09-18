@@ -23,7 +23,7 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JSlider;
 import javax.swing.JSeparator;
 
-public class ServerTab extends JPanel {
+public class ServerTabView extends JPanel {
 	private JTable table;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -32,7 +32,7 @@ public class ServerTab extends JPanel {
 	private JTextField textField_4;
 	private JTextField textField_5;
 
-	public ServerTab() {
+	public ServerTabView() {
 		init();
 	}
 

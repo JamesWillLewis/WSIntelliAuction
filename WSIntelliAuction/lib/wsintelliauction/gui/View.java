@@ -67,7 +67,7 @@ public abstract class View<M extends Model> extends JFrame {
 			ErrorLogger.log(e.getMessage());
 		} catch (UnsupportedLookAndFeelException e) {
 			ErrorLogger.log(e.getMessage());
-		}
+		} 
 	}
 
 	/**

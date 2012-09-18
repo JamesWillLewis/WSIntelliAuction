@@ -11,10 +11,10 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 
-public class LeasesTab extends JPanel {
+public class LeasesTabView extends JPanel {
 	private JTable table;
 
-	public LeasesTab() {
+	public LeasesTabView() {
 		init();
 	}
 	

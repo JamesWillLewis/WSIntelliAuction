@@ -12,10 +12,10 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 
-public class ClientsTab extends JPanel {
+public class ClientsTabView extends JPanel {
 	private JTable table;
 
-	public ClientsTab() {
+	public ClientsTabView() {
 		init();
 	}
 

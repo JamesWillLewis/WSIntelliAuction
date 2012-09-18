@@ -14,11 +14,11 @@ import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
-public class ChannelsTab extends JPanel {
+public class ChannelsTabView extends JPanel {
 	private JTable table;
 	private final ButtonGroup filterButtonGroup = new ButtonGroup();
 
-	public ChannelsTab() {
+	public ChannelsTabView() {
 		init();
 	}
 	

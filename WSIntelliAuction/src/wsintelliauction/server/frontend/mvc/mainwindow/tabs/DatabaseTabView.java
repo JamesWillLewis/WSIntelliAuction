@@ -3,9 +3,9 @@ package wsintelliauction.server.frontend.mvc.mainwindow.tabs;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-public class DatabaseTab extends JPanel {
+public class DatabaseTabView extends JPanel {
 
-	public DatabaseTab() {
+	public DatabaseTabView() {
 		setBorder(new TitledBorder(null, "Database Management",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 	}

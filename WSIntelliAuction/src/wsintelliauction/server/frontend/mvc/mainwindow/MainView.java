@@ -11,14 +11,15 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import wsintelliauction.gui.View;
-import wsintelliauction.server.frontend.mvc.mainwindow.tabs.AuctionTab;
-import wsintelliauction.server.frontend.mvc.mainwindow.tabs.ChannelsTab;
-import wsintelliauction.server.frontend.mvc.mainwindow.tabs.ClientsTab;
-import wsintelliauction.server.frontend.mvc.mainwindow.tabs.ConsoleTab;
-import wsintelliauction.server.frontend.mvc.mainwindow.tabs.DatabaseTab;
-import wsintelliauction.server.frontend.mvc.mainwindow.tabs.DeviceTab;
-import wsintelliauction.server.frontend.mvc.mainwindow.tabs.LeasesTab;
-import wsintelliauction.server.frontend.mvc.mainwindow.tabs.ServerTab;
+import wsintelliauction.gui.tabs.ConsoleTab;
+import wsintelliauction.server.frontend.mvc.mainwindow.tabs.AuctionTabView;
+import wsintelliauction.server.frontend.mvc.mainwindow.tabs.ChannelsTabView;
+import wsintelliauction.server.frontend.mvc.mainwindow.tabs.ClientsTabView;
+import wsintelliauction.server.frontend.mvc.mainwindow.tabs.DatabaseTabView;
+import wsintelliauction.server.frontend.mvc.mainwindow.tabs.DeviceTabView;
+import wsintelliauction.server.frontend.mvc.mainwindow.tabs.LeasesTabView;
+import wsintelliauction.server.frontend.mvc.mainwindow.tabs.ServerTabView;
+import java.awt.BorderLayout;
 
 public class MainView extends View<MainModel> {
 
@@ -26,13 +27,13 @@ public class MainView extends View<MainModel> {
 	 * Window components
 	 */
 	private JPanel mainContentPane;
-	private ChannelsTab channelsTab;
-	private ClientsTab clientsTab;
-	private LeasesTab leasesTab;
-	private AuctionTab auctionTab;
-	private ServerTab serverTab;
-	private DatabaseTab databaseTab;
-	private DeviceTab deviceTab;
+	private ChannelsTabView channelsTab;
+	private ClientsTabView clientsTab;
+	private LeasesTabView leasesTab;
+	private AuctionTabView auctionTab;
+	private ServerTabView serverTab;
+	private DatabaseTabView databaseTab;
+	private DeviceTabView deviceTab;
 	private ConsoleTab consoleTab;
 
 	private JMenuBar menuBar;
@@ -67,39 +68,30 @@ public class MainView extends View<MainModel> {
 
 		mainContentPane = new JPanel();
 		setContentPane(mainContentPane);
-		GridBagLayout gbl_mainContentPane = new GridBagLayout();
-		gbl_mainContentPane.columnWeights = new double[] { 1.0 };
-		gbl_mainContentPane.rowWeights = new double[] { 1.0 };
-		mainContentPane.setLayout(gbl_mainContentPane);
+		mainContentPane.setLayout(new BorderLayout(0, 0));
 
 		JTabbedPane tabs = new JTabbedPane(JTabbedPane.TOP);
-		GridBagConstraints gbc_tabs = new GridBagConstraints();
-		gbc_tabs.insets = new Insets(0, 0, 5, 0);
-		gbc_tabs.fill = GridBagConstraints.BOTH;
-		gbc_tabs.anchor = GridBagConstraints.NORTHWEST;
-		gbc_tabs.gridx = 0;
-		gbc_tabs.gridy = 0;
-		mainContentPane.add(tabs, gbc_tabs);
+		mainContentPane.add(tabs);
 
-		channelsTab = new ChannelsTab();
+		channelsTab = new ChannelsTabView();
 		tabs.addTab(channelsTab.getName(), null, channelsTab, "View and manage radio-band frequency channels");
 
-		clientsTab = new ClientsTab();
+		clientsTab = new ClientsTabView();
 		tabs.addTab(clientsTab.getName(), null, clientsTab, "View and manage all connected clients");
 
-		leasesTab = new LeasesTab();
+		leasesTab = new LeasesTabView();
 		tabs.addTab(leasesTab.getName(), null, leasesTab, "View and manage all leases");
 
-		auctionTab = new AuctionTab();
+		auctionTab = new AuctionTabView();
 		tabs.addTab(auctionTab.getName(), null, auctionTab, "View and manage bids");
 
-		serverTab = new ServerTab();
+		serverTab = new ServerTabView();
 		tabs.addTab(serverTab.getName(), null, serverTab, "View and manage server settings");
 
-		databaseTab = new DatabaseTab();
+		databaseTab = new DatabaseTabView();
 		tabs.addTab(databaseTab.getName(), null, databaseTab, "Manage and query database");
 
-		deviceTab = new DeviceTab();
+		deviceTab = new DeviceTabView();
 		tabs.addTab(deviceTab.getName(), null, deviceTab, "View and manage devices");
 
 		consoleTab = new ConsoleTab();
@@ -107,19 +99,19 @@ public class MainView extends View<MainModel> {
 
 	}
 
-	public ChannelsTab getChannelsTab() {
+	public ChannelsTabView getChannelsTab() {
 		return channelsTab;
 	}
 
-	public ClientsTab getClientsTab() {
+	public ClientsTabView getClientsTab() {
 		return clientsTab;
 	}
 
-	public LeasesTab getLeasesTab() {
+	public LeasesTabView getLeasesTab() {
 		return leasesTab;
 	}
 
-	public AuctionTab getAuctionTab() {
+	public AuctionTabView getAuctionTab() {
 		return auctionTab;
 	}
 
@@ -127,11 +119,11 @@ public class MainView extends View<MainModel> {
 		return serverTab;
 	}
 
-	public DatabaseTab getDatabaseTab() {
+	public DatabaseTabView getDatabaseTab() {
 		return databaseTab;
 	}
 
-	public DeviceTab getDeviceTab() {
+	public DeviceTabView getDeviceTab() {
 		return deviceTab;
 	}
 

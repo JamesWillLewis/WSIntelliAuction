@@ -1,4 +1,4 @@
-package wsintelliauction.server.frontend.mvc.mainwindow.tabs;
+package wsintelliauction.gui.tabs;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

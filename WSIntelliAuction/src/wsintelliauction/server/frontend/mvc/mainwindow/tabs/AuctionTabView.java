@@ -12,10 +12,10 @@ import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
 
-public class AuctionTab extends JPanel {
+public class AuctionTabView extends JPanel {
 	private JTable table;
 
-	public AuctionTab() {
+	public AuctionTabView() {
 		init();
 	}
 
