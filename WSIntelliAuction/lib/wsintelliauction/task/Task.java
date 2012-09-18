@@ -1,6 +1,6 @@
 package wsintelliauction.task;
 
-import wsintelliauction.misc.EventLogger;
+import wsintelliauction.util.EventLogger;
 
 /**
  * Abstract super-class for all tasks. A task represents 

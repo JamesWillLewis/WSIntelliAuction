@@ -1,19 +1,24 @@
 package wsintelliauction.net;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.Socket;
+import java.net.SocketException;
+import java.util.concurrent.locks.ReentrantLock;
 
-import wsintelliauction.misc.ErrorLogger;
 import wsintelliauction.net.message.Message;
+import wsintelliauction.util.ErrorLogger;
 
 /**
- * Wraps a standard network socket, adding functionality for
- * handling transmission and reception of messages. 
+ * Wraps a standard network socket, adding functionality for handling
+ * transmission and reception of messages.
  * 
  * @author James Lewis
- *
+ * 
  */
 public class MessageSocket {
 
@@ -24,25 +29,32 @@ public class MessageSocket {
 	/**
 	 * Object stream to which message objects are written.
 	 */
-	private ObjectOutputStream outputStream;
+	private OutputStream outputStream;
 	/**
 	 * Object stream from which message object are read.
 	 */
-	private ObjectInputStream inputStream;
+	private InputStream inputStream;
+
+	private ReentrantLock ioSyncLock;
 
 	/**
 	 * Construct the message socket, wrapping the given socket.
-	 * @param socket Destination.
+	 * 
+	 * @param socket
+	 *            Destination.
 	 */
 	public MessageSocket(Socket socket) {
 		this.socket = socket;
+		ioSyncLock = new ReentrantLock(true);
 		initStreams();
 	}
 
 	/**
-	 * Construct a message socket, given a recipient. A socket for the
-	 * recipient is instantiated.
-	 * @param recipient Socket destination.
+	 * Construct a message socket, given a recipient. A socket for the recipient
+	 * is instantiated.
+	 * 
+	 * @param recipient
+	 *            Socket destination.
 	 * @throws IOException
 	 */
 	public MessageSocket(Recipient recipient) throws IOException {
@@ -54,8 +66,8 @@ public class MessageSocket {
 	 */
 	private void initStreams() {
 		try {
-			outputStream = new ObjectOutputStream(socket.getOutputStream());
-			inputStream = new ObjectInputStream(socket.getInputStream());
+			outputStream = socket.getOutputStream();
+			inputStream = socket.getInputStream();
 		} catch (IOException e) {
 			ErrorLogger.log("Unable to open object IO socket streams.");
 		}
@@ -69,15 +81,14 @@ public class MessageSocket {
 			inputStream.close();
 			outputStream.close();
 		} catch (IOException e) {
-			ErrorLogger
-					.log("Error while closing object IO socket streams.");
+			ErrorLogger.log("Error while closing object IO socket streams.");
 		}
 	}
-	
+
 	/**
 	 * Close the socket.
 	 */
-	public void closeSocket(){
+	public void closeSocket() {
 		try {
 			socket.close();
 		} catch (IOException e) {
@@ -87,14 +98,26 @@ public class MessageSocket {
 
 	/**
 	 * Write the message to the socket's output.
-	 * @param m Message to write.
+	 * 
+	 * @param m
+	 *            Message to write.
 	 * @return True if successful, false if write failed.
 	 */
 	public boolean writeMessage(Message m) {
 		try {
-			outputStream.writeObject(m);
+			ByteArrayOutputStream packet = new ByteArrayOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(packet);
+			oos.writeObject(m);
+
+			outputStream.write(packet.toByteArray());
 			outputStream.flush();
+
 			return true;
+		} catch (SocketException e) {
+			if (!socket.isClosed())
+				ErrorLogger.log(e.getMessage());
+
+			return false;
 		} catch (IOException e) {
 			ErrorLogger
 					.log("Error writing message to socket object output stream.");
@@ -103,21 +126,29 @@ public class MessageSocket {
 	}
 
 	/**
-	 * Read a message from the socket's input.
-	 * Will block if no messages immediatly in stream.
+	 * Read a message from the socket's input. Will block if no messages
+	 * immediatly in stream.
+	 * 
 	 * @return Next read message in stream, or null if failed.
 	 */
 	public Message readMessage() {
 		Message m = null;
 		try {
-			m = (Message) inputStream.readObject();
+			ObjectInputStream objectInputStream = new ObjectInputStream(
+					inputStream);
+			m = (Message) objectInputStream.readObject();
+
+		} catch (SocketException e) {
+
+			if (!socket.isClosed())
+				ErrorLogger.log(e.getMessage());
 		} catch (IOException e) {
-			ErrorLogger
-					.log("Error reading message from socket object input stream.");
+			ErrorLogger.log(e.getMessage());
 		} catch (ClassNotFoundException e) {
 			ErrorLogger
 					.log("Class type of object message read from object input stream invalid.");
 		}
+
 		return m;
 	}
 

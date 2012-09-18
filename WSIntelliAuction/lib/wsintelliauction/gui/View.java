@@ -7,8 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import wsintelliauction.misc.Configuration;
-import wsintelliauction.misc.ErrorLogger;
+import wsintelliauction.util.Configuration;
+import wsintelliauction.util.ErrorLogger;
 
 /**
  * A view initializes and organizes the actual visible components of a window.
@@ -67,7 +67,7 @@ public abstract class View<M extends Model> extends JFrame {
 			ErrorLogger.log(e.getMessage());
 		} catch (UnsupportedLookAndFeelException e) {
 			ErrorLogger.log(e.getMessage());
-		}
+		} 
 	}
 
 	/**

@@ -2,9 +2,9 @@ package wsintelliauction.gui;
 
 import java.util.ArrayList;
 
-import wsintelliauction.misc.ErrorLogger;
-import wsintelliauction.misc.EventLogger;
 import wsintelliauction.task.TaskManager;
+import wsintelliauction.util.ErrorLogger;
+import wsintelliauction.util.EventLogger;
 
 /**
  * 
@@ -22,7 +22,7 @@ public abstract class WindowManager {
 	/**
 	 * List of active windows.
 	 */
-	protected ArrayList<MVC<?, ?, ?>> windows;
+	protected ArrayList<Module<?, ?, ?>> windows;
 
 	/**
 	 * Reference to task backlog (for parsing control to windows)
@@ -49,7 +49,7 @@ public abstract class WindowManager {
 	 * @param w
 	 *            New window to launch.
 	 */
-	protected void appendAndLaunchWindow(MVC<?, ?, ?> w) {
+	protected void appendAndLaunchWindow(Module<?, ?, ?> w) {
 		if (w != null) {
 			// activeWindows.add(w);
 			w.launchMVC();
@@ -66,7 +66,7 @@ public abstract class WindowManager {
 	 * @param w
 	 *            Window to close.
 	 */
-	protected void closeAndRemoveWindow(MVC<?, ?, ?> w) {
+	protected void closeAndRemoveWindow(Module<?, ?, ?> w) {
 		w.closeMVC();
 		if (windows.contains(w))
 			windows.remove(w);

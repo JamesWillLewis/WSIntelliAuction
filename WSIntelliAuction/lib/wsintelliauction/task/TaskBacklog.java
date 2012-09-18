@@ -3,7 +3,7 @@ package wsintelliauction.task;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-import wsintelliauction.misc.ErrorLogger;
+import wsintelliauction.util.ErrorLogger;
 
 /**
  * Wraps a synchronised blocking queue which holds tasks.

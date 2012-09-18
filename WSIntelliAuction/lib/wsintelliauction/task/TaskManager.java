@@ -2,9 +2,9 @@ package wsintelliauction.task;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import wsintelliauction.misc.ErrorLogger;
-import wsintelliauction.misc.EventLogger;
-import wsintelliauction.misc.ThreadManager;
+import wsintelliauction.util.ErrorLogger;
+import wsintelliauction.util.EventLogger;
+import wsintelliauction.util.ThreadManager;
 
 /**
  * General task manager for all application task managers. Used in conjunction

@@ -1,5 +1,7 @@
 package wsintelliauction.gui;
 
+import wsintelliauction.gui.Model;
+
 public class TestModel extends Model {
 	
 	private int slider1Value;

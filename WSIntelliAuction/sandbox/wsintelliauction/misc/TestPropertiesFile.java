@@ -1,5 +1,7 @@
 package wsintelliauction.misc;
 
+import wsintelliauction.util.Configuration;
+
 public class TestPropertiesFile {
 
 	/**
