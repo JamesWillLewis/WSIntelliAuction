@@ -5,154 +5,173 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.LinkedList;
-import java.util.Queue;
 
-
+import wsintelliauction.misc.EventLogger;
 
 public class DatabaseManager{
-	
-	
+
 	/**
 	 * Local Variables for our database
 	 */
-	private Statement Statement = null;
-	private Connection Connection = null;
+	private Statement statement = null;
+	private Connection connection = null;
+	
 	private final String URL = "jdbc:mysql://localhost:3306/";
 	private final String JDBCDriverClass = "com.mysql.jdbc.Driver";
-	private String DBName = "wsintelliauction";
-	private String UserName = "root"; 
-	private String Password = "s1lentk1ll";
 	
-	public DatabaseManager(String DBName, String UserName, String Password)
+	private String DBName, Username, Password;
+	/**
+	 * Creates a new Database Manager with the following properties.
+	 * Note that the DBName is not specified, this is used to connect 
+	 * to the server only, when connect() is called
+	 * 
+	 * @param URL
+	 * @param Username
+	 * @param Password
+	 */
+	public DatabaseManager(String URL, String Username, String Password)
 	{
-		this.DBName = DBName;
-		this.UserName = UserName;
+		this.DBName = null;
+		this.Username = Username;
 		this.Password = Password;
-	
-		
-		startConnection();
-
-		Queue<String[]> Temp = getResultSet("SELECT * FROM employee11");
-		
-		for(String[] t:Temp){
-			System.out.println();
-			for(String i:t)
-				System.out.print(i+"\t");
-		}
-		
-		stopConnection();
 	}
 	
+	/**
+	 * Creates a new Database Manager with the following properties.
+	 * Note that the DBName is specified, this is used to connect 
+	 * to the server and database explicitly, when connect() is called
+	 * 
+	 * @param URL
+	 * @param Username
+	 * @param Password
+	 * @param DBName
+	 */
+	public DatabaseManager(String URL, String Username, String Password, String DBName)
+	{
+		this.DBName = DBName;
+		this.Username = Username;
+		this.Password = Password;
+	}
+	
+	/**
+	 * Opens the desired database.
+	 * @param DBName
+	 */
+	public void openDatabase(String DBName)
+	{
+		this.DBName = DBName;
+		
+		openDatabase();
+	}
+	
+	/**
+	 * Opens the database, provided the DBName was given as a command line parameter or
+	 * or the openDatabase(<DBName>) was called before.
+	 */
+	public void openDatabase()
+	{
+		if(DBName == null)
+			EventLogger.log("Error, you need to specify a DB first. Use openConnection(<Database Name>)");
+		
+		try 
+		{
+			connection = DriverManager.getConnection(URL+DBName,Username,Password);  //Connected to the DB
+		}
+		catch (SQLException e) 
+		{
+			EventLogger.log("Could not open the desired database, please check Username, password and access privaliges and try again." +
+							"\n\tError: "+e.getMessage()+" Error Code: "+e.getErrorCode());
+		}
+	}
+	
+	/**
+	 * Create a connection with the Database
+	 */
 	public void startConnection()
 	{
 		try
 		{
 			Class.forName(JDBCDriverClass).newInstance();
-			Connection = DriverManager.getConnection(URL+DBName,UserName,Password); //Connected to the DB
-			System.out.println("Database Connected");
-		} 
-		catch (Exception e) 
-		{
-			System.out.println("Error Starting Connection");
+			
+			//Try loading the JDBC Drivers and connect to the specified DB, if errors Log them.
+			if(DBName == null)
+			{
+				connection = DriverManager.getConnection(URL,Username,Password);
+				EventLogger.log("Database Server Connected");
+			}
+			else
+			{
+				connection = DriverManager.getConnection(URL+DBName,Username,Password);
+				EventLogger.log("Database Server Connected. Connected to DB: "+DBName);
+			} 
 		}
-		
+		catch (SQLException e) 
+		{
+				EventLogger.log("There was error establishing a connection with the Database: "+DBName+
+								"\n\tPlease ensure that the Name and URL are correct and try again.");
+		}
+		catch(Exception e)
+		{
+			EventLogger.log("There was error loading the drivers, please ensure that they exist. Error: "+e.getMessage());
+		}
 	}
-	
+		
+	/**
+	 * Stop a Database Connection
+	 */
 	public void stopConnection()
 	{
 		try 
 		{
-			Connection.close();  //Disconnected
+			connection.close();  //Disconnected
 		} 
 		catch (SQLException e) 
 		{
-			e.printStackTrace();
+			EventLogger.log("There was an error closing the connection to the DB! Error: "+e.getMessage());
 		}
-	}
-	
-	public static void main(String[] args) 
-	{
-		new DatabaseManager("wsintelliauction","root","s1lentk1ll");
-		
-	}
-	
-	public void updateQuery(String Query)
-	{
-		
-		
-		try 
-		{
-			Statement = Connection.createStatement();
-			Statement.executeUpdate(Query);
-		}
-		catch (SQLException e) 
-		{
-			System.out.println("Error Executeing Update Query.");
-			e.printStackTrace();
-		}
-		
 	}
 	
 	/**
-	 * This method returns the entire result set of the query below.
-	 * @param Query
-	 * @param AmtCols
-	 * @return
+	 * Creates an update Query where no output is returned.
+	 * @param query
 	 */
-	public Queue<String[]> getResultSet(String Query)
+	public void updateQuery(String query)
 	{
-		//Create a new queue of String arrays
-		Queue<String[]> Queue = new LinkedList<String[]>(); 
-		
-		int AmtCols = 0;
+		try 
+		{
+			statement = connection.createStatement();	//Create a new statement
+			statement.executeUpdate(query);				//Execute it.
+		}
+		catch (SQLException e) 
+		{
+			EventLogger.log("Error Executeing Update Query: "+e.getMessage()+" \n\tSQL Error Code: "+e.getErrorCode());
+		}
+	}
+	
+	/**
+	 * This returns a ResultMatrix object which has stored the results in an access object.
+	 * @param query
+	 * @return ResultMatrix, the matrix holding the resulting query table
+	 */
+	public ResultMatrix query(String query)
+	{
+		ResultMatrix resultMatrix = null;  
 		
 		try
 		{	
-			
-			/*
-			 * A Quick routine to get the amount of columns in the table.
-			 */
-			Statement = Connection.createStatement();
-			ResultSet ColCountResult = Statement.executeQuery("SELECT COUNT(*) FROM employee11");
-			ColCountResult.next();
-			AmtCols = ColCountResult.getInt("COUNT(*)");
-			System.out.println(AmtCols);		
-			
 			//Create a new statement
-			Statement = Connection.createStatement();
+			statement = connection.createStatement();
 		    // Create a result set containing all data from the query
-		    ResultSet Results = Statement.executeQuery(Query);
-		    
-		    // Fetch each row from the result set
-		    while (Results.next()) 
-		    {
-		    	String Temp[] = new String[AmtCols];
-		        
-		    	//Iterate through the columns expected
-		    	for(int i = 1 ; i < AmtCols ; i++)
-		        	Temp[i-1] = Results.getString(i);
-		        
-		        //Add it to the queue
-		        Queue.add(Temp);
-		    							
-		        // Get the data from the row using the column name
-		        // String col_string = Results.getString("col_string");
-		         
-		    }
-		    
+		    ResultSet Results = statement.executeQuery(query);
+		    //Create a new result Matrix, with standard iterator access.
+		    resultMatrix = new ResultMatrix(Results);
+		   
 		} 
-		catch(ArrayIndexOutOfBoundsException e)
-		{
-			System.out.println("There was an indexing error, maybe you specified too many columns? please check");
-		}
 		catch (SQLException e)
 		{
-			System.out.println("Poes");
+			EventLogger.log("There was an error executing the Query. Error: "+e.getMessage()+"\n\tSQL Error: "+e.getErrorCode());
 		}
 		
-		return Queue;
-		
+		return resultMatrix;
 	}
-	
 }
