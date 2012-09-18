@@ -6,8 +6,8 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.SplashScreen;
 
-import wsintelliauction.misc.EventLogger;
-import wsintelliauction.misc.ThreadManager;
+import wsintelliauction.util.EventLogger;
+import wsintelliauction.util.ThreadManager;
 
 /** 
  * This class is intended to be a super class to a main class.

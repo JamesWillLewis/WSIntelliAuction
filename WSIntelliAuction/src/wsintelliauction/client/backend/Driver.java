@@ -1,10 +1,10 @@
 package wsintelliauction.client.backend;
 
-import wsintelliauction.client.frontend.ClientNetworkManager;
+import wsintelliauction.client.backend.net.ClientNetworkManager;
 import wsintelliauction.client.frontend.ClientWindowManager;
-import wsintelliauction.misc.AbstractDriver;
-import wsintelliauction.misc.ThreadManager;
 import wsintelliauction.task.TaskManager;
+import wsintelliauction.util.AbstractDriver;
+import wsintelliauction.util.ThreadManager;
 
 public class Driver extends AbstractDriver {
 

@@ -1,8 +1,9 @@
 package wsintelliauction.net;
 
-import wsintelliauction.misc.ThreadManager;
+import wsintelliauction.net.NetworkConnection;
 import wsintelliauction.net.message.InfoMessage;
-import wsintelliauction.server.frontend.ServerNetworkManager;
+import wsintelliauction.server.backend.net.ServerNetworkManager;
+import wsintelliauction.util.ThreadManager;
 
 /**
  * Code snippet for creating a server which can send and receive objects over a

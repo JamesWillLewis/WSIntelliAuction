@@ -2,7 +2,7 @@ package wsintelliauction.task;
 
 import org.junit.Test;
 
-import wsintelliauction.misc.EventLogger;
+import wsintelliauction.util.EventLogger;
 
 public class TaskSchedulerTest {
 

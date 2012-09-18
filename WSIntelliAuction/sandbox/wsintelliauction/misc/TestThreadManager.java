@@ -2,6 +2,8 @@ package wsintelliauction.misc;
 
 import java.util.concurrent.Callable;
 
+import wsintelliauction.util.ThreadManager;
+
 public class TestThreadManager {
 
 	public static void main(String[] args) {

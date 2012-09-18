@@ -10,8 +10,8 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.concurrent.locks.ReentrantLock;
 
-import wsintelliauction.misc.ErrorLogger;
 import wsintelliauction.net.message.Message;
+import wsintelliauction.util.ErrorLogger;
 
 /**
  * Wraps a standard network socket, adding functionality for handling

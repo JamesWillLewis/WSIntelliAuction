@@ -6,9 +6,9 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import wsintelliauction.misc.ErrorLogger;
-import wsintelliauction.misc.ThreadManager;
 import wsintelliauction.net.message.Message;
+import wsintelliauction.util.ErrorLogger;
+import wsintelliauction.util.ThreadManager;
 
 /**
  * Represent a single network connection, linking one source (the application)

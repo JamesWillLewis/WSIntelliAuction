@@ -4,10 +4,11 @@ import java.net.UnknownHostException;
 
 import javax.net.ssl.SSLSocket;
 
-import wsintelliauction.client.frontend.ClientNetworkManager;
-import wsintelliauction.misc.Configuration;
-import wsintelliauction.misc.ThreadManager;
+import wsintelliauction.client.backend.net.ClientNetworkManager;
+import wsintelliauction.net.Recipient;
 import wsintelliauction.net.message.InfoMessage;
+import wsintelliauction.util.Configuration;
+import wsintelliauction.util.ThreadManager;
 
 /**
  * Code snippet for creating a client which can send and receive objects over a

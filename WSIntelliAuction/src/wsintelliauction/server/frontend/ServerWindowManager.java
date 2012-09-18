@@ -1,7 +1,7 @@
 package wsintelliauction.server.frontend;
 
 import wsintelliauction.gui.WindowManager;
-import wsintelliauction.server.frontend.mvc.mainwindow.MainMVC;
+import wsintelliauction.server.frontend.modules.MainWindowModule;
 import wsintelliauction.task.TaskManager;
 
 /**
@@ -26,7 +26,7 @@ public class ServerWindowManager extends WindowManager {
 	 * Launch a new main window instance.
 	 */
 	public void launchMainWindow(){
-		appendAndLaunchWindow(new MainMVC(this.taskmanager));
+		appendAndLaunchWindow(new MainWindowModule(this.taskmanager));
 	}
 
 }

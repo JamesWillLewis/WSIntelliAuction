@@ -8,6 +8,7 @@ import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import wsintelliauction.gui.Controller;
 import wsintelliauction.task.TaskManager;
 
 public class TestController extends Controller<TestModel, TestView> {

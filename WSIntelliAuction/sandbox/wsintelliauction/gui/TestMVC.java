@@ -1,12 +1,14 @@
 package wsintelliauction.gui;
 
+import wsintelliauction.gui.Module;
+
 /**
  * A simple demonstration of exactly how the MVC process works.
  * 
  * @author James
  *
  */
-public class TestMVC extends MVC<TestModel, TestView, TestController> {
+public class TestMVC extends Module<TestModel, TestView, TestController> {
 
 	
 	public TestMVC() {

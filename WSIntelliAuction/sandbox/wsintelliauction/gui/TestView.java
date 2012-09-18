@@ -11,6 +11,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JToggleButton;
 
+import wsintelliauction.gui.View;
+
 public class TestView extends View<TestModel> {
 
 	private JPanel contentPane;
