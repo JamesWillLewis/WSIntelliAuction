@@ -6,12 +6,37 @@ public abstract class Module<M extends Model, V extends View<?>, C extends Contr
 	protected V view;
 	protected C controller;
 
-	public void launchMVC() {
-		view.launch();
+	/**
+	 * Display the module's view.
+	 */
+	public abstract void display();
+
+	public M getModel() {
+		return model;
 	}
 
-	public void closeMVC() {
-		view.close();
+	public void setModel(M model) {
+		this.model = model;
 	}
 
+	public V getView() {
+		return view;
+	}
+
+	public void setView(V view) {
+		this.view = view;
+	}
+
+	public C getController() {
+		return controller;
+	}
+
+	public void setController(C controller) {
+		this.controller = controller;
+	}
+	
+	
+	
+	
+	
 }

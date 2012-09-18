@@ -1,22 +1,20 @@
 package wsintelliauction.client.frontend.views;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 import wsintelliauction.client.frontend.models.MainWindowModel;
 import wsintelliauction.gui.View;
-import wsintelliauction.gui.view.ConsoleTab;
-
-import java.awt.BorderLayout;
-import javax.swing.JTabbedPane;
 
 public class MainWindowView extends View<MainWindowModel> {
 
-	private NetworkTabView networkTab;
-	private AuctionTabView auctionTab;
-	private LeasesTabView leaseTab;
-	private ConsoleTab consoleTab;
-
-	private JPanel contentPane;
+	private JFrame frame;
+	private JTabbedPane tabs;
 
 	public MainWindowView(MainWindowModel model) {
 		super(model);
@@ -26,38 +24,28 @@ public class MainWindowView extends View<MainWindowModel> {
 	 * @wbp.parser.entryPoint
 	 */
 	protected void initialize() {
-		contentPane = new JPanel();
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
-
-		JTabbedPane tabs = new JTabbedPane(JTabbedPane.TOP);
-		contentPane.add(tabs, BorderLayout.CENTER);
-
-		auctionTab = new AuctionTabView();
-		tabs.addTab(auctionTab.getName(), auctionTab);
-
-		networkTab = new NetworkTabView();
-		tabs.addTab(networkTab.getName(), networkTab);
-
-		leaseTab = new LeasesTabView();
-		tabs.addTab(leaseTab.getName(), leaseTab);
-
-		consoleTab = new ConsoleTab();
-		tabs.addTab(consoleTab.getName(), consoleTab);
+		frame = new JFrame("Client Application");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setContentPane(this);
+		setLayout(new BorderLayout(0, 0));
+		tabs = new JTabbedPane(JTabbedPane.TOP);
+		add(tabs, BorderLayout.CENTER);
+		frame.setPreferredSize(new Dimension(800, 600));
+		frame.pack();
+		frame.setLocationRelativeTo(null);
 	}
 	
-
-	public ConsoleTab getConsoleTab() {
-		return consoleTab;
+	public void addTab(JPanel tabPanel){
+		tabs.addTab(tabPanel.toString() , tabPanel);
 	}
-	public LeasesTabView getLeaseTab() {
-		return leaseTab;
-	}
-	public NetworkTabView getNetworkTab() {
-		return networkTab;
-	}
-	public AuctionTabView getAuctionTab() {
-		return auctionTab;
+	
+	public void show() {
+		EventQueue.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				frame.setVisible(true);
+			}
+		});
 	}
 
 }

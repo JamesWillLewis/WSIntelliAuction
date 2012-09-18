@@ -1,9 +1,6 @@
 package wsintelliauction.gui;
 
-import java.awt.Dimension;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -41,7 +38,7 @@ import wsintelliauction.util.ErrorLogger;
  * @author James Lewis
  * 
  */
-public abstract class View<M extends Model> extends JFrame {
+public abstract class View<M extends Model> extends JPanel{
 
 	/**
 	 * Serial version number.
@@ -78,12 +75,7 @@ public abstract class View<M extends Model> extends JFrame {
 	 */
 	public View(M model) {
 		this.model = model;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// initialize frame components
 		initialize();
-		setPreferredSize(new Dimension(800, 600));
-		pack();
-		setLocationRelativeTo(null);
 	}
 
 	/**
@@ -92,23 +84,5 @@ public abstract class View<M extends Model> extends JFrame {
 	 */
 	protected abstract void initialize();
 
-	/**
-	 * Launch this view in a new thread.
-	 */
-	public void launch() {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				setVisible(true);
-			}
-		});
-	}
-
-	/**
-	 * Set frame visibility to false.
-	 */
-	public void close() {
-		setVisible(false);
-	}
 
 }

@@ -1,5 +1,6 @@
 package wsintelliauction.server.frontend.views;
 
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -10,50 +11,51 @@ import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
 import wsintelliauction.gui.View;
-import wsintelliauction.server.frontend.models.ClientsTabModel;
+import wsintelliauction.server.frontend.models.ChannelTabModel;
 
-public class ClientsTabView extends View<ClientsTabModel> {
-	public ClientsTabView(ClientsTabModel model) {
+public class ChannelTabView extends View<ChannelTabModel> {
+
+	public ChannelTabView(ChannelTabModel model) {
 		super(model);
 		// TODO Auto-generated constructor stub
 	}
 
 	private JTable table;
+	private final ButtonGroup filterButtonGroup = new ButtonGroup();
 
 
 	@Override
 	protected void initialize() {
-		setBorder(new TitledBorder(null, "Client Management",
+		setBorder(new TitledBorder(null, "Channel Management",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new MigLayout("", "[grow]", "[][grow]"));
 
 		JLabel lblFilter = new JLabel("Filter:");
 		add(lblFilter, "flowx,cell 0 0");
 
-		JComboBox filterComboBox = new JComboBox();
-		filterComboBox.setModel(new DefaultComboBoxModel(new String[] { "All",
-				"Active", "Connected", "Has outstanding bid(s)",
-				"Holds lease(s)" }));
-		add(filterComboBox, "cell 0 0,alignx left");
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] { "All",
+				"Available", "Unavailable", "Leased" }));
+		add(comboBox, "cell 0 0,alignx left");
 
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1,grow");
 
 		table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] { { null, null,
-				null, null, null }, }, new String[] { "Secondary User ID",
-				"Bids Placed", "Leases Held", "Status", "Hostname" }));
-		table.getColumnModel().getColumn(0).setPreferredWidth(171);
-		table.getColumnModel().getColumn(1).setPreferredWidth(122);
-		table.getColumnModel().getColumn(2).setPreferredWidth(121);
-		table.getColumnModel().getColumn(3).setPreferredWidth(121);
-		table.getColumnModel().getColumn(4).setPreferredWidth(118);
+				null, null, null }, }, new String[] { "Channel ID",
+				"Frequency Band", "Power Limitation", "Primary User",
+				"Secondary User" }));
+		table.getColumnModel().getColumn(1).setPreferredWidth(138);
+		table.getColumnModel().getColumn(2).setPreferredWidth(177);
+		table.getColumnModel().getColumn(3).setPreferredWidth(137);
+		table.getColumnModel().getColumn(4).setPreferredWidth(139);
 		scrollPane.setViewportView(table);
 
 	}
 	
 	@Override
 	public String toString() {
-		return "Clients";
+		return "Channels";
 	}
 }

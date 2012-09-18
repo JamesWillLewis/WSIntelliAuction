@@ -7,16 +7,13 @@ import wsintelliauction.net.Recipient;
 
 public class MainWindowModel extends Model {
 
-	private ArrayList<Recipient> registeredServerList;
-
 	@Override
 	public void reset() {
-		registeredServerList = new ArrayList<Recipient>();
+		// TODO Auto-generated method stub
+		
 	}
 
-	public ArrayList<Recipient> getRegisteredServerList() {
-		return registeredServerList;
-	}
+
 	
 
 }

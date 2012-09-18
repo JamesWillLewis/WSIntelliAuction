@@ -51,7 +51,7 @@ public class ErrorLogger {
 	 *            Message to log.
 	 */
 	public static void log(String message) {
-		System.out.println("RUNTIME ERROR >> " + message.toUpperCase());
+		System.out.println("ERROR>>	" + message);
 		logOut.println(Calendar.getInstance().getTime().toString() + " : "
 				+ message);
 	}

@@ -80,7 +80,7 @@ public class Main extends Splash {
 	 */
 	public static void main(String[] args) {
 
-		new Main();
+		//new Main();
 
 		Driver driver = new Driver(args);
 		driver.exec();

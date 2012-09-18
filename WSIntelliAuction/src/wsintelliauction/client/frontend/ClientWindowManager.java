@@ -7,14 +7,25 @@ import wsintelliauction.task.TaskManager;
 public class ClientWindowManager extends WindowManager {
 
 	public static final int NUM_WINDOWS = 1;
-	
+
+	public MainWindowModule mainWindowModule;
+
+	/**
+	 * Construct new window manager.
+	 * 
+	 * @param taskmanager
+	 *            Task manager.
+	 */
 	public ClientWindowManager(TaskManager taskmanager) {
-		super(NUM_WINDOWS, taskmanager);
+		this.taskmanager = taskmanager;
+		mainWindowModule = new MainWindowModule(taskmanager);
 	}
 
+	/**
+	 * Launch a new main window instance.
+	 */
 	public void launchMainWindow() {
-		appendAndLaunchWindow(new MainWindowModule(this.taskmanager));
+		mainWindowModule.display();
 	}
-
 
 }

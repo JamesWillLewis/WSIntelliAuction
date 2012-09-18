@@ -1,7 +1,8 @@
-package wsintelliauction.gui.view;
+package wsintelliauction.gui.modules;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Point;
 
 import javax.swing.JButton;
@@ -9,22 +10,24 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import net.miginfocom.swing.MigLayout;
-import java.awt.Font;
+import wsintelliauction.gui.View;
 
-public class ConsoleTab extends JPanel {
+public class ConsoleTabView extends View<ConsoleTabModel> {
 
-	public ConsoleTab() {
-		init();
+
+
+	public ConsoleTabView(ConsoleTabModel model) {
+		super(model);
 	}
 
-	private void init() {
+	@Override
+	protected void initialize() {
 		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
 				"Console Messages", TitledBorder.LEADING, TitledBorder.TOP,
 				null, null));
@@ -86,9 +89,12 @@ public class ConsoleTab extends JPanel {
 		scrollPane.getViewport().setViewPosition(new Point(0, scrollPane.getViewport().getViewSize().height));
 		scrollPane_1.getViewport().setViewPosition(new Point(0, scrollPane_1.getViewport().getViewSize().height));
 	}
-
+	
 	@Override
-	public String getName() {
+	public String toString() {
 		return "Console";
 	}
+
+
+
 }

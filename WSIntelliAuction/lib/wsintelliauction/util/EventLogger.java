@@ -51,7 +51,7 @@ public class EventLogger {
 	 *            Message to log.
 	 */
 	public static void log(String message) {
-		System.out.println(">>	" + message.toUpperCase());
+		System.out.println(">>	" + message);
 		logOut.println(Calendar.getInstance().getTime().toString() + " : "
 				+ message);
 	}

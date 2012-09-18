@@ -11,15 +11,19 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
+import wsintelliauction.gui.View;
+import wsintelliauction.server.frontend.models.AuctionTabModel;
 
-public class AuctionTabView extends JPanel {
-	private JTable table;
-
-	public AuctionTabView() {
-		init();
+public class AuctionTabView extends View<AuctionTabModel> {
+	public AuctionTabView(AuctionTabModel model) {
+		super(model);
+		// TODO Auto-generated constructor stub
 	}
 
-	private void init() {
+	private JTable table;
+
+	@Override
+	protected void initialize() {
 		setBorder(new TitledBorder(null, "Auction Management",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new MigLayout("", "[grow]", "[][grow][]"));
@@ -31,14 +35,10 @@ public class AuctionTabView extends JPanel {
 		add(scrollPane, "cell 0 1,grow");
 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"Bid #", "Time placed", "Time outstanding", "Secondary User", "Frequency Band Requested", "Power Limit Requested", "Status"
-			}
-		));
+		table.setModel(new DefaultTableModel(new Object[][] { { null, null,
+				null, null, null, null, null }, }, new String[] { "Bid #",
+				"Time placed", "Time outstanding", "Secondary User",
+				"Frequency Band Requested", "Power Limit Requested", "Status" }));
 		table.getColumnModel().getColumn(0).setPreferredWidth(67);
 		table.getColumnModel().getColumn(2).setPreferredWidth(113);
 		table.getColumnModel().getColumn(3).setPreferredWidth(114);
@@ -56,16 +56,18 @@ public class AuctionTabView extends JPanel {
 				"Auction Settings", TitledBorder.LEADING, TitledBorder.TOP,
 				null, null));
 		add(auctionControlPanel, "cell 0 2,grow");
-		auctionControlPanel.setLayout(new MigLayout("", "[251.00px]", "[25px,bottom]"));
+		auctionControlPanel.setLayout(new MigLayout("", "[251.00px]",
+				"[25px,bottom]"));
 
 		JCheckBox chckbxNewCheckBox = new JCheckBox("Automatic Broker");
 		chckbxNewCheckBox.setSelected(true);
 		auctionControlPanel.add(chckbxNewCheckBox,
 				"cell 0 0,alignx left,aligny center");
-	}
 
+	}
+	
 	@Override
-	public String getName() {
+	public String toString() {
 		return "Auction";
 	}
 }

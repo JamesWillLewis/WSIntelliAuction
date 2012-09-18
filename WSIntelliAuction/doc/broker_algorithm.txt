@@ -1,0 +1,91 @@
+
+Protocol Description (Auction Mechanism)
+----------------------------------------------------------------------------------------
+
+Note: $ = any currency that we specify in the config.properties file.
+
+Channel = frequency range & power limit.
+
+Goal:	To maximize BOTH profit earned and spectrum utilization.
+
+Note:	To achieve this, it is vital that not only do we auction off each channel at the highest
+	bidder, but offer the client alternatives. This will maximize utilization and profit,
+	as well as be beneficial to the client.
+
+	If a client wins a bid, they recieve a lease for the channel. A lease
+	entitles the client (SU) to use of the channel, for a certain time unit.
+
+Note: 	When a channel is offered for auction, it must be advertized along with
+	how long the lease will be valid. Different channels up for auction might be
+	offered with different lease time periods, as specified by the PU who is selling
+	the lease. The time slot which the channel's lease is sold with will determine
+	the demand for the channel, and ultimately maximize the bid that it earns.
+	In essence, the system is selling leases. A lease entitles usage of the channel,
+	within the power limitations, for a set period of time.
+
+----------------------------------------------------------------------------------------
+
+allocateChannel:
+
+	1)	PU adds channel (along with time slot) to list of available channels for auction.
+	2)	Server sets current bid to $0
+	3)	Server sets bid increment (>0)
+	4)	Channel is in WAITING_FOR_OFFER state.
+
+placeBid:
+
+	1)	The client selects the channel they want. This is on the basis of the frequency band
+		requirments, power requirements, and the length of time which they can own the channel.
+	2)	The client places a bid for the channel, where:
+			clientBid >= currentBid + bidIncrement
+	3)	Channel goes into HAS_BID state.
+	4)	Client waits for solution offer from server.
+
+receiveBid:
+
+	1)	If clientBid < currentbid + bidIncrementbid is invalid. (Client informed)
+	2)	If clientBid >= currentbid  + bidIncrementbid, client becomes the current bid holder.
+	3)	Server informs previous bid holder that their bid was bested. 
+	4)	Client responds: 
+			a)	place new bid (where clientBid >= currentbid + bidIncrementbid)
+			b)	find alternative
+	5) 	Goto bidPlaced
+
+
+
+findAlternative:	//finds closest matching channel for clients request
+
+	1)	For each channel C in availableChannels where clientBid > C.currentBid + bidIncrement:
+			a)	calculate cartesian distance between requestedChannel and C:
+				=	cartesian distance of each channel attribute (frequency band, power limit,
+						time allocation)
+			b)	Add cartesian distance to list L
+	2)	Find minimum cartesian distance in L, and client a bid for this channel.
+	3)	If client accept, place their bid for that channel.
+		Else:
+			a)	client rebids (for requestedChannel or different channel) 
+			b)	client requests closestMatch()		
+				i) Same as algorithm above, except also finds closest
+					matching bid value (includes bid value as a dimension). Process is repeated
+					as above, offering the client the closest matched channel and
+					the bid value for it (currentBid + bidIncrement) - client accepts or rejects
+			c)	client disconnects
+
+bidPlaced:	//the purpose of this function is to decide when to announce the bid winner
+		
+	1)	If first bid, set remaining time (RT) to ALPHA.
+	2)	RT = RT + (DELTA - (total_time_elapsed * THETA) ) //
+			
+
+Note: ALPHA, DELTA, THETA determined using CI, finding the
+values where they will produce the greatest bid. An improved profit outcome for a particular
+constant will thus trend the constant in that direction (using genetic algorithm)
+Constants will most likely reflect the demand for the particular channel and time period,
+as well as T value used.
+
+
+timeTick:
+	1) For each time unit T that passes, decrement RT for each HAS_BID channel by T.
+	2) When RT = 0, current bid holder wins bid and recieves the lease.
+
+	

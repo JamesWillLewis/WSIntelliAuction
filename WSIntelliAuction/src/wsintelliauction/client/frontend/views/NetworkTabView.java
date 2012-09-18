@@ -1,12 +1,9 @@
 package wsintelliauction.client.frontend.views;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -15,14 +12,38 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
+import wsintelliauction.client.frontend.models.NetworkTabModel;
+import wsintelliauction.gui.View;
 
-public class NetworkTabView extends JPanel {
+public class NetworkTabView extends View<NetworkTabModel> {
+
+	public NetworkTabView(NetworkTabModel model) {
+		super(model);
+		// TODO Auto-generated constructor stub
+	}
+
 	private JTable serversTable;
 	private JButton btnRegisterNewServer;
-
 	private DefaultTableModel registeredServersTableModel;
 
-	public NetworkTabView() {
+	@Override
+	public String toString() {
+		return "Network";
+	}
+
+	public JButton getBtnRegisterNewServer() {
+		return btnRegisterNewServer;
+	}
+
+	public void updateServerListTable() {
+		// registeredServersTableModel.add
+	}
+
+	/**
+	 * @wbp.parser.entryPoint
+	 */
+	@Override
+	protected void initialize() {
 		setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)),
 				"Network Connection Management", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
@@ -41,7 +62,7 @@ public class NetworkTabView extends JPanel {
 
 		serversTable = new JTable();
 
-		//construct table to display registered servers
+		// construct table to display registered servers
 		registeredServersTableModel = new DefaultTableModel(new String[] {
 				"Server ID", "Host name", "Host Address", "IP Address",
 				"Connected" }, 1) {
@@ -91,23 +112,6 @@ public class NetworkTabView extends JPanel {
 
 		JLabel lblRunning = new JLabel("RUNNING");
 		connectionInfoPanel.add(lblRunning, "cell 1 0,alignx center");
-		init();
 	}
 
-	private void init() {
-
-	}
-
-	@Override
-	public String getName() {
-		return "Network";
-	}
-
-	public JButton getBtnRegisterNewServer() {
-		return btnRegisterNewServer;
-	}
-
-	public void updateServerListTable() {
-		//registeredServersTableModel.add
-	}
 }

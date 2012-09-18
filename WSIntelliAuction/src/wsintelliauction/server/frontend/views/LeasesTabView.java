@@ -1,24 +1,30 @@
 package wsintelliauction.server.frontend.views;
 
-import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
-public class LeasesTabView extends JPanel {
-	private JTable table;
+import net.miginfocom.swing.MigLayout;
+import wsintelliauction.gui.View;
+import wsintelliauction.server.frontend.models.LeasesTabModel;
 
-	public LeasesTabView() {
-		init();
-	}
+public class LeasesTabView  extends View<LeasesTabModel> {
 	
-	private void init(){
+	public LeasesTabView(LeasesTabModel model) {
+		super(model);
+		// TODO Auto-generated constructor stub
+	}
+
+	private JTable table;
+	
+
+	@Override
+	protected void initialize() {
 		setBorder(new TitledBorder(null, "Lease Management",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new MigLayout("", "[grow]", "[][grow][]"));
@@ -57,10 +63,11 @@ public class LeasesTabView extends JPanel {
 		
 		JButton btnReallocate = new JButton("Reallocate");
 		add(btnReallocate, "cell 0 2");
+		
 	}
 	
 	@Override
-	public String getName() {
+	public String toString() {
 		return "Leases";
 	}
 

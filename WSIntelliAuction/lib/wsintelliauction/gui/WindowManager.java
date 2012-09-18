@@ -20,60 +20,8 @@ import wsintelliauction.util.EventLogger;
 public abstract class WindowManager {
 
 	/**
-	 * List of active windows.
-	 */
-	protected ArrayList<Module<?, ?, ?>> windows;
-
-	/**
 	 * Reference to task backlog (for parsing control to windows)
 	 */
 	protected TaskManager taskmanager;
-
-	/**
-	 * Construct the window manager and initialise window list.
-	 * 
-	 * @param NUM_WINDOWS
-	 *            'Assumed' amount of active windows.
-	 * @param backlog
-	 *            Reference to task backlog.
-	 */
-	public WindowManager(int NUM_WINDOWS, TaskManager taskmanager) {
-		// activeWindows = new ArrayList<Window<?, ?, ?>>(NUM_WINDOWS);
-		this.taskmanager = taskmanager;
-	}
-
-	/**
-	 * Appends the given window to the active window list and launches the
-	 * window.
-	 * 
-	 * @param w
-	 *            New window to launch.
-	 */
-	protected void appendAndLaunchWindow(Module<?, ?, ?> w) {
-		if (w != null) {
-			// activeWindows.add(w);
-			w.launchMVC();
-			EventLogger.log("New window launched: " + w.getClass());
-		} else {
-			ErrorLogger.log("Cannot load NULL window");
-		}
-
-	}
-
-	/**
-	 * Closes the specified window and removes it from the active window list.
-	 * 
-	 * @param w
-	 *            Window to close.
-	 */
-	protected void closeAndRemoveWindow(Module<?, ?, ?> w) {
-		w.closeMVC();
-		if (windows.contains(w))
-			windows.remove(w);
-		else
-			ErrorLogger.log("Window manager does not contain window: "
-					+ w.getClass());
-		EventLogger.log("Window closed: " + w.getClass());
-	}
 
 }
