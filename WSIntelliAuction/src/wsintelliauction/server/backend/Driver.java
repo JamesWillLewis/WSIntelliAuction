@@ -20,12 +20,8 @@ public class Driver extends AbstractDriver {
 	 * Task scheduler for this application.
 	 */
 	private TaskManager taskManager;
-	
-	/**
-	 * 
-	 * @param args
-	 */
-	public static final int BACKLOG_CAPACITY = 64;
+
+	public static final int BACKLOG_CAPACITY = 512;
 	
 	public Driver(String[] args) {
 		super(args);
@@ -34,7 +30,7 @@ public class Driver extends AbstractDriver {
 	@Override
 	public void init() {
 		//init the managers
-		taskManager = new TaskManager(64);
+		taskManager = new TaskManager(BACKLOG_CAPACITY);
 		windowManager = new ServerWindowManager(taskManager);
 		networkManager = new ServerNetworkManager();
 	}

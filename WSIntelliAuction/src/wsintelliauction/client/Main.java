@@ -3,15 +3,16 @@ package wsintelliauction.client;
 import wsintelliauction.client.backend.Driver;
 import wsintelliauction.gui.Splash;
 
-public class Main extends Splash
+public class Main //extends Splash
 {
 	
 	public Main()
 	{
 		super();
-		simulateOurWorkLoad();
+		//simulateOurWorkLoad();
 	}
 	
+	/*
 	public void simulateOurWorkLoad()
 	{
 		for(int i = 0 ; i < 100 ; ++i)
@@ -29,6 +30,8 @@ public class Main extends Splash
 			}
 		}
 	}
+	*/
+	
 	/**
 	 * please note that the program Must have a VM environment flag set the splash image to be used.
 	 * This is done using RunConfigurations in eclipse, go to Run->Run Configuration->Arguments->VM Arguments 

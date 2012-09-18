@@ -61,4 +61,5 @@ public class MainView extends View<MainModel> {
 	public AuctionTabView getAuctionTab() {
 		return auctionTab;
 	}
+
 }

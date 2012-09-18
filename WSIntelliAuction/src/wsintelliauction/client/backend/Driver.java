@@ -3,6 +3,7 @@ package wsintelliauction.client.backend;
 import wsintelliauction.client.frontend.ClientNetworkManager;
 import wsintelliauction.client.frontend.ClientWindowManager;
 import wsintelliauction.misc.AbstractDriver;
+import wsintelliauction.misc.ThreadManager;
 import wsintelliauction.task.TaskManager;
 
 public class Driver extends AbstractDriver {
@@ -20,29 +21,30 @@ public class Driver extends AbstractDriver {
 	 */
 	private TaskManager taskManager;
 	
+	public static final int BACKLOG_CAPACITY = 128;
+
 	public Driver(String[] args) {
 		super(args);
-		taskManager = new TaskManager(128);
+	}
+
+	@Override
+	public void exec() {
+		taskManager.beginServiceRoutine();
+		windowManager.launchMainWindow();
+
+	}
+
+	@Override
+	protected void init() {
+		taskManager = new TaskManager(BACKLOG_CAPACITY);
 		windowManager = new ClientWindowManager(taskManager);
 		networkManager = new ClientNetworkManager();
 	}
 
 	@Override
-	public void exec() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void init() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void end() {
-		// TODO Auto-generated method stub
-		
+		taskManager.endServiceRoutine();
+		ThreadManager.closeThreads();
 	}
 
 }
