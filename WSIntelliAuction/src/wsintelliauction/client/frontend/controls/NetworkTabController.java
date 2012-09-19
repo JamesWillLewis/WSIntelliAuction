@@ -30,6 +30,13 @@ public class NetworkTabController extends
 
 	}
 
+	/**
+	 * Registers a new server on the registered server list. Before adding the
+	 * server, the model will check to ensure that the server host address is
+	 * valid.
+	 * 
+	 * @author James Lewis
+	 */
 	private class RegisterNewServerHandle implements ActionListener {
 
 		@Override
@@ -49,11 +56,10 @@ public class NetworkTabController extends
 									"Communication to host was successful.",
 									"Success", JOptionPane.INFORMATION_MESSAGE);
 
-							model.getRegisteredServerList().add(
-									new Recipient(addr.getAddress(), Integer
-											.parseInt(Configuration
-													.getProperty("port"))));
-							view.updateServerListTable();
+							model.registerServer(new Recipient(addr
+									.getAddress(),
+									Integer.parseInt(Configuration
+											.getProperty("port"))));
 						} else {
 							JOptionPane.showMessageDialog(view,
 									"Unable to reach host.", "Error",

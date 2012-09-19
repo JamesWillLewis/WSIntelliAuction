@@ -2,11 +2,8 @@ package wsintelliauction.server.frontend.modules;
 
 import wsintelliauction.gui.Module;
 import wsintelliauction.server.frontend.controls.AuctionTabController;
-import wsintelliauction.server.frontend.controls.MainWindowController;
 import wsintelliauction.server.frontend.models.AuctionTabModel;
-import wsintelliauction.server.frontend.models.MainWindowModel;
 import wsintelliauction.server.frontend.views.AuctionTabView;
-import wsintelliauction.server.frontend.views.MainWindowView;
 import wsintelliauction.task.TaskManager;
 
 public class AuctionTabModule extends

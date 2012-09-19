@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
@@ -24,7 +25,6 @@ public class NetworkTabView extends View<NetworkTabModel> {
 
 	private JTable serversTable;
 	private JButton btnRegisterNewServer;
-	private DefaultTableModel registeredServersTableModel;
 
 	@Override
 	public String toString() {
@@ -35,9 +35,6 @@ public class NetworkTabView extends View<NetworkTabModel> {
 		return btnRegisterNewServer;
 	}
 
-	public void updateServerListTable() {
-		// registeredServersTableModel.add
-	}
 
 	/**
 	 * @wbp.parser.entryPoint
@@ -60,21 +57,10 @@ public class NetworkTabView extends View<NetworkTabModel> {
 		JScrollPane scrollPane = new JScrollPane();
 		registeredServersPanel.add(scrollPane, "cell 0 0 2 1,grow");
 
-		serversTable = new JTable();
-
-		// construct table to display registered servers
-		registeredServersTableModel = new DefaultTableModel(new String[] {
-				"Server ID", "Host name", "Host Address", "IP Address",
-				"Connected" }, 1) {
-			Class[] columnTypes = new Class[] { Object.class, Object.class,
-					Object.class, Object.class, Boolean.class };
-
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		};
-
-		serversTable.setModel(registeredServersTableModel);
+		serversTable = new JTable(model.getRegisteredServersTableModel());
+		serversTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		serversTable.setCellSelectionEnabled(false);
+		serversTable.setRowSelectionAllowed(true);
 
 		serversTable.getColumnModel().getColumn(0).setPreferredWidth(133);
 		serversTable.getColumnModel().getColumn(1).setPreferredWidth(142);
@@ -113,5 +99,6 @@ public class NetworkTabView extends View<NetworkTabModel> {
 		JLabel lblRunning = new JLabel("RUNNING");
 		connectionInfoPanel.add(lblRunning, "cell 1 0,alignx center");
 	}
+
 
 }
