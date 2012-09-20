@@ -1,98 +1,79 @@
+-------------------	Auction Mechanism Implementation Details And Notes ------------------
 
-Protocol Description (Auction Mechanism)
-----------------------------------------------------------------------------------------
-
-Note: $ = any currency that we specify in the config.properties file.
-
-Channel = frequency range & power limit.
-
-Goal:	To maximize BOTH profit earned and spectrum utilization.
-
-Note:	To achieve this, it is vital that not only do we auction off each channel at the highest
-	bidder, but offer the client alternatives. This will maximize utilization and profit,
-	as well as be beneficial to the client.
-
-	If a client wins a bid, they recieve a lease for the channel. A lease
-	entitles the client (SU) to use of the channel, for a certain time unit.
-
-Note: 	When a channel is offered for auction, it must be advertized along with
-	how long the lease will be valid. Different channels up for auction might be
-	offered with different lease time periods, as specified by the PU who is selling
-	the lease. The time slot which the channel's lease is sold with will determine
-	the demand for the channel, and ultimately maximize the bid that it earns.
-	In essence, the system is selling leases. A lease entitles usage of the channel,
-	within the power limitations, for a set period of time.
-
-----------------------------------------------------------------------------------------
-
-allocateChannel:
-
-	1)	PU adds channel (along with time slot) to list of available channels for auction.
-	2)	Server sets current bid to $X (where X = function of power limit, bandwidth, demand, etc - CI)
-	3)	Server sets bid increment (where increment = function of power limit, bandwidth, demand, etc - CI)
-	4)	Channel is in WAITING_FOR_OFFER state.
-
-placeBid:
-
-	1)	The client selects the channel they want. This is on the basis of the frequency band
-		requirments, power requirements, and the length of time which they can own the channel.
-	2)	The client places a bid for the channel, where:
-			clientBid >= currentBid + bidIncrement
-	3)	Channel goes into HAS_BID state.
-	4)	Client waits for solution offer from server.
-
-receiveBid:
-
-	1)	If clientBid < currentbid + bidIncrementbid is invalid. (Client informed)
-	2)	If clientBid >= currentbid  + bidIncrementbid, client becomes the current bid holder.
-	3)	Server informs previous bid holder that their bid was bested. 
-	4)	Client responds: 
-			a)	place new bid (where clientBid >= currentbid + bidIncrementbid)
-			b)	find alternative
-	5) 	Goto bidPlaced
-
-
-
-findAlternative:	//finds closest matching channel for clients request
-
-	1)	For each channel C in availableChannels where clientBid > C.currentBid + bidIncrement:
-			a)	calculate cartesian distance between requestedChannel and C:
-				=	cartesian distance of each channel attribute (frequency band, power limit,
-						time allocation)
-			b)	Add cartesian distance to list L
-	2)	Find minimum cartesian distance in L, and client a bid for this channel.
-	3)	If client accept, place their bid for that channel.
-		Else:
-			a)	client rebids (for requestedChannel or different channel) 
-			b)	client requests closestMatch()		
-				i) Same as algorithm above, except also finds closest
-					matching bid value (includes bid value as a dimension). Process is repeated
-					as above, offering the client the closest matched channel and
-					the bid value for it (currentBid + bidIncrement) - client accepts or rejects
-			c)	client disconnects
-
-bidPlaced:	//the purpose of this function is to decide when to announce the bid winner
+Notes:
+	
+	->	Each radio station selects N different channels from a pool of channels (Typically 32, in the UK for instance), this is to avoid 
+		interference of channels from radio stations that are close in  terms of signal propagation distance (Power limitation).
+	
+	->	These stations will then sell those channels that are vacant at each station by means of the auctioning system.
+	
+	->	Each channel when sold, must adhere to the limitations that come with it, such as the very important power limitation.
+	
+	->	The server is responsible for conducting the database management and decisions regarding sales.
+	
+	->	The client side is responsible for querying the server for information regarding the available channels. 
+		The client side then places a bid when an auction is open. Thus the server need not update the client when channels are available.
+		It is the responsibility of the client to check what's available when they need it. Thus each client would could essentially have
+		their own CI module running making decisions which best match the needs of the client based on parameters which are important to them, 
+		such as Network load or Overall speed etc... (This CI for the client side will not be dealt with by us and is out of scope for this 
+		project)
 		
-	1)	If first bid, set remaining time (RT) to ALPHA().
-	2)	RT = RT + DELTA()
+	->	The primary user Owns the license to the specific channel and the user is simulated using our simulator
+	
+	->	When a PU goes off-line it must inform the database using that it is vacating a channel which may be sold.
+	
+	->	The auctioneers (brokers) goal is to maximize profit while utilizing the available spectrum.
+	
+	->	It is very important that the auction doesn't last too long as the longer an auction lasts the more time spectrum that is wasted.
+	
+	->	Channels are sold off once the PU goes off-line. The leases are sold for a specific frequency band, for a specific time with a
+		power limitation on the line.
+	
+	->	Leases for the available channel must be sold. No matter the price.
+	
+	-> 	It is also very important that the presence of the SU does not affect the operation of the PU.
+	
+Implementations:
+
+	How leases are divided:																					Side effects.
+	
+		->  Idea 1:		Leases are sold on a time basis in terms of amount of time.			|	Lease states then need to be saved.
+						So a specific amount of time is promised and it may be reclaimed	|	This also increases complexity in 
+						whenever the PU goes off-line.										|	terms of triggering the auction because a SU
+																							|	might be entitled to the line and this check 
+																							|	must be kept in mind.
+
+		->	Idea 2:		The channels are divided into discrete chunks and sold on a use		|	This is a better approach. as we don't need to  
+						as its free basis, so if the channels are split into 5s chunks		|	save lease states, when the SU goes off-line.
+						a user can buy say 20s, if the SU goes off-line during this time 	|	But the lease states might need to be saved,
+						they lose out.														|	if the PU pushes them off-line.
+		
+	Selling of leases:																	
+	
+		->	Idea 1:		Leases are sold when the PU goes off-line.							|	If the auction lasts too long the spectrum is 
+																							|	not utilized well.
 			
-
-ALPHA():
-	Determined using CI. Probably a function of expected demand, bid increment value, etc.
-	-	MUST MAXIMIZE PROFIT
-
-DELTA():
-	determined using CI. Most likely a function of many variables. Delta determines how much extra
-	time to be added to an auction after each bid has been placed.
-
-	Posibble relevent attributes: Time elapsed, number of bids placed, demand for channel,
-	channel history, bid increment, value difference between each bid placed (a function of demand itself)	
-	-	MUST MAXIMIZE PROFIT
-
-
-
-timeTick:
-	1) For each time unit T that passes, decrement RT for each HAS_BID channel by T.
-	2) When RT = 0, current bid holder wins bid and recieves the lease.
-
+		->  Idea 2:		Leases are pre-sold. And leases claimed when the PU goes off-line	|	Increased complexity with dealing with leases 
+																							|	which are to be claimed in the future.
+	
+	Dealing with a PU that comes back online while a lease is being claimed:
+	
+		->  Idea 1:		The SU is disconnected from the line, their lease contract 			|	Increased complexity with saving lease states.
+						saved to be claimed later.											|	
+	
+		->  Idea 2:		The SU is disconnected and loses out on the lease. (the lease gets 	|	This solves the leave state problem.
+						canceled.)															|	but could be considered unfair to the SU.
+	
+		->	Idea 3:		The SU buys a time slot in discrete chunks, for example				|	This is kind of the middle ground between the last 
+						the time spectrum is split into 5s chunks, the SU then bids for		|	two ideas, the SU doesn't lose out but the PU must 
+						a certain amount of time. the broker then optimizes the sale.		|	now wait a small period of time for that section to
+						If the PU comes online they must wait until that chunk of has been 	|	be used by the SU.
+						used by the SU. The SU's lease state is then saved and reclaimed 	|
+						later. 																|
+	
+	
+	In my opinion i think the channels should be divided into discrete chunks. Idea 2, this allow is better than Idea 1. 
+	In terms of selling the lease, this could go either way.
+	Lastely in dealing with the PU as they come online. Idea 3, sounds good, but in our notes we say that the PU mostn't be affected
+	by ths SU. So maybe Idea 1, if we go with the discrete chunks idea.
 	
