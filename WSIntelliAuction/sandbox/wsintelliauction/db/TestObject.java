@@ -17,7 +17,7 @@ public class TestObject {
 	private String surname;
 	private Integer age;
 	
-	private TestObject(){
+	public TestObject(){
 		
 	}
 

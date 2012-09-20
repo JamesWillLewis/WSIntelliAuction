@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import wsintelliauction.util.ErrorLogger;
 import wsintelliauction.util.EventLogger;
 
 public class DatabaseManager{
@@ -169,7 +170,7 @@ public class DatabaseManager{
 		} 
 		catch (SQLException e)
 		{
-			EventLogger.log("There was an error executing the Query. Error: "+e.getMessage()+"\n\tSQL Error: "+e.getErrorCode());
+			ErrorLogger.log("There was an error executing the Query. Error: "+e.getMessage()+"\n\tSQL Error: "+e.getErrorCode());
 		}
 		
 		return resultMatrix;

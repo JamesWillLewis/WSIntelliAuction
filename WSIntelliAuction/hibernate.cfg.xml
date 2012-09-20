@@ -14,7 +14,8 @@
 	<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/wsintelliauction</property>
 	<property name="hibernate.connection.username">root</property>
 	<property name="hibernate.connection.password">s1lentk1ll</property>
-	<property name="hibernate.hbm2ddl.auto">create</property>
+	<property name="hibernate.hbm2ddl.auto">update</property>
+	
 	<mapping class="wsintelliauction.db.TestObject"/>
 	
   </session-factory>
