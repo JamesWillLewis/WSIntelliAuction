@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import wsintelliauction.util.Configuration;
+import wsintelliauction.util.AppConfig;
 import wsintelliauction.util.ErrorLogger;
 
 /**
@@ -55,7 +55,7 @@ public abstract class View<M extends Model> extends JPanel{
 	 */
 	static {
 		try {
-			UIManager.setLookAndFeel(Configuration.getProperty("skin"));
+			UIManager.setLookAndFeel(AppConfig.getProperty("skin"));
 		} catch (ClassNotFoundException e) {
 			ErrorLogger.log(e.getMessage());
 		} catch (InstantiationException e) {

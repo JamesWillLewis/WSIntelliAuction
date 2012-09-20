@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import wsintelliauction.gui.Model;
 import wsintelliauction.gui.View;
 import wsintelliauction.net.Recipient;
-import wsintelliauction.util.Configuration;
+import wsintelliauction.util.AppConfig;
 
 public class NetworkTabModel extends Model {
 

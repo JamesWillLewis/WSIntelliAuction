@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import wsintelliauction.net.NetworkConnection;
 import wsintelliauction.net.NetworkManager;
-import wsintelliauction.util.Configuration;
+import wsintelliauction.util.AppConfig;
 import wsintelliauction.util.ErrorLogger;
 import wsintelliauction.util.EventLogger;
 import wsintelliauction.util.ThreadManager;
@@ -45,7 +45,7 @@ public class ServerNetworkManager implements NetworkManager {
 	public void startServer() {
 		try {
 			// launch the server
-			serverSocket = new ServerSocket(Integer.parseInt(Configuration
+			serverSocket = new ServerSocket(Integer.parseInt(AppConfig
 					.getProperty("port")), MAX_CLIENT_CONNECTIONS);
 			EventLogger.log("Server now running on host-address: "
 					+ serverSocket.getInetAddress().getHostName()

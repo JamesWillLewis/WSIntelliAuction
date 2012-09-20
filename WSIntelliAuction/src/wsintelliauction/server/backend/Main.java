@@ -13,8 +13,6 @@ public class Main extends Splash {
 		// our program as usual.
 		super();
 
-		// Simulate a loaders
-		simulateOurWorkLoad();
 	}
 
 	/**

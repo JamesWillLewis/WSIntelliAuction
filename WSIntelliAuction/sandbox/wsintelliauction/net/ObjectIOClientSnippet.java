@@ -7,7 +7,7 @@ import javax.net.ssl.SSLSocket;
 import wsintelliauction.client.backend.net.ClientNetworkManager;
 import wsintelliauction.net.Recipient;
 import wsintelliauction.net.message.InfoMessage;
-import wsintelliauction.util.Configuration;
+import wsintelliauction.util.AppConfig;
 import wsintelliauction.util.ThreadManager;
 
 /**
@@ -25,7 +25,7 @@ public class ObjectIOClientSnippet {
 			final int randomClientNum = (int) (Math.random() * 100);
 			try {
 				clientNetworkManager.connectTo(new Recipient("localhost",
-						Integer.parseInt(Configuration.getProperty("port"))));
+						Integer.parseInt(AppConfig.getProperty("port"))));
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

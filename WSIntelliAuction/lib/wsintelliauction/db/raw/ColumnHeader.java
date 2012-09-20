@@ -1,4 +1,4 @@
-package wsintelliauction.db;
+package wsintelliauction.db.raw;
 
 public class ColumnHeader 
 {

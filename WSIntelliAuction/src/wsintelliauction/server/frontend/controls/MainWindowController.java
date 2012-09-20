@@ -10,7 +10,7 @@ import wsintelliauction.gui.View;
 import wsintelliauction.server.frontend.models.MainWindowModel;
 import wsintelliauction.server.frontend.views.MainWindowView;
 import wsintelliauction.task.TaskManager;
-import wsintelliauction.util.Configuration;
+import wsintelliauction.util.AppConfig;
 
 public class MainWindowController extends Controller<MainWindowModel, MainWindowView> {
 

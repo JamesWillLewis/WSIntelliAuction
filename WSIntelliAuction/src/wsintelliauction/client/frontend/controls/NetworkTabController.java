@@ -13,7 +13,7 @@ import wsintelliauction.client.frontend.views.NetworkTabView;
 import wsintelliauction.gui.Controller;
 import wsintelliauction.net.Recipient;
 import wsintelliauction.task.TaskManager;
-import wsintelliauction.util.Configuration;
+import wsintelliauction.util.AppConfig;
 
 public class NetworkTabController extends
 		Controller<NetworkTabModel, NetworkTabView> {
@@ -58,7 +58,7 @@ public class NetworkTabController extends
 
 							model.registerServer(new Recipient(addr
 									.getAddress(),
-									Integer.parseInt(Configuration
+									Integer.parseInt(AppConfig
 											.getProperty("port"))));
 						} else {
 							JOptionPane.showMessageDialog(view,

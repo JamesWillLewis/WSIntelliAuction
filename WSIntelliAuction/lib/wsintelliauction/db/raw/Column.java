@@ -1,4 +1,4 @@
-package wsintelliauction.db;
+package wsintelliauction.db.raw;
 
 /**
  * A simple object to hold an array of object. Some functions 

@@ -14,7 +14,7 @@ import java.util.Properties;
  * @author James Lewis
  * 
  */
-public class Configuration {
+public class AppConfig {
 
 	private final static Properties properties;
 

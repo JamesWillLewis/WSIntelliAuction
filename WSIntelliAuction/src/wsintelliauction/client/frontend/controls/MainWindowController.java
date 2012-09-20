@@ -13,7 +13,7 @@ import wsintelliauction.client.frontend.views.MainWindowView;
 import wsintelliauction.gui.Controller;
 import wsintelliauction.net.Recipient;
 import wsintelliauction.task.TaskManager;
-import wsintelliauction.util.Configuration;
+import wsintelliauction.util.AppConfig;
 
 public class MainWindowController extends Controller<MainWindowModel, MainWindowView> {
 

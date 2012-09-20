@@ -1,5 +1,8 @@
 package wsintelliauction.db;
 
+import wsintelliauction.db.raw.DatabaseManager;
+import wsintelliauction.db.raw.ResultMatrix;
+
 
 public class DBDriver
 {

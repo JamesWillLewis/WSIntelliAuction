@@ -1,4 +1,4 @@
-package wsintelliauction.db;
+package wsintelliauction.db.raw;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
