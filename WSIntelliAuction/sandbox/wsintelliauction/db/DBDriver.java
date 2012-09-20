@@ -1,7 +1,7 @@
 package wsintelliauction.db;
 
-import wsintelliauction.db.raw.DatabaseManager;
-import wsintelliauction.db.raw.ResultMatrix;
+import com.uct.cs.wsintelliauction.db.raw.DatabaseManager;
+import com.uct.cs.wsintelliauction.db.raw.ResultMatrix;
 
 
 public class DBDriver

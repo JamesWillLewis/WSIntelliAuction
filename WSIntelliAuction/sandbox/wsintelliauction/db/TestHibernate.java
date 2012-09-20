@@ -2,7 +2,8 @@ package wsintelliauction.db;
 
 import java.util.ArrayList;
 
-import wsintelliauction.db.orm.DatabaseManager;
+import com.uct.cs.wsintelliauction.db.orm.DatabaseManager;
+
 
 public class TestHibernate {
 

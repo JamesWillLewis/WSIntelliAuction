@@ -2,7 +2,8 @@ package wsintelliauction.misc;
 
 import java.util.concurrent.Callable;
 
-import wsintelliauction.util.ThreadManager;
+import com.uct.cs.wsintelliauction.util.ThreadManager;
+
 
 public class TestThreadManager {
 

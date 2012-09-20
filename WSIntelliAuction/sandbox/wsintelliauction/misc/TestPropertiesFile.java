@@ -1,6 +1,6 @@
 package wsintelliauction.misc;
 
-import wsintelliauction.util.AppConfig;
+import com.uct.cs.wsintelliauction.util.AppConfig;
 
 public class TestPropertiesFile {
 
