@@ -7,6 +7,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import javax.swing.JOptionPane;
+
 /**
  * Wraps a Properties object, allowing global static access for setting and
  * getting properties, as well as defining the default properties file.
@@ -20,13 +22,23 @@ public class AppConfig {
 
 	private final static File propertiesFile;
 
-	public final static String PROPERTIES_FILE_NAME = "config.properties";
+	public final static String PROPERTIES_FILE_NAME = "wsintelliauction.cfg.xml";
 
 	static {
 		propertiesFile = new File(PROPERTIES_FILE_NAME);
 		properties = new Properties();
 		if (propertiesFile.exists())
 			load();
+		else {
+			JOptionPane
+					.showMessageDialog(
+							null,
+							"Unable to locate wsintelliauction.cfg.xml configuration file.",
+							"Fatal Error",
+							JOptionPane.ERROR_MESSAGE);
+			ErrorLogger.log("Unable to locate wsintelliauction.cfg.xml configuration file");
+			System.exit(1);
+		}
 	}
 
 	public static String getProperty(String key) {
@@ -40,7 +52,7 @@ public class AppConfig {
 
 	public static void load() {
 		try {
-			properties.load(new FileInputStream(propertiesFile));
+			properties.loadFromXML(new FileInputStream(propertiesFile));
 		} catch (FileNotFoundException e) {
 			ErrorLogger.log("Error loading properties file");
 		} catch (IOException e) {
@@ -48,9 +60,9 @@ public class AppConfig {
 		}
 	}
 
-	private static void store() {
+	public static void store() {
 		try {
-			properties.store(new FileOutputStream(propertiesFile),
+			properties.storeToXML(new FileOutputStream(propertiesFile),
 					"Configuration Properties");
 		} catch (IOException e) {
 			ErrorLogger.log("Error writing properties file");

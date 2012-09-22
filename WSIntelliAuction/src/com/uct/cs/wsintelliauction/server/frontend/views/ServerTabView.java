@@ -28,13 +28,17 @@ public class ServerTabView extends View<ServerTabModel> {
 	}
 
 	private JTable table;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
+	private JTextField hostNameField;
+	private JTextField hostAddressField;
+	private JTextField IPAddressField;
+	private JTextField portField;
+	private JTextField stateField;
+	private JTextField connectionsField;
+	private JButton btnNewButton;
 
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	@Override
 	protected void initialize() {
 		setLayout(new BorderLayout(0, 0));
@@ -55,10 +59,9 @@ public class ServerTabView extends View<ServerTabModel> {
 		serverConnectionsTab.add(scrollPane, "cell 0 0 2 1,grow");
 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] { { null, null,
-				null, null, null, null, null }, }, new String[] { "Host Name",
-				"Host Address", "IP Address", "Connected At", "Time Online",
-				"SU ID", "State" }));
+		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] {
+				"Host Name", "Host Address", "IP Address", "Connected At",
+				"Time Online", "SU ID", "State" }));
 		table.getColumnModel().getColumn(3).setPreferredWidth(124);
 		table.getColumnModel().getColumn(4).setPreferredWidth(114);
 		scrollPane.setViewportView(table);
@@ -83,55 +86,62 @@ public class ServerTabView extends View<ServerTabModel> {
 		JLabel lblNewLabel = new JLabel("Host name:");
 		serverSettingsTab.add(lblNewLabel, "cell 0 0,alignx right");
 
-		textField = new JTextField();
-		serverSettingsTab.add(textField, "cell 2 0,alignx right");
-		textField.setColumns(20);
+		hostNameField = new JTextField();
+		hostNameField.setEditable(false);
+		serverSettingsTab.add(hostNameField, "cell 2 0,alignx right");
+		hostNameField.setColumns(20);
 
 		JLabel lblNewLabel_1 = new JLabel("Host Address:");
 		serverSettingsTab.add(lblNewLabel_1, "cell 0 1,alignx right");
 
-		textField_1 = new JTextField();
-		serverSettingsTab.add(textField_1, "cell 2 1,alignx right");
-		textField_1.setColumns(20);
+		hostAddressField = new JTextField();
+		hostAddressField.setEditable(false);
+		serverSettingsTab.add(hostAddressField, "cell 2 1,alignx right");
+		hostAddressField.setColumns(20);
 
 		JLabel lblNewLabel_2 = new JLabel("IP Address:");
 		serverSettingsTab.add(lblNewLabel_2, "cell 0 2,alignx right");
 
-		textField_2 = new JTextField();
-		serverSettingsTab.add(textField_2, "cell 2 2,alignx right");
-		textField_2.setColumns(20);
+		IPAddressField = new JTextField();
+		IPAddressField.setEditable(false);
+		serverSettingsTab.add(IPAddressField, "cell 2 2,alignx right");
+		IPAddressField.setColumns(20);
 
 		JLabel lblNewLabel_3 = new JLabel("Port:");
 		serverSettingsTab.add(lblNewLabel_3, "cell 0 3,alignx right");
 
-		textField_3 = new JTextField();
-		serverSettingsTab.add(textField_3, "cell 2 3,alignx right");
-		textField_3.setColumns(20);
+		portField = new JTextField();
+		portField.setEditable(false);
+		serverSettingsTab.add(portField, "cell 2 3,alignx right");
+		portField.setColumns(20);
 
 		JLabel lblState = new JLabel("State:");
 		serverSettingsTab.add(lblState, "cell 0 4,alignx right");
 
-		textField_4 = new JTextField();
-		serverSettingsTab.add(textField_4, "cell 2 4,alignx right");
-		textField_4.setColumns(20);
+		stateField = new JTextField();
+		stateField.setEditable(false);
+		serverSettingsTab.add(stateField, "cell 2 4,alignx right");
+		stateField.setColumns(20);
 
 		JLabel lblConnections = new JLabel("Connections:");
 		serverSettingsTab.add(lblConnections, "cell 0 5,alignx right");
 
-		textField_5 = new JTextField();
-		serverSettingsTab.add(textField_5, "cell 2 5,alignx right");
-		textField_5.setColumns(20);
+		connectionsField = new JTextField();
+		connectionsField.setEditable(false);
+		serverSettingsTab.add(connectionsField, "cell 2 5,alignx right");
+		connectionsField.setColumns(20);
 
 		JSeparator separator = new JSeparator();
 		serverSettingsTab.add(separator, "cell 0 6 3 1,grow");
 
-		JButton btnNewButton = new JButton("Restart Server");
+		if (model.isServerOn())
+			btnNewButton = new JButton("Stop Server");
+		else {
+			btnNewButton = new JButton("Start Server");
+		}
+
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
 		serverSettingsTab.add(btnNewButton, "cell 0 7,aligny bottom");
-
-		JButton btnNewButton_1 = new JButton("Shutdown");
-		btnNewButton_1.setHorizontalAlignment(SwingConstants.LEFT);
-		serverSettingsTab.add(btnNewButton_1, "cell 1 7,aligny bottom");
 
 		JCheckBox chckbxAcceptConnections_1 = new JCheckBox(
 				"Accept Connections");
@@ -139,25 +149,24 @@ public class ServerTabView extends View<ServerTabModel> {
 		serverSettingsTab.add(chckbxAcceptConnections_1,
 				"cell 2 7,alignx right");
 
-		JPanel serverConsoleTab = new JPanel();
-		serverConsoleTab.setBorder(new TitledBorder(null, "Console Output",
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		serverTabbedPane.addTab("Console", null, serverConsoleTab, null);
-		serverConsoleTab.setLayout(new BorderLayout(0, 0));
-
-		JScrollPane consolePane = new JScrollPane();
-		serverConsoleTab.add(consolePane);
-
-		JTextArea serverConsole = new JTextArea();
-		serverConsole
-				.setText("> Initializing server...\r\n> Establishing connection...\r\n> Creating host...\r\n> Opening socket...\r\n> Server active.\r\n> Client connected...\r\n> ETC....\r\n\r\n(this console can be upgraded and stuff, maybe have its own proper log file)");
-		consolePane.setViewportView(serverConsole);
-
 	}
 
 	@Override
 	public String toString() {
 		return "Server";
+	}
+
+	public JButton getBtnNewButton() {
+		return btnNewButton;
+	}
+
+	public void refreshServerStats() {
+		hostNameField.setText(model.getHostNameField());
+		hostAddressField.setText(model.getHostAddressField());
+		IPAddressField.setText(model.getHostIPField());
+		portField.setText(model.getPortField());
+		stateField.setText(model.isServerOn() ? "ONLINE" : "OFFLINE");
+		connectionsField.setText(model.getConnectionsField());
 	}
 
 }

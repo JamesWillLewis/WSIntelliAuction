@@ -25,7 +25,9 @@ public class NetworkTabController extends
 	protected void assignListeners() {
 		view.getBtnRegisterNewServer().addActionListener(
 				new RegisterNewServerHandle());
-
+		view.getBtnRemoveServer().addActionListener(new RemoveServerHandle());
+		view.getBtnPing().addActionListener(new PingServerHandle());
+		view.getBtnConnectTo().addActionListener(new ConnectToServerHandle());
 	}
 
 	/**
@@ -42,41 +44,43 @@ public class NetworkTabController extends
 			String address = JOptionPane.showInputDialog(view,
 					"Enter the server address (Host address or IP address):",
 					"Register New Server", JOptionPane.QUESTION_MESSAGE);
-			if (address != null) {
-				// check if valid address
-				try {
-					InetAddress addr = InetAddress.getByName(address);
-					try {
-						boolean isReachable = addr.isReachable(9999);
-						if (isReachable) {
+			model.registerServer(address);
+		}
+	}
 
-							JOptionPane.showMessageDialog(view,
-									"Communication to host was successful.",
-									"Success", JOptionPane.INFORMATION_MESSAGE);
+	private class RemoveServerHandle implements ActionListener {
 
-							model.registerServer(new Recipient(addr
-									.getAddress(), Integer.parseInt(AppConfig
-									.getProperty("port"))));
-						} else {
-							JOptionPane.showMessageDialog(view,
-									"Unable to reach host.", "Error",
-									JOptionPane.ERROR_MESSAGE);
-						}
-					} catch (IOException e1) {
-						JOptionPane.showMessageDialog(view,
-								"A network connection error occurred.",
-								"Error", JOptionPane.ERROR_MESSAGE);
-
-					}
-
-				} catch (UnknownHostException e1) {
-					JOptionPane.showMessageDialog(view,
-							"Failed to determine host.", "Error",
-							JOptionPane.ERROR_MESSAGE);
-				}
-
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int opt = JOptionPane.showConfirmDialog(view,
+					"Are you sure you want to remove the selected server?",
+					"Confirm Deletion", JOptionPane.OK_CANCEL_OPTION);
+			if (opt == JOptionPane.OK_OPTION) {
+				int row = view.getSelectedServer();
+				model.removeServer(row);
 			}
 		}
+
+	}
+
+	private class PingServerHandle implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int server = view.getSelectedServer();
+			model.pingServer(server);
+		}
+
+	}
+	
+	private class ConnectToServerHandle implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int select = view.getSelectedServer();
+			model.connectTo(select);
+		}
+		
 	}
 
 }

@@ -3,6 +3,7 @@ package com.uct.cs.wsintelliauction.client.frontend.views;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -26,7 +27,7 @@ public class MainWindowView extends View<MainWindowModel> {
 	 */
 	protected void initialize() {
 		frame = new JFrame("Client Application");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.setContentPane(this);
 		setLayout(new BorderLayout(0, 0));
 		tabs = new JTabbedPane(JTabbedPane.TOP);
@@ -49,4 +50,13 @@ public class MainWindowView extends View<MainWindowModel> {
 		});
 	}
 
+	public void addWindowListener(WindowListener l) {
+		frame.addWindowListener(l);
+	}
+	
+	public JFrame getFrame() {
+		return frame;
+	}
+	
+  
 }

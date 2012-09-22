@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,22 +17,18 @@ import org.hibernate.service.ServiceRegistryBuilder;
 import com.uct.cs.wsintelliauction.util.AppConfig;
 import com.uct.cs.wsintelliauction.util.ErrorLogger;
 
-
 /**
  * 
- * Manages all object-relational database configuration and transactions,
- * using the Hibernate library, with annotations.
- * Configuration settings for this manager are specified by the
- * 'hibernate_config' property in the application property file.
- * The manager implements all basic database query functions, however
- * the {@link DatabaseManager.query()} method allows for execution
- * of HQL queries, providing greater control than the convenience methods. 
- * <br/>
- * <b>Note</b>
- * <br/>
+ * Manages all object-relational database configuration and transactions, using
+ * the Hibernate library, with annotations. Configuration settings for this
+ * manager are specified by the 'hibernate_config' property in the application
+ * property file. The manager implements all basic database query functions,
+ * however the {@link DatabaseManager.query()} method allows for execution of
+ * HQL queries, providing greater control than the convenience methods. <br/>
+ * <b>Note</b> <br/>
  * All persistent classes must be annotated with the {@link javax.persistence}
- * library annotations. All persistent classes must also be specified
- * in the hibernate configuration XML file as an element.
+ * library annotations. All persistent classes must also be specified in the
+ * hibernate configuration XML file as an element.
  * 
  * @author James Lewis
  * 
@@ -53,7 +51,6 @@ public class DatabaseManager {
 	 */
 	public DatabaseManager() {
 		configureSessionFactory();
-
 	}
 
 	/**
@@ -202,7 +199,13 @@ public class DatabaseManager {
 					configuration.getProperties()).buildServiceRegistry();
 			sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 		} catch (HibernateException e) {
+			JOptionPane
+					.showMessageDialog(
+							null,
+							e.toString(),
+							"Fatal Error", JOptionPane.ERROR_MESSAGE);
 			ErrorLogger.log(e.getMessage());
+			System.exit(1);
 		}
 	}
 

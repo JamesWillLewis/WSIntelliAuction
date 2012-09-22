@@ -1,11 +1,11 @@
 package com.uct.cs.wsintelliauction.client.frontend;
 
+import com.uct.cs.wsintelliauction.client.backend.ClientResourceManager;
 import com.uct.cs.wsintelliauction.client.frontend.modules.MainWindowModule;
 import com.uct.cs.wsintelliauction.gui.WindowManager;
 
 public class ClientWindowManager extends WindowManager {
 
-	public static final int NUM_WINDOWS = 1;
 
 	public MainWindowModule mainWindowModule;
 
@@ -15,15 +15,21 @@ public class ClientWindowManager extends WindowManager {
 	 * @param taskmanager
 	 *            Task manager.
 	 */
-	public ClientWindowManager() {
-		mainWindowModule = new MainWindowModule();
+	public ClientWindowManager(ClientResourceManager resourceManager) {
+		super(resourceManager);
+		mainWindowModule = new MainWindowModule(resourceManager);
 	}
+
 
 	/**
 	 * Launch a new main window instance.
 	 */
 	public void launchMainWindow() {
 		mainWindowModule.display();
+	}
+	
+	public MainWindowModule getMainWindowModule() {
+		return mainWindowModule;
 	}
 
 }

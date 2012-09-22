@@ -1,5 +1,6 @@
 package com.uct.cs.wsintelliauction.net;
 
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -13,8 +14,12 @@ import java.net.UnknownHostException;
  * @author James Lewis
  * @see InetAddress
  */
-public class Recipient {
+public class Recipient implements Serializable {
 
+	/**
+	 * Serial key
+	 */
+	private static final long serialVersionUID = 4168758408299185596L;
 	/**
 	 * Host name of the recipient
 	 */

@@ -2,9 +2,11 @@ package com.uct.cs.wsintelliauction.server.frontend.modules;
 
 import com.uct.cs.wsintelliauction.gui.Module;
 import com.uct.cs.wsintelliauction.gui.modules.ConsoleTabModule;
+import com.uct.cs.wsintelliauction.server.backend.ServerResourceManager;
 import com.uct.cs.wsintelliauction.server.frontend.controls.MainWindowController;
 import com.uct.cs.wsintelliauction.server.frontend.models.MainWindowModel;
 import com.uct.cs.wsintelliauction.server.frontend.views.MainWindowView;
+import com.uct.cs.wsintelliauction.util.ResourceManager;
 
 
 public class MainWindowModule extends
@@ -19,19 +21,20 @@ public class MainWindowModule extends
 	private ServerTabModule serverTabModule;
 	private ConsoleTabModule consoleTabModule;
 
-	public MainWindowModule() {
-		model = new MainWindowModel();
+	public MainWindowModule(ServerResourceManager resourceManager) {
+		super(resourceManager);
+		model = new MainWindowModel(resourceManager);
 		view = new MainWindowView(model);
 		controller = new MainWindowController(view, model );
 
-		auctionTabModule = new AuctionTabModule();
-		channelTabModule = new ChannelTabModule();
-		clientsTabModule = new ClientsTabModule();
-		databaseTabModule = new DatabaseTabModule();
-		deviceTabModule = new DeviceTabModule();
-		leasesTabModule = new LeasesTabModule();
-		serverTabModule = new ServerTabModule();
-		consoleTabModule = new ConsoleTabModule();
+		auctionTabModule = new AuctionTabModule(resourceManager);
+		channelTabModule = new ChannelTabModule(resourceManager);
+		clientsTabModule = new ClientsTabModule(resourceManager);
+		databaseTabModule = new DatabaseTabModule(resourceManager);
+		deviceTabModule = new DeviceTabModule(resourceManager);
+		leasesTabModule = new LeasesTabModule(resourceManager);
+		serverTabModule = new ServerTabModule(resourceManager);
+		consoleTabModule = new ConsoleTabModule(resourceManager);
 
 		initTabs();
 	}

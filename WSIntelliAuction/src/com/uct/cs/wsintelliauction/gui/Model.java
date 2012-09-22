@@ -1,5 +1,9 @@
 package com.uct.cs.wsintelliauction.gui;
 
+import com.uct.cs.wsintelliauction.util.ResourceManager;
+
+
+
 /**
  * Manages all underlying data for a particular view and controller.
  * The model has no visibility of the view and controller. The controller and view
@@ -10,10 +14,12 @@ package com.uct.cs.wsintelliauction.gui;
  * @author James Lewis
  *
  */
-public abstract class Model{
+public abstract class Model <E extends ResourceManager>{
 	
+	protected E resourceManager;
 
-	public Model() {
+	public Model(E resourceManager) {
+		this.resourceManager = resourceManager;
 		reset();
 	}
 	

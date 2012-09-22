@@ -6,11 +6,13 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.concurrent.locks.ReentrantLock;
 
 import com.uct.cs.wsintelliauction.net.message.Message;
+import com.uct.cs.wsintelliauction.net.message.CloseConnectionMessage;
 import com.uct.cs.wsintelliauction.util.ErrorLogger;
 
 
@@ -74,17 +76,6 @@ public class MessageSocket {
 		}
 	}
 
-	/**
-	 * Close the input and output streams.
-	 */
-	public void closeStreams() {
-		try {
-			inputStream.close();
-			outputStream.close();
-		} catch (IOException e) {
-			ErrorLogger.log("Error while closing object IO socket streams.");
-		}
-	}
 
 	/**
 	 * Close the socket.
@@ -117,7 +108,9 @@ public class MessageSocket {
 		} catch (SocketException e) {
 			if (!socket.isClosed())
 				ErrorLogger.log(e.getMessage());
-
+			else{
+				//socket stream closed
+			}
 			return false;
 		} catch (IOException e) {
 			ErrorLogger
@@ -140,11 +133,14 @@ public class MessageSocket {
 			m = (Message) objectInputStream.readObject();
 
 		} catch (SocketException e) {
-
-			if (!socket.isClosed())
-				ErrorLogger.log(e.getMessage());
+			if (!socket.isClosed()){
+				ErrorLogger.log("Socket exception occurred on read stream operation.");
+			} else{
+				//socket closed
+			}
 		} catch (IOException e) {
-			ErrorLogger.log(e.getMessage());
+			ErrorLogger.log("IO exception occurred on read stream operation: Recipient probably disconnected without notice.");
+			m = new CloseConnectionMessage(false);	
 		} catch (ClassNotFoundException e) {
 			ErrorLogger
 					.log("Class type of object message read from object input stream invalid.");
@@ -152,5 +148,11 @@ public class MessageSocket {
 
 		return m;
 	}
+
+	public InetAddress getInetAddress() {
+		return socket.getInetAddress();
+	}
+	
+	
 
 }

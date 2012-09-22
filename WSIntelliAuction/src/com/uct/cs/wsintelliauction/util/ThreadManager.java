@@ -19,7 +19,7 @@ public final class ThreadManager {
 	/**
 	 * Number of worker threads in the thread pool.
 	 */
-	public static final int THREAD_POOL_SIZE = 32;
+	public static final int THREAD_POOL_SIZE = 128;
 	/**
 	 * Maximum shutdown time allowed for global thread shutdown.
 	 */
@@ -209,5 +209,6 @@ public final class ThreadManager {
 		pauseThisForMillisIgnoreInterupt((seconds * MILLIS_PER_SECONDS)
 				+ millis);
 	}
+	
 
 }

@@ -1,5 +1,7 @@
 package com.uct.cs.wsintelliauction.gui;
 
+import com.uct.cs.wsintelliauction.util.ResourceManager;
+
 
 
 /**
@@ -14,6 +16,14 @@ package com.uct.cs.wsintelliauction.gui;
  * 
  */
 public abstract class WindowManager {
+	
+	protected ResourceManager resourceManager;
 
+	public WindowManager(ResourceManager resourceManager) {
+		this.resourceManager = resourceManager;
+	}
+	
+	
+	
 
 }

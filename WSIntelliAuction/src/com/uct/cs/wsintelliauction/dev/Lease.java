@@ -74,7 +74,7 @@ public class Lease
 	 * @return double Power Limitation of channel in mW
 	 */
 	public double getPowerLimitation() {
-		return ChannelLeased.getPowerLimit();
+		return ChannelLeased.getPowerLimitation();
 	}
 	
 	/**

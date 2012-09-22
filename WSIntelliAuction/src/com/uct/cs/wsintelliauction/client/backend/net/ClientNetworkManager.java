@@ -9,17 +9,26 @@ import com.uct.cs.wsintelliauction.net.Recipient;
 import com.uct.cs.wsintelliauction.net.message.Message;
 import com.uct.cs.wsintelliauction.util.ErrorLogger;
 import com.uct.cs.wsintelliauction.util.EventLogger;
+import com.uct.cs.wsintelliauction.util.ResourceManager;
 
 
-public class ClientNetworkManager implements NetworkManager {
+public class ClientNetworkManager extends NetworkManager {
 
+	/**
+	 * Network connectiont to central server
+	 */
 	private NetworkConnection serverConnection;
 
-	private AtomicBoolean isConnected;
+	/**
+	 * If connection is active
+	 */
+	private AtomicBoolean connected;
 
-	public ClientNetworkManager() {
+
+	public ClientNetworkManager(ResourceManager resourceManager) {
+		super(resourceManager);
 		serverConnection = null;
-		isConnected = new AtomicBoolean(false);
+		connected = new AtomicBoolean(false);
 	}
 
 	/**
@@ -31,13 +40,13 @@ public class ClientNetworkManager implements NetworkManager {
 	 */
 	public boolean connectTo(Recipient server) {
 		try {
-			serverConnection = new NetworkConnection(server);
+			serverConnection = new NetworkConnection(server, resourceManager.getMessageParser());
 			EventLogger.log("Client now connected to server: "
 					+ server.getIPAddressString() + " on port: "
 					+ server.getPortNumber());
-			isConnected.set(true);
+			connected.set(true);
 			return true;
-		} catch (IOException e) {
+		} catch (Exception e) {
 			ErrorLogger.log(e.getMessage());
 			return false;
 		}
@@ -47,22 +56,20 @@ public class ClientNetworkManager implements NetworkManager {
 	 * Disconnect the client from the server.
 	 */
 	public void disconnect() {
-		if (isConnected.get()) {
-			serverConnection.closeConnection();
-			isConnected.set(false);
+		if (connected.get()) {
+			serverConnection.tellRecipientToDisconnect(true);
+			connected.set(false);
 		}
 	}
 
 	public void dispatchMessage(Message m) {
-		if (isConnected.get())
-			serverConnection.sendMessage(m);
+		if (connected.get())
+			serverConnection.enqueueMessage(m);
 	}
 
-	public Message consumeMessage() {
-		if (isConnected.get())
-			return serverConnection.consumeMessage();
-		else
-			return null;
+	@Override
+	public void close() {
+		disconnect();
 	}
 
 }

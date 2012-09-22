@@ -7,7 +7,7 @@
   	
 
 <session-factory>
-  	  	
+
 	<property name="show_sql">true</property>
 	<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 	<property name="hibernate.connection.driver_class">org.gjt.mm.mysql.Driver</property>
@@ -16,7 +16,7 @@
 	<property name="hibernate.connection.password">s1lentk1ll</property>
 	<property name="hibernate.hbm2ddl.auto">update</property>
 	
-	<mapping class="wsintelliauction.db.TestObject"/>
+	<mapping class="com.uct.cs.wsintelliauction.dev.Channel"/>
 	
   </session-factory>
 </hibernate-configuration> 

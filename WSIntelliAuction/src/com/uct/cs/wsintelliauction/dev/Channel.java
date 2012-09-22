@@ -1,13 +1,23 @@
 package com.uct.cs.wsintelliauction.dev;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+
+
+@Entity
 public class Channel 
 {
+	private Long id;
 	/*
 	 * Self explanatory attributes.
 	 */
 	private int ChannelNumber, LowerBound, UpperBound;
 	private double PowerLimitation;
-	boolean PUState;
+	boolean PUOwned;
 	
 	/**
 	 * Constructs a channel with the specified properties.
@@ -21,57 +31,73 @@ public class Channel
 	public Channel(int ChannelNumber,boolean PUState,int LowerBound,int UpperBound,double PowerLimitation)
 	{
 		this.ChannelNumber = ChannelNumber;
-		this.PUState = PUState;
+		this.PUOwned = PUState;
 		this.LowerBound = LowerBound;
 		this.UpperBound = UpperBound;
 		this.PowerLimitation = PowerLimitation;
 	}
 	
 	/**
-	 * Set the current primary users state
-	 * @param boolean PUState
+	 * All persistent classes must have a default constructor.
 	 */
-	public void setPUState(boolean PUState){
-		this.PUState = PUState;
-	}
+	public Channel(){}
 	
-	/**
-	 * Returns the current channels index number.
-	 * @return int ChannelNumber
-	 */
-	public int getChannelNumber(){
+
+	@Id
+	@GeneratedValue(generator="increment")
+	@GenericGenerator(name="increment", strategy = "increment")
+	public Long getId() {
+		return id;
+	}
+
+	public int getChannelNumber() {
 		return ChannelNumber;
 	}
-	
-	/**
-	 * Returns the current primary users state.
-	 * @return boolean PUState
-	 */
-	public boolean getPUState(){
-		return PUState;
+
+	public void setChannelNumber(int channelNumber) {
+		ChannelNumber = channelNumber;
 	}
-	
-	/**
-	 * Returns the frequency lower bound.
-	 * @return int LowerBound
-	 */
-	public int getLowerBound(){
+
+	public int getLowerBound() {
 		return LowerBound;
 	}
-	
-	/**
-	 * Returns the frequency upper bound.
-	 * @return int UpperBound
-	 */
-	public int getUpperBound(){
+
+	public void setLowerBound(int lowerBound) {
+		LowerBound = lowerBound;
+	}
+
+	public int getUpperBound() {
 		return UpperBound;
 	}
-	
-	/**
-	 * Returns the power limitations for the channel
-	 * @return double PowerLimitation
-	 */
-	public double getPowerLimit(){
+
+	public void setUpperBound(int upperBound) {
+		UpperBound = upperBound;
+	}
+
+	public double getPowerLimitation() {
 		return PowerLimitation;
 	}
+
+	public void setPowerLimitation(double powerLimitation) {
+		PowerLimitation = powerLimitation;
+	}
+
+	public boolean isPUOwned() {
+		return PUOwned;
+	}
+
+	public void setPUOwned(boolean pUState) {
+		PUOwned = pUState;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	
+	
+	
+	
+	
+	
 }

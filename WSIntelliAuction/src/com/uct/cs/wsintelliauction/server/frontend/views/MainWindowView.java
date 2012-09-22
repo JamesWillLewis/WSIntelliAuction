@@ -3,6 +3,7 @@ package com.uct.cs.wsintelliauction.server.frontend.views;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -11,7 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import com.uct.cs.wsintelliauction.gui.View;
-import com.uct.cs.wsintelliauction.gui.modules.ConsoleTabView;
 import com.uct.cs.wsintelliauction.server.frontend.models.MainWindowModel;
 
 
@@ -59,6 +59,7 @@ public class MainWindowView extends View<MainWindowModel> {
 		tabs = new JTabbedPane(JTabbedPane.TOP);
 		add(tabs);
 
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.setPreferredSize(new Dimension(800, 600));
 		frame.pack();
 		frame.setLocationRelativeTo(null);
@@ -75,6 +76,14 @@ public class MainWindowView extends View<MainWindowModel> {
 				frame.setVisible(true);
 			}
 		});
+	}
+
+	public void addWindowListener(WindowListener mainWindowListener) {
+		frame.addWindowListener(mainWindowListener);
+	}
+	
+	public JFrame getFrame() {
+		return frame;
 	}
 
 }

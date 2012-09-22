@@ -1,10 +1,18 @@
 package com.uct.cs.wsintelliauction.gui;
 
-public abstract class Module<M extends Model, V extends View<?>, C extends Controller<?,?>> {
+import com.uct.cs.wsintelliauction.util.ResourceManager;
+
+public abstract class Module<M extends Model, V extends View<?>, C extends Controller<?, ?>> {
 
 	protected M model;
 	protected V view;
 	protected C controller;
+
+	protected ResourceManager resourceManager;
+
+	public Module(ResourceManager resourceManager) {
+		this.resourceManager = resourceManager;
+	}
 
 	/**
 	 * Display the module's view.
@@ -34,9 +42,5 @@ public abstract class Module<M extends Model, V extends View<?>, C extends Contr
 	public void setController(C controller) {
 		this.controller = controller;
 	}
-	
-	
-	
-	
-	
+
 }

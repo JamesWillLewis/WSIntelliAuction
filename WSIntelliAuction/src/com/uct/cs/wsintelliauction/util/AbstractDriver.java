@@ -1,7 +1,5 @@
 package com.uct.cs.wsintelliauction.util;
 
-
-
 /**
  * Driver superclass. All executable applications in the system must derive an
  * implementation of this class. The driver is the entry point for any
@@ -15,15 +13,7 @@ package com.uct.cs.wsintelliauction.util;
  */
 public abstract class AbstractDriver {
 
-	/**
-	 * Parameter parser used for this driver.
-	 */
-	protected RuntimeParamParser paramParser;
-
-	/**
-	 * 
-	 */
-	public final boolean DEBUG;
+	protected String[] args;
 
 	/**
 	 * Construct new driver.
@@ -34,16 +24,8 @@ public abstract class AbstractDriver {
 	 *            Task manager to handle tasks.
 	 */
 	public AbstractDriver(String[] args) {
-		this.paramParser = new RuntimeParamParser(args);
-		this.DEBUG = paramParser.getParam(RuntimeParamParser.DEBUG_OPTION).flagged;
-		init();
+		this.args = args;
 	}
-
-	/**
-	 * Initiate the driver. Always called by the super constructor, to ensure
-	 * program can't be executed before initiation has occurred.
-	 */
-	protected abstract void init();
 
 	/**
 	 * Begin program execution. Always called after the driver has been
@@ -51,11 +33,5 @@ public abstract class AbstractDriver {
 	 */
 	public abstract void exec();
 
-	/**
-	 * Ends the program, shutting down various services and destroying
-	 * resources, closing streams, etc. All post-execution operations are done
-	 * here.
-	 */
-	public abstract void end();
 
 }

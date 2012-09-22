@@ -74,12 +74,12 @@ public class CognativeDevice implements DeviceDriver
 				//if the PU has been off-line for longer than the reconnect threshold, then they have passed the threshold test and 
 				if((System.currentTimeMillis() - ChannelShadow[i].getTimeStamp()) > RECONNECTION_THREASHOLD) 			
 				{
-					Channel[i].setPUState(Math.random() > PROBABILITY_OF_PU_STATE_SWITCH); //there is a PROBABILITY_OF_PU_STATE_SWITCH chance of user changing states (connected/disconnected)
+					Channel[i].setPUOwned(Math.random() > PROBABILITY_OF_PU_STATE_SWITCH); //there is a PROBABILITY_OF_PU_STATE_SWITCH chance of user changing states (connected/disconnected)
 				}
 			}
 			else //Otherwise if the user was online, then no threshold exists
 			{
-				Channel[i].setPUState(Math.random() > PROBABILITY_OF_PU_STATE_SWITCH); //PROBABILITY_OF_PU_STATE_SWITCH chance of user going off-line and online.
+				Channel[i].setPUOwned(Math.random() > PROBABILITY_OF_PU_STATE_SWITCH); //PROBABILITY_OF_PU_STATE_SWITCH chance of user going off-line and online.
 			}
 		}
 		
@@ -88,9 +88,9 @@ public class CognativeDevice implements DeviceDriver
 	public boolean hasChanged(int index) 
 	{
 		//if the users state has changed 
-		if(Channel[index].getPUState() != ChannelShadow[index].getPUState()) 
+		if(Channel[index].isPUOwned() != ChannelShadow[index].getPUState()) 
 		{	
-			ChannelShadow[index].setPUState(Channel[index].getPUState()); //Change the channel heuristics appropriately.
+			ChannelShadow[index].setPUState(Channel[index].isPUOwned()); //Change the channel heuristics appropriately.
 			return true;	
 		}
 		

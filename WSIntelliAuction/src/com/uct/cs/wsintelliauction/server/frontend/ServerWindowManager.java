@@ -1,7 +1,11 @@
 package com.uct.cs.wsintelliauction.server.frontend;
 
+
+
 import com.uct.cs.wsintelliauction.gui.WindowManager;
+import com.uct.cs.wsintelliauction.server.backend.ServerResourceManager;
 import com.uct.cs.wsintelliauction.server.frontend.modules.MainWindowModule;
+import com.uct.cs.wsintelliauction.util.ResourceManager;
 
 /**
  * Implementation of 
@@ -11,7 +15,6 @@ import com.uct.cs.wsintelliauction.server.frontend.modules.MainWindowModule;
  */
 public class ServerWindowManager extends WindowManager {
 
-	public static final int NUM_WINDOWS = 1;
 	
 	public MainWindowModule mainWindowModule;
 
@@ -19,8 +22,9 @@ public class ServerWindowManager extends WindowManager {
 	 * Construct new window manager.
 	 * @param taskmanager Task manager.
 	 */
-	public ServerWindowManager() {
-		mainWindowModule = new MainWindowModule();
+	public ServerWindowManager(ServerResourceManager resourceManager) {
+		super(resourceManager);
+		mainWindowModule = new MainWindowModule(resourceManager);
 	}
 	
 	/**

@@ -1,26 +1,29 @@
 package com.uct.cs.wsintelliauction.server.backend.net;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.net.UnknownHostException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.uct.cs.wsintelliauction.net.NetworkConnection;
 import com.uct.cs.wsintelliauction.net.NetworkManager;
+import com.uct.cs.wsintelliauction.net.message.CloseConnectionMessage;
 import com.uct.cs.wsintelliauction.util.AppConfig;
 import com.uct.cs.wsintelliauction.util.ErrorLogger;
 import com.uct.cs.wsintelliauction.util.EventLogger;
+import com.uct.cs.wsintelliauction.util.ResourceManager;
 import com.uct.cs.wsintelliauction.util.ThreadManager;
 
+public class ServerNetworkManager extends NetworkManager {
 
-public class ServerNetworkManager implements NetworkManager {
-
+	/**
+	 * If server is running
+	 */
 	private AtomicBoolean serverActive;
 	/**
 	 * Arraylist of client connections wrapped in a synchronized container.
@@ -34,7 +37,8 @@ public class ServerNetworkManager implements NetworkManager {
 
 	private ServerSocket serverSocket;
 
-	public ServerNetworkManager() {
+	public ServerNetworkManager(ResourceManager resourceManager) {
+		super(resourceManager);
 		clientObjects = new ArrayBlockingQueue<>(MAX_CLIENT_CONNECTIONS, true);
 		serverActive = new AtomicBoolean(false);
 	}
@@ -44,17 +48,19 @@ public class ServerNetworkManager implements NetworkManager {
 	 * connection requests.
 	 */
 	public void startServer() {
-		try {
-			// launch the server
-			serverSocket = new ServerSocket(Integer.parseInt(AppConfig
-					.getProperty("port")), MAX_CLIENT_CONNECTIONS);
-			EventLogger.log("Server now running on host-address: "
-					+ serverSocket.getInetAddress().getHostName()
-					+ " on port: " + serverSocket.getLocalPort());
-			serverActive.set(true);
-			beginAcceptClientCycle();
-		} catch (IOException e) {
-			ErrorLogger.log(e.getMessage());
+		if (!serverActive.get()) {
+			try {
+				// launch the server
+				serverSocket = new ServerSocket(Integer.parseInt(AppConfig
+						.getProperty("port")), MAX_CLIENT_CONNECTIONS);
+				EventLogger.log("Server now running on host-address: "
+						+ InetAddress.getLocalHost().getHostAddress()
+						+ " on port: " + serverSocket.getLocalPort());
+				serverActive.set(true);
+				beginAcceptClientCycle();
+			} catch (IOException e) {
+				ErrorLogger.log(e.getMessage());
+			}
 		}
 	}
 
@@ -66,8 +72,11 @@ public class ServerNetworkManager implements NetworkManager {
 			serverActive.set(false);
 			try {
 				serverSocket.close();
-				
-				//add code to disconnect each client socket
+
+				for(NetworkConnection con: clientObjects){
+					con.tellRecipientToDisconnect(true);
+				}
+				EventLogger.log("Server has shut down - all connections closed.");
 			} catch (IOException e) {
 				ErrorLogger.log(e.getMessage());
 			}
@@ -109,15 +118,15 @@ public class ServerNetworkManager implements NetworkManager {
 						&& serverActive.get()) {
 					// accept the connection
 					NetworkConnection connection = new NetworkConnection(
-							incoming);
+							incoming, resourceManager.getMessageParser());
 					clientObjects.add(connection);
-					
+
 				} else {
 					// reject the connection
 					incoming.close();
 				}
 			} catch (SocketException e) {
-				if(serverSocket.isClosed())
+				if (serverSocket.isClosed())
 					break;
 				else
 					ErrorLogger.log(e.getMessage());
@@ -130,6 +139,7 @@ public class ServerNetworkManager implements NetworkManager {
 
 	/**
 	 * Returns the next client from the client connect queue.
+	 * 
 	 * @return
 	 */
 	public NetworkConnection pollNextClient() {
@@ -139,6 +149,40 @@ public class ServerNetworkManager implements NetworkManager {
 			// clients queue is closed
 			return null;
 		}
+	}
+
+	@Override
+	public void close() {
+		stopServer();
+	}
+
+	public AtomicBoolean getServerActive() {
+		return serverActive;
+	}
+
+	public InetAddress getServerHostAddress() {
+		if(serverSocket != null){
+			try {
+				return InetAddress.getLocalHost();
+			} catch (UnknownHostException e) {
+				ErrorLogger.log(e.toString());
+				return null;
+			}
+		} else{
+			return null;
+		}
+	}
+
+	public int getServerPortNumber() {
+		if(serverSocket != null){
+			return serverSocket.getLocalPort();
+		} else{
+			return -1;
+		}
+	}
+	
+	public int getNumberOfConnections(){
+		return clientObjects.size();
 	}
 
 }

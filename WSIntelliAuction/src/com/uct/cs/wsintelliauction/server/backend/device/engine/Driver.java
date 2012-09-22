@@ -39,7 +39,6 @@ public class Driver extends AbstractDriver implements Runnable
 		Running.set(true);
 	}
 
-	@Override
 	public void init() 
 	{
 		//Setup the device..
@@ -48,8 +47,7 @@ public class Driver extends AbstractDriver implements Runnable
 		UpdateSpeed = Dev.getDefaultUpdateSpeed();
 	}
 
-	@Override
-	public void end() 
+	public void close() 
 	{
 		Running.set(false);
 	}

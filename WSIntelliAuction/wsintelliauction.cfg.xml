@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Configuration Properties</comment>
+<entry key="debug">false</entry>
+<entry key="port">32548</entry>
+<entry key="hibernate_config">hibernate.cfg.xml</entry>
+<entry key="skin">com.jtattoo.plaf.hifi.HiFiLookAndFeel</entry>
+</properties>

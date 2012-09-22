@@ -1,5 +1,8 @@
 package com.uct.cs.wsintelliauction.server.frontend.controls;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import com.uct.cs.wsintelliauction.gui.Controller;
 import com.uct.cs.wsintelliauction.server.frontend.models.ServerTabModel;
 import com.uct.cs.wsintelliauction.server.frontend.views.ServerTabView;
@@ -14,8 +17,22 @@ public class ServerTabController extends
 
 	@Override
 	protected void assignListeners() {
-		// TODO Auto-generated method stub
+		view.getBtnNewButton().addActionListener(new ServerStartStopButtonClickedEvent());
+	}
+	
+	public class ServerStartStopButtonClickedEvent implements ActionListener{
 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(model.isServerOn()){
+				model.turnOffServer();
+				view.getBtnNewButton().setText("Start Server");
+			} else{
+				model.turnOnServer();
+				view.getBtnNewButton().setText("Stop Server");
+			}
+			view.refreshServerStats();
+		}	
 	}
 
 }

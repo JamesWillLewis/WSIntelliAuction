@@ -26,6 +26,9 @@ public class NetworkTabView extends View<NetworkTabModel> {
 
 	private JTable serversTable;
 	private JButton btnRegisterNewServer;
+	private JButton btnRemoveServer;
+	private JButton btnPing;
+	private JButton btnConnectTo;
 
 	@Override
 	public String toString() {
@@ -35,6 +38,7 @@ public class NetworkTabView extends View<NetworkTabModel> {
 	public JButton getBtnRegisterNewServer() {
 		return btnRegisterNewServer;
 	}
+	
 
 
 	/**
@@ -73,16 +77,16 @@ public class NetworkTabView extends View<NetworkTabModel> {
 
 		registeredServersPanel.add(btnRegisterNewServer, "flowx,cell 0 1");
 
-		JButton btnRemoveServer = new JButton("Remove Server");
+		btnRemoveServer = new JButton("Remove Server");
 		registeredServersPanel.add(btnRemoveServer, "cell 0 1");
 
-		JButton btnConnectTo = new JButton("Connect To");
+		btnConnectTo = new JButton("Connect To");
 		registeredServersPanel.add(btnConnectTo, "flowx,cell 1 1,alignx right");
 
 		JButton btnNewButton = new JButton("Disconnect From");
 		registeredServersPanel.add(btnNewButton, "cell 1 1,alignx right");
 
-		JButton btnPing = new JButton("Ping");
+		btnPing = new JButton("Ping");
 		registeredServersPanel.add(btnPing, "cell 1 1");
 
 		JPanel connectionInfoPanel = new JPanel();
@@ -102,4 +106,17 @@ public class NetworkTabView extends View<NetworkTabModel> {
 	}
 
 
+	public JButton getBtnRemoveServer() {
+		return btnRemoveServer;
+	}
+	
+	public int getSelectedServer(){
+		return serversTable.getSelectedRow();
+	}
+	public JButton getBtnPing() {
+		return btnPing;
+	}
+	public JButton getBtnConnectTo() {
+		return btnConnectTo;
+	}
 }

@@ -1,5 +1,7 @@
 package com.uct.cs.wsintelliauction.net;
 
+import com.uct.cs.wsintelliauction.util.ResourceManager;
+
 /**
  * Interface defining an application's network manager.
  * A network manager must handle the creation and management of
@@ -9,6 +11,15 @@ package com.uct.cs.wsintelliauction.net;
  * @author James Lewis
  *
  */
-public interface NetworkManager {
+public abstract class NetworkManager {
+	
+	
+	protected ResourceManager resourceManager;
+
+	public NetworkManager(ResourceManager resourceManager) {
+		this.resourceManager = resourceManager;
+	}
+	
+	public abstract void close();
 	
 }

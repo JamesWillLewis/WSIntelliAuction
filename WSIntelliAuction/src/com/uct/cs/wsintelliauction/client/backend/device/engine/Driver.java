@@ -26,7 +26,6 @@ public class Driver extends AbstractDriver implements Runnable
 		}
 	}
 
-	@Override
 	protected void init() 
 	{
 		t = new Thread(this);
@@ -39,7 +38,6 @@ public class Driver extends AbstractDriver implements Runnable
 		t.start();
 	}
 
-	@Override
 	public void end() 
 	{
 		t.interrupt();	
