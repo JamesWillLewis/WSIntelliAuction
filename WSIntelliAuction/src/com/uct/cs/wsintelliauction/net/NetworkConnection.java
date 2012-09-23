@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.uct.cs.wsintelliauction.net.message.CloseConnectionMessage;
+import com.uct.cs.wsintelliauction.net.message.ConnectionMessage;
 import com.uct.cs.wsintelliauction.net.message.Message;
 import com.uct.cs.wsintelliauction.util.ErrorLogger;
 import com.uct.cs.wsintelliauction.util.EventLogger;
@@ -31,8 +34,14 @@ public class NetworkConnection {
 	 */
 	private boolean connectionActive;
 
+	/**
+	 * If accepting messages to append to dispatch queue
+	 */
 	private AtomicBoolean acceptEnqueue;
 
+	/**
+	 * If accepting consuming messages from receive queue
+	 */
 	private AtomicBoolean acceptConsume;
 
 	/**
@@ -81,7 +90,14 @@ public class NetworkConnection {
 	 */
 	private final static int CONNECTION_SHUTDOWN_TIMEOUT = 5;
 
-	private final MessageParser messageParser;
+	/**
+	 * Message parser to handle incoming messages
+	 */
+	private final MessageParser<?> messageParser;
+
+	private AtomicBoolean orderShutdown;
+
+	private CountDownLatch waitForCacheEmptyLatch;
 
 	/**
 	 * Establishes a network connection given a recipient. A new socket is
@@ -92,18 +108,24 @@ public class NetworkConnection {
 	 * @throws IOException
 	 *             If an error occurs while opening the socket.
 	 */
-	public NetworkConnection(Recipient recipient, MessageParser messageParser)
+	public NetworkConnection(Recipient recipient, MessageParser<?> messageParser)
 			throws IOException {
+		socket = new MessageSocket(recipient);
+		this.messageParser = messageParser;
+		initConnection();
+		beginIOListening();
+	}
+
+	public void initConnection() {
 		dispatchCache = new ArrayBlockingQueue<Message>(DISPATCH_Q_SIZE, true);
 		receiveCache = new ArrayBlockingQueue<Message>(RECEIVE_Q_SIZE, true);
-		socket = new MessageSocket(recipient);
 		connectionActive = true;
 		dispatching = new AtomicBoolean(false);
 		receiving = new AtomicBoolean(false);
 		acceptConsume = new AtomicBoolean(false);
 		acceptEnqueue = new AtomicBoolean(false);
-		this.messageParser = messageParser;
-		beginIOListening();
+		orderShutdown = new AtomicBoolean(false);
+		waitForCacheEmptyLatch = new CountDownLatch(2);
 	}
 
 	/**
@@ -115,16 +137,10 @@ public class NetworkConnection {
 	 * @throws IOException
 	 *             If an error occurs while opening the socket.
 	 */
-	public NetworkConnection(Socket s, MessageParser messageParser) {
-		dispatchCache = new ArrayBlockingQueue<Message>(DISPATCH_Q_SIZE);
-		receiveCache = new ArrayBlockingQueue<Message>(RECEIVE_Q_SIZE);
+	public NetworkConnection(Socket s, MessageParser<?> messageParser) {
 		socket = new MessageSocket(s);
-		connectionActive = true;
-		dispatching = new AtomicBoolean(false);
-		receiving = new AtomicBoolean(false);
-		acceptConsume = new AtomicBoolean(false);
-		acceptEnqueue = new AtomicBoolean(false);
 		this.messageParser = messageParser;
+		initConnection();
 		beginIOListening();
 	}
 
@@ -173,14 +189,19 @@ public class NetworkConnection {
 	/**
 	 * Pops the next message (in FIFO order) which was received.
 	 * 
-	 * @return Head of recieve queue
+	 * @return Head of receive queue
 	 */
 	public void submitToMessageParserRoutine() {
 		while (acceptConsume.get()) {
 			try {
 				Message parseNext = receiveCache.poll(BLOCKING_TIMEOUT,
 						TimeUnit.SECONDS);
-				if (parseNext != null && messageParser != null) {
+				if (orderShutdown.get() && parseNext == null) {
+					acceptConsume.set(false);
+					// all messages have been parsed
+					waitForCacheEmptyLatch.countDown();
+				} else if (parseNext != null && messageParser != null) {
+					// service message
 					messageParser.parseMessage(parseNext);
 				}
 			} catch (InterruptedException e) {
@@ -194,7 +215,7 @@ public class NetworkConnection {
 	 * 
 	 * @param m
 	 *            Message to send.
-	 * @return true if successful, false is unsuccesful
+	 * @return true if successful, false is unsuccessful
 	 */
 	public boolean enqueueMessage(Message m) {
 		boolean success = false;
@@ -220,7 +241,12 @@ public class NetworkConnection {
 			try {
 				Message sendNext = dispatchCache.poll(BLOCKING_TIMEOUT,
 						TimeUnit.SECONDS);
-				if (sendNext != null)
+
+				if (orderShutdown.get() && sendNext == null) {
+					dispatching.set(false);
+					// all messages have been dispatched
+					waitForCacheEmptyLatch.countDown();
+				} else if (sendNext != null)
 					socket.writeMessage(sendNext);
 			} catch (InterruptedException e) {
 				ErrorLogger.log(e.getMessage());
@@ -234,30 +260,26 @@ public class NetworkConnection {
 	 */
 	private void recieveListen() {
 		while (receiving.get()) {
-
+			// listen to the socket for an incoming message
 			Message m = socket.readMessage();
 
-			// recipient has informed that they want to disconnect
-			if (m instanceof CloseConnectionMessage) {
-				EventLogger.log("Received disconnect message from: "
-						+ socket.getInetAddress().getHostName());
-				// if the recipient was the initializer of the disconnect,
-				// acknowledge the disconnect.
-				if (((CloseConnectionMessage) m).isInitializer) {
-					tellRecipientToDisconnect(false);
-				}
-				closeConnection();
-			}
-
-			// blocking while attempting to submit received message to cache
-			if (m != null) {
-				boolean insertSuccess = false;
-				while (!insertSuccess && receiving.get()) {
-					try {
-						insertSuccess = receiveCache.offer(m, BLOCKING_TIMEOUT,
-								TimeUnit.SECONDS);
-					} catch (InterruptedException e) {
-						ErrorLogger.log(e.getMessage());
+			/*
+			 * Connection messages are handled prior to any other message type,
+			 * and are not appended to the queue, but parsed immediately.
+			 */
+			if (m instanceof ConnectionMessage) {
+				parseConnectionMessage((ConnectionMessage) m);
+			} else {
+				// blocking while attempting to submit received message to cache
+				if (m != null) {
+					boolean insertSuccess = false;
+					while (!insertSuccess && receiving.get()) {
+						try {
+							insertSuccess = receiveCache.offer(m,
+									BLOCKING_TIMEOUT, TimeUnit.SECONDS);
+						} catch (InterruptedException e) {
+							ErrorLogger.log(e.getMessage());
+						}
 					}
 				}
 			}
@@ -265,8 +287,31 @@ public class NetworkConnection {
 	}
 
 	/**
+	 * Process a connection management message. Immediate handling guarenteed.
+	 * 
+	 * @param m
+	 *            ConnectionMessage to parse
+	 */
+	private void parseConnectionMessage(ConnectionMessage m) {
+
+		// recipient has informed that they want to disconnect
+		if (m instanceof CloseConnectionMessage) {
+			EventLogger.log("Received disconnect message from: "
+					+ socket.getInetAddress().getHostName());
+			// if the recipient was the initializer of the disconnect,
+			// acknowledge the disconnect.
+			if (((CloseConnectionMessage) m).isInitializer) {
+				tellRecipientToDisconnect(false);
+			}
+			closeConnection();
+		}
+	}
+
+	/**
 	 * Request the recipient to disconnect from this socket.
-	 * @param isInitializer True if THIS application initialized the disconnect.
+	 * 
+	 * @param isInitializer
+	 *            True if THIS application initialized the disconnect.
 	 */
 	public void tellRecipientToDisconnect(boolean isInitializer) {
 		EventLogger.log("Informing recipient: "
@@ -292,15 +337,27 @@ public class NetworkConnection {
 		/*
 		 * dispatching stays true, allowing unsent messages to be sent.
 		 * acceptConsume stays true, allowing unconsumed messages to be
-		 * consumed.
+		 * consumed. Thread waits at latch for both caches to become empty, or
+		 * times out.
 		 */
 
-		// gives time for other messages to be consumed/sent.
-		ThreadManager.pauseThisForSeconds(CONNECTION_SHUTDOWN_TIMEOUT);
+		orderShutdown.set(true);
 
-		this.dispatching.set(false);
-		this.acceptConsume.set(false);
+		try {
+			// wait for receive and dispatch cache to become empty, or timeout.
+			boolean success = waitForCacheEmptyLatch.await(
+					CONNECTION_SHUTDOWN_TIMEOUT, TimeUnit.SECONDS);
+			if (!success) {
+				ErrorLogger
+						.log("Timed-out while waiting for connection caches to finish servicing.");
+			} else {
+				EventLogger.log("Shutdown procedure was successful.");
+			}
+		} catch (InterruptedException e) {
+			ErrorLogger.log(e.toString());
+		}
 
+		// close the socket and socket IO streams
 		this.socket.closeSocket();
 		this.connectionActive = false;
 		EventLogger.log("Connection closed to: "

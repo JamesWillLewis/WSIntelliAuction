@@ -23,11 +23,6 @@ public class ClientResourceManager extends ResourceManager {
 	 * Server network manager.
 	 */
 	private ClientNetworkManager networkManager;
-
-	/**
-	 * Database manager
-	 */
-	private DatabaseManager databaseManager;
 	
 	/**
 	 * Client message parser
@@ -50,7 +45,6 @@ public class ClientResourceManager extends ResourceManager {
 	@Override
 	public void initManagers() {
 		splashLoader.updateLoader("Establishing database connection", 40);
-		databaseManager = new DatabaseManager();
 		
 		splashLoader.updateLoader("Configuring network interface", 60);
 		networkManager = new ClientNetworkManager(this);
@@ -90,7 +84,6 @@ public class ClientResourceManager extends ResourceManager {
 	@Override
 	public void close() {
 		storeSerializedResources();
-		databaseManager.close();
 		networkManager.close();
 		ThreadManager.closeThreads();
 	}

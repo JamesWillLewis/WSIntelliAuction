@@ -71,12 +71,13 @@ public class ServerNetworkManager extends NetworkManager {
 		if (serverActive.get()) {
 			serverActive.set(false);
 			try {
+				//stop accepting incoming connection requests
 				serverSocket.close();
 
 				for(NetworkConnection con: clientObjects){
 					con.tellRecipientToDisconnect(true);
 				}
-				EventLogger.log("Server has shut down - all connections closed.");
+				EventLogger.log("Server has informed all connected clients of server shutdown.");
 			} catch (IOException e) {
 				ErrorLogger.log(e.getMessage());
 			}
@@ -126,8 +127,10 @@ public class ServerNetworkManager extends NetworkManager {
 					incoming.close();
 				}
 			} catch (SocketException e) {
-				if (serverSocket.isClosed())
-					break;
+				if (serverSocket.isClosed()){
+					//server socket shutdown
+					continue;
+				}
 				else
 					ErrorLogger.log(e.getMessage());
 			} catch (IOException e) {

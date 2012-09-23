@@ -6,7 +6,7 @@ package com.uct.cs.wsintelliauction.net.message;
  * @author James
  *
  */
-public class CloseConnectionMessage extends Message {
+public class CloseConnectionMessage extends ConnectionMessage {
 
 	/**
 	 * 
