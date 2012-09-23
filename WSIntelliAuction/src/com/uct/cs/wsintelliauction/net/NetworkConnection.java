@@ -1,11 +1,11 @@
 package com.uct.cs.wsintelliauction.net;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -32,7 +32,7 @@ public class NetworkConnection {
 	/**
 	 * If this network connection is open.
 	 */
-	private boolean connectionActive;
+	private volatile boolean connectionActive;
 
 	/**
 	 * If accepting messages to append to dispatch queue
@@ -95,9 +95,28 @@ public class NetworkConnection {
 	 */
 	private final MessageParser<?> messageParser;
 
+	/**
+	 * Order the shutdown of the connection. Unsent messages are sent, unparsed
+	 * messages are parsed. No new messages for dispatch will be accepted, and
+	 * no new received messages will be handled.
+	 */
 	private AtomicBoolean orderShutdown;
 
+	/**
+	 * Used to allow a disconnect procedure to wait for the caches to become
+	 * empty, or timeout.
+	 */
 	private CountDownLatch waitForCacheEmptyLatch;
+
+	/**
+	 * Recipient of this connection
+	 */
+	private InetAddress recipientAddress;
+
+	/**
+	 * The network manager which created this connection
+	 */
+	private NetworkManager<?> networkManager;
 
 	/**
 	 * Establishes a network connection given a recipient. A new socket is
@@ -108,24 +127,15 @@ public class NetworkConnection {
 	 * @throws IOException
 	 *             If an error occurs while opening the socket.
 	 */
-	public NetworkConnection(Recipient recipient, MessageParser<?> messageParser)
+	public NetworkConnection(Recipient recipient,
+			MessageParser<?> messageParser, NetworkManager<?> networkManager)
 			throws IOException {
 		socket = new MessageSocket(recipient);
 		this.messageParser = messageParser;
+		this.networkManager = networkManager;
 		initConnection();
 		beginIOListening();
-	}
-
-	public void initConnection() {
-		dispatchCache = new ArrayBlockingQueue<Message>(DISPATCH_Q_SIZE, true);
-		receiveCache = new ArrayBlockingQueue<Message>(RECEIVE_Q_SIZE, true);
-		connectionActive = true;
-		dispatching = new AtomicBoolean(false);
-		receiving = new AtomicBoolean(false);
-		acceptConsume = new AtomicBoolean(false);
-		acceptEnqueue = new AtomicBoolean(false);
-		orderShutdown = new AtomicBoolean(false);
-		waitForCacheEmptyLatch = new CountDownLatch(2);
+		recipient.setConnected(true);
 	}
 
 	/**
@@ -137,11 +147,29 @@ public class NetworkConnection {
 	 * @throws IOException
 	 *             If an error occurs while opening the socket.
 	 */
-	public NetworkConnection(Socket s, MessageParser<?> messageParser) {
+	public NetworkConnection(Socket s, MessageParser<?> messageParser,
+			NetworkManager<?> networkManager) {
 		socket = new MessageSocket(s);
 		this.messageParser = messageParser;
+		this.networkManager = networkManager;
 		initConnection();
 		beginIOListening();
+	}
+
+	/**
+	 * Set all fields for pre-IO-parsing environment.
+	 */
+	public void initConnection() {
+		this.recipientAddress = socket.getInetAddress();
+		dispatchCache = new ArrayBlockingQueue<Message>(DISPATCH_Q_SIZE, true);
+		receiveCache = new ArrayBlockingQueue<Message>(RECEIVE_Q_SIZE, true);
+		dispatching = new AtomicBoolean(false);
+		receiving = new AtomicBoolean(false);
+		acceptConsume = new AtomicBoolean(false);
+		acceptEnqueue = new AtomicBoolean(false);
+		orderShutdown = new AtomicBoolean(false);
+		waitForCacheEmptyLatch = new CountDownLatch(2);
+		connectionActive = true;
 	}
 
 	/**
@@ -149,7 +177,8 @@ public class NetworkConnection {
 	 * from the global thread pool.
 	 */
 	private void beginIOListening() {
-		if (connectionActive && !dispatching.get() && !receiving.get()) {
+		if (connectionActive && !dispatching.get() && !receiving.get()
+				&& !acceptEnqueue.get() && !acceptConsume.get()) {
 			Runnable dispatchThread = new Runnable() {
 
 				@Override
@@ -287,7 +316,7 @@ public class NetworkConnection {
 	}
 
 	/**
-	 * Process a connection management message. Immediate handling guarenteed.
+	 * Process a connection management message. Immediate handling guaranteed.
 	 * 
 	 * @param m
 	 *            ConnectionMessage to parse
@@ -299,11 +328,16 @@ public class NetworkConnection {
 			EventLogger.log("Received disconnect message from: "
 					+ socket.getInetAddress().getHostName());
 			// if the recipient was the initializer of the disconnect,
-			// acknowledge the disconnect.
-			if (((CloseConnectionMessage) m).isInitializer) {
+			// acknowledge the disconnect (if the recipient didn't locse contact).
+			if (((CloseConnectionMessage) m).isInitializer
+					&& !((CloseConnectionMessage) m).communicationFail) {
 				tellRecipientToDisconnect(false);
 			}
 			closeConnection();
+			// inform the network manager that this connection was closed
+			// (externally)
+			networkManager.connectionWasClosed(this,
+					((CloseConnectionMessage) m).isInitializer);
 		}
 	}
 
@@ -323,10 +357,8 @@ public class NetworkConnection {
 	}
 
 	/**
-	 * Close this connection.
+	 * Close this connection (gracefully).
 	 * 
-	 * TODO ensure closing the connection dispatches all unsent messages and
-	 * saves the received (unprocessed) messages
 	 */
 	public void closeConnection() {
 		// stop receiving messages from socket
@@ -362,6 +394,24 @@ public class NetworkConnection {
 		this.connectionActive = false;
 		EventLogger.log("Connection closed to: "
 				+ socket.getInetAddress().getHostName());
+	}
+
+	/**
+	 * If this connection is alive
+	 * 
+	 * @return True if alive.
+	 */
+	public boolean isConnectionActive() {
+		return connectionActive;
+	}
+
+	/**
+	 * Inet address of the recipient.
+	 * 
+	 * @return InetAddress
+	 */
+	public InetAddress getRecipientAddress() {
+		return recipientAddress;
 	}
 
 }

@@ -50,6 +50,70 @@ public class MainWindowModule extends
 		view.addTab(consoleTabModule.getView());
 	}
 
+	public AuctionTabModule getAuctionTabModule() {
+		return auctionTabModule;
+	}
+
+	public void setAuctionTabModule(AuctionTabModule auctionTabModule) {
+		this.auctionTabModule = auctionTabModule;
+	}
+
+	public ChannelTabModule getChannelTabModule() {
+		return channelTabModule;
+	}
+
+	public void setChannelTabModule(ChannelTabModule channelTabModule) {
+		this.channelTabModule = channelTabModule;
+	}
+
+	public ClientsTabModule getClientsTabModule() {
+		return clientsTabModule;
+	}
+
+	public void setClientsTabModule(ClientsTabModule clientsTabModule) {
+		this.clientsTabModule = clientsTabModule;
+	}
+
+	public DatabaseTabModule getDatabaseTabModule() {
+		return databaseTabModule;
+	}
+
+	public void setDatabaseTabModule(DatabaseTabModule databaseTabModule) {
+		this.databaseTabModule = databaseTabModule;
+	}
+
+	public DeviceTabModule getDeviceTabModule() {
+		return deviceTabModule;
+	}
+
+	public void setDeviceTabModule(DeviceTabModule deviceTabModule) {
+		this.deviceTabModule = deviceTabModule;
+	}
+
+	public LeasesTabModule getLeasesTabModule() {
+		return leasesTabModule;
+	}
+
+	public void setLeasesTabModule(LeasesTabModule leasesTabModule) {
+		this.leasesTabModule = leasesTabModule;
+	}
+
+	public ServerTabModule getServerTabModule() {
+		return serverTabModule;
+	}
+
+	public void setServerTabModule(ServerTabModule serverTabModule) {
+		this.serverTabModule = serverTabModule;
+	}
+
+	public ConsoleTabModule getConsoleTabModule() {
+		return consoleTabModule;
+	}
+
+	public void setConsoleTabModule(ConsoleTabModule consoleTabModule) {
+		this.consoleTabModule = consoleTabModule;
+	}
+
 	@Override
 	public void display() {
 		view.show();

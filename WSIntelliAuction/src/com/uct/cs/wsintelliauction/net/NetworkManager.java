@@ -11,15 +11,17 @@ import com.uct.cs.wsintelliauction.util.ResourceManager;
  * @author James Lewis
  *
  */
-public abstract class NetworkManager {
+public abstract class NetworkManager<E extends ResourceManager> {
 	
 	
-	protected ResourceManager resourceManager;
+	protected E resourceManager;
 
-	public NetworkManager(ResourceManager resourceManager) {
+	public NetworkManager(E resourceManager) {
 		this.resourceManager = resourceManager;
 	}
 	
 	public abstract void close();
+	
+	public abstract void connectionWasClosed(NetworkConnection connection, boolean recipientInitialized);
 	
 }

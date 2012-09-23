@@ -3,6 +3,7 @@ package com.uct.cs.wsintelliauction.net;
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Represents a recipient of messages in the network communication link, i.e.
@@ -16,10 +17,11 @@ import java.net.UnknownHostException;
  */
 public class Recipient implements Serializable {
 
+
 	/**
-	 * Serial key
+	 * 
 	 */
-	private static final long serialVersionUID = 4168758408299185596L;
+	private static final long serialVersionUID = 3590786167545662927L;
 	/**
 	 * Host name of the recipient
 	 */
@@ -41,6 +43,11 @@ public class Recipient implements Serializable {
 	 * versa)
 	 */
 	private InetAddress inetAddress;
+	
+	/**
+	 * True if this recipient is currently connected.
+	 */
+	private transient AtomicBoolean connected;
 
 	/**
 	 * Constructs a new recipient given the host address and port number. Host
@@ -61,6 +68,7 @@ public class Recipient implements Serializable {
 		this.hostName = inetAddress.getHostName();
 		this.ipAddressString = inetAddress.getHostAddress();
 		this.ipAddressRaw = inetAddress.getAddress();
+		connected = new AtomicBoolean(false);
 	}
 
 	/**
@@ -81,6 +89,7 @@ public class Recipient implements Serializable {
 		this.hostName = inetAddress.getHostName();
 		this.ipAddressString = inetAddress.getHostAddress();
 		this.ipAddressRaw = inetAddress.getAddress();
+		connected = new AtomicBoolean(false);
 	}
 
 	/**
@@ -116,6 +125,20 @@ public class Recipient implements Serializable {
 	 */
 	public InetAddress getInetAddress() {
 		return inetAddress;
+	}
+	
+	public boolean isConnected() {
+		if(connected == null){
+			connected = new AtomicBoolean(false);
+		}
+		return connected.get();
+	}
+	
+	public void setConnected(boolean connected) {
+		if(this.connected == null){
+			this.connected = new AtomicBoolean(false);
+		}
+		this.connected.set(connected);
 	}
 
 }

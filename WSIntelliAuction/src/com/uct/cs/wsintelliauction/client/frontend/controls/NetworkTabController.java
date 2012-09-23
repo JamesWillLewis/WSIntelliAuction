@@ -28,6 +28,7 @@ public class NetworkTabController extends
 		view.getBtnRemoveServer().addActionListener(new RemoveServerHandle());
 		view.getBtnPing().addActionListener(new PingServerHandle());
 		view.getBtnConnectTo().addActionListener(new ConnectToServerHandle());
+		view.getBtnDisconnectButton().addActionListener(new DisconnectHandle());
 	}
 
 	/**
@@ -79,6 +80,15 @@ public class NetworkTabController extends
 		public void actionPerformed(ActionEvent e) {
 			int select = view.getSelectedServer();
 			model.connectTo(select);
+		}
+		
+	}
+	
+	private class DisconnectHandle implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			model.disconnect();
 		}
 		
 	}

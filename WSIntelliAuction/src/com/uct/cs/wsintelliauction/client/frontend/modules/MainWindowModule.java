@@ -37,4 +37,10 @@ public class MainWindowModule extends
 		view.show();
 	}
 
+	public NetworkTabModule getNetworkTabModule() {
+		return networkTabModule;
+	}
+	
+	
+
 }

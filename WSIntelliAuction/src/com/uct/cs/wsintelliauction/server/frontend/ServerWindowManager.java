@@ -33,5 +33,9 @@ public class ServerWindowManager extends WindowManager {
 	public void launchMainWindow(){
 		mainWindowModule.display();
 	}
+	
+	public MainWindowModule getMainWindowModule() {
+		return mainWindowModule;
+	}
 
 }

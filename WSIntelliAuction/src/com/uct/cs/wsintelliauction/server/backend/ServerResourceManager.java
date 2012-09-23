@@ -63,7 +63,7 @@ public class ServerResourceManager extends ResourceManager{
 	}
 
 	@Override
-	public MessageParser getMessageParser() {
+	public MessageParser<ServerResourceManager> getMessageParser() {
 		return serverMessageParser;
 	}
 
@@ -77,6 +77,7 @@ public class ServerResourceManager extends ResourceManager{
 		// TODO Auto-generated method stub
 		
 	}
+	
 
 	@Override
 	public void close() {

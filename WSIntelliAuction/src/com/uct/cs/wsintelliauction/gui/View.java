@@ -39,7 +39,7 @@ import com.uct.cs.wsintelliauction.util.ErrorLogger;
  * @author James Lewis
  * 
  */
-public abstract class View<M extends Model> extends JPanel{
+public abstract class View<M extends Model<?>> extends JPanel{
 
 	/**
 	 * Serial version number.

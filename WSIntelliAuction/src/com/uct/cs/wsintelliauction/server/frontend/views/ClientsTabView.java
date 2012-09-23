@@ -14,13 +14,13 @@ import com.uct.cs.wsintelliauction.server.frontend.models.ClientsTabModel;
 import net.miginfocom.swing.MigLayout;
 
 public class ClientsTabView extends View<ClientsTabModel> {
+	
+	
 	public ClientsTabView(ClientsTabModel model) {
 		super(model);
-		// TODO Auto-generated constructor stub
 	}
 
 	private JTable table;
-
 
 	@Override
 	protected void initialize() {
@@ -40,21 +40,14 @@ public class ClientsTabView extends View<ClientsTabModel> {
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 1,grow");
 
-		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] { { null, null,
-				null, null, null }, }, new String[] { "Secondary User ID",
-				"Bids Placed", "Leases Held", "Status", "Hostname" }));
-		table.getColumnModel().getColumn(0).setPreferredWidth(171);
-		table.getColumnModel().getColumn(1).setPreferredWidth(122);
-		table.getColumnModel().getColumn(2).setPreferredWidth(121);
-		table.getColumnModel().getColumn(3).setPreferredWidth(121);
-		table.getColumnModel().getColumn(4).setPreferredWidth(118);
+		table = new JTable(model.getClientTableModel());
 		scrollPane.setViewportView(table);
 
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Clients";
 	}
+
 }

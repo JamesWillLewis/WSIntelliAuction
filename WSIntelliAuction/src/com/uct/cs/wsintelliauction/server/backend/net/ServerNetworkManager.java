@@ -6,20 +6,21 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.concurrent.ArrayBlockingQueue;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.uct.cs.wsintelliauction.net.NetworkConnection;
 import com.uct.cs.wsintelliauction.net.NetworkManager;
-import com.uct.cs.wsintelliauction.net.message.CloseConnectionMessage;
+import com.uct.cs.wsintelliauction.server.backend.ServerResourceManager;
 import com.uct.cs.wsintelliauction.util.AppConfig;
 import com.uct.cs.wsintelliauction.util.ErrorLogger;
 import com.uct.cs.wsintelliauction.util.EventLogger;
-import com.uct.cs.wsintelliauction.util.ResourceManager;
 import com.uct.cs.wsintelliauction.util.ThreadManager;
 
-public class ServerNetworkManager extends NetworkManager {
+public class ServerNetworkManager extends NetworkManager<ServerResourceManager> {
 
 	/**
 	 * If server is running
@@ -28,18 +29,28 @@ public class ServerNetworkManager extends NetworkManager {
 	/**
 	 * Arraylist of client connections wrapped in a synchronized container.
 	 */
-	private BlockingQueue<NetworkConnection> clientObjects;
+	private List<NetworkConnection> clientObjects;
 
 	/**
 	 * Maximum amount of concurrently connected clients
 	 */
 	public final static int MAX_CLIENT_CONNECTIONS = 128;
 
+	/**
+	 * Server accept socket
+	 */
 	private ServerSocket serverSocket;
 
-	public ServerNetworkManager(ResourceManager resourceManager) {
+	/**
+	 * Construct a new server network manager without starting the server
+	 * 
+	 * @param resourceManager
+	 */
+	public ServerNetworkManager(ServerResourceManager resourceManager) {
 		super(resourceManager);
-		clientObjects = new ArrayBlockingQueue<>(MAX_CLIENT_CONNECTIONS, true);
+		clientObjects = Collections
+				.synchronizedList(new ArrayList<NetworkConnection>(
+						MAX_CLIENT_CONNECTIONS));
 		serverActive = new AtomicBoolean(false);
 	}
 
@@ -71,13 +82,14 @@ public class ServerNetworkManager extends NetworkManager {
 		if (serverActive.get()) {
 			serverActive.set(false);
 			try {
-				//stop accepting incoming connection requests
+				// stop accepting incoming connection requests
 				serverSocket.close();
 
-				for(NetworkConnection con: clientObjects){
+				for (NetworkConnection con : clientObjects) {
 					con.tellRecipientToDisconnect(true);
 				}
-				EventLogger.log("Server has informed all connected clients of server shutdown.");
+				EventLogger
+						.log("Server has informed all connected clients of server shutdown.");
 			} catch (IOException e) {
 				ErrorLogger.log(e.getMessage());
 			}
@@ -119,38 +131,26 @@ public class ServerNetworkManager extends NetworkManager {
 						&& serverActive.get()) {
 					// accept the connection
 					NetworkConnection connection = new NetworkConnection(
-							incoming, resourceManager.getMessageParser());
+							incoming, resourceManager.getMessageParser(), this);
 					clientObjects.add(connection);
+					resourceManager.getServerWindowManager()
+							.getMainWindowModule().getClientsTabModule()
+							.getController().newClientConnected();
 
 				} else {
 					// reject the connection
 					incoming.close();
 				}
 			} catch (SocketException e) {
-				if (serverSocket.isClosed()){
-					//server socket shutdown
+				if (serverSocket.isClosed()) {
+					// server socket shutdown
 					continue;
-				}
-				else
+				} else
 					ErrorLogger.log(e.getMessage());
 			} catch (IOException e) {
 				ErrorLogger.log(e.getMessage());
 
 			}
-		}
-	}
-
-	/**
-	 * Returns the next client from the client connect queue.
-	 * 
-	 * @return
-	 */
-	public NetworkConnection pollNextClient() {
-		try {
-			return clientObjects.take();
-		} catch (InterruptedException e) {
-			// clients queue is closed
-			return null;
 		}
 	}
 
@@ -164,28 +164,38 @@ public class ServerNetworkManager extends NetworkManager {
 	}
 
 	public InetAddress getServerHostAddress() {
-		if(serverSocket != null){
+		if (serverSocket != null) {
 			try {
 				return InetAddress.getLocalHost();
 			} catch (UnknownHostException e) {
 				ErrorLogger.log(e.toString());
 				return null;
 			}
-		} else{
+		} else {
 			return null;
 		}
 	}
 
 	public int getServerPortNumber() {
-		if(serverSocket != null){
+		if (serverSocket != null) {
 			return serverSocket.getLocalPort();
-		} else{
+		} else {
 			return -1;
 		}
 	}
-	
-	public int getNumberOfConnections(){
+
+	public int getNumberOfConnections() {
 		return clientObjects.size();
+	}
+
+	public List<NetworkConnection> getClientConnections() {
+		return clientObjects;
+	}
+
+	@Override
+	public void connectionWasClosed(NetworkConnection connection, boolean recipientInitialized) {
+		resourceManager.getServerWindowManager().getMainWindowModule()
+				.getClientsTabModule().getController().clientDisconncted();
 	}
 
 }

@@ -15,7 +15,6 @@ import com.uct.cs.wsintelliauction.net.message.Message;
 import com.uct.cs.wsintelliauction.net.message.CloseConnectionMessage;
 import com.uct.cs.wsintelliauction.util.ErrorLogger;
 
-
 /**
  * Wraps a standard network socket, adding functionality for handling
  * transmission and reception of messages.
@@ -76,7 +75,6 @@ public class MessageSocket {
 		}
 	}
 
-
 	/**
 	 * Close the socket.
 	 */
@@ -108,8 +106,8 @@ public class MessageSocket {
 		} catch (SocketException e) {
 			if (!socket.isClosed())
 				ErrorLogger.log(e.getMessage());
-			else{
-				//socket stream closed
+			else {
+				// socket stream closed
 			}
 			return false;
 		} catch (IOException e) {
@@ -133,14 +131,16 @@ public class MessageSocket {
 			m = (Message) objectInputStream.readObject();
 
 		} catch (SocketException e) {
-			if (!socket.isClosed()){
-				ErrorLogger.log("Socket exception occurred on read stream operation.");
-			} else{
-				//socket closed
+			if (!socket.isClosed()) {
+				ErrorLogger
+						.log("IO exception occurred on read stream operation: Recipient probably disconnected without notice.");
+				m = new CloseConnectionMessage(true);
+				((CloseConnectionMessage) m).communicationFail = true;
+			} else {
+				// socket closed
 			}
 		} catch (IOException e) {
-			ErrorLogger.log("IO exception occurred on read stream operation: Recipient probably disconnected without notice.");
-			m = new CloseConnectionMessage(false);	
+			ErrorLogger.log(e.getMessage());
 		} catch (ClassNotFoundException e) {
 			ErrorLogger
 					.log("Class type of object message read from object input stream invalid.");
@@ -152,7 +152,5 @@ public class MessageSocket {
 	public InetAddress getInetAddress() {
 		return socket.getInetAddress();
 	}
-	
-	
 
 }

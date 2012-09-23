@@ -9,13 +9,19 @@ public class ClientsTabController extends
 
 	public ClientsTabController(ClientsTabView view, ClientsTabModel model) {
 		super(view, model);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	protected void assignListeners() {
-		// TODO Auto-generated method stub
 
+	}
+
+	public void newClientConnected() {
+		model.fireTableDataChanged();
+	}
+	
+	public void clientDisconncted(){
+		model.fireTableDataChanged();
 	}
 
 }

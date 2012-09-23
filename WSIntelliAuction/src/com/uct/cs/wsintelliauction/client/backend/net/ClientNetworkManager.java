@@ -3,6 +3,7 @@ package com.uct.cs.wsintelliauction.client.backend.net;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import com.uct.cs.wsintelliauction.client.backend.ClientResourceManager;
 import com.uct.cs.wsintelliauction.net.NetworkConnection;
 import com.uct.cs.wsintelliauction.net.NetworkManager;
 import com.uct.cs.wsintelliauction.net.Recipient;
@@ -11,11 +12,10 @@ import com.uct.cs.wsintelliauction.util.ErrorLogger;
 import com.uct.cs.wsintelliauction.util.EventLogger;
 import com.uct.cs.wsintelliauction.util.ResourceManager;
 
-
-public class ClientNetworkManager extends NetworkManager {
+public class ClientNetworkManager extends NetworkManager<ClientResourceManager> {
 
 	/**
-	 * Network connectiont to central server
+	 * Network connection to central server
 	 */
 	private NetworkConnection serverConnection;
 
@@ -24,8 +24,7 @@ public class ClientNetworkManager extends NetworkManager {
 	 */
 	private AtomicBoolean connected;
 
-
-	public ClientNetworkManager(ResourceManager resourceManager) {
+	public ClientNetworkManager(ClientResourceManager resourceManager) {
 		super(resourceManager);
 		serverConnection = null;
 		connected = new AtomicBoolean(false);
@@ -40,7 +39,8 @@ public class ClientNetworkManager extends NetworkManager {
 	 */
 	public boolean connectTo(Recipient server) {
 		try {
-			serverConnection = new NetworkConnection(server, resourceManager.getMessageParser());
+			serverConnection = new NetworkConnection(server,
+					resourceManager.getMessageParser(), this);
 			EventLogger.log("Client now connected to server: "
 					+ server.getIPAddressString() + " on port: "
 					+ server.getPortNumber());
@@ -70,6 +70,14 @@ public class ClientNetworkManager extends NetworkManager {
 	@Override
 	public void close() {
 		disconnect();
+	}
+
+	@Override
+	public void connectionWasClosed(NetworkConnection connection,
+			boolean recipientInitialized) {
+		if(recipientInitialized)
+			resourceManager.getWindowManager().getMainWindowModule()
+					.getNetworkTabModule().getModel().serverDisconnected();
 	}
 
 }
