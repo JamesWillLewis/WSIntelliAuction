@@ -22,7 +22,9 @@ public class ClientsTabView extends View<ClientsTabModel> {
 
 	private JTable table;
 
-	@Override
+	/**
+	 *  @wbp.parser.entryPoint
+	 */
 	protected void initialize() {
 		setBorder(new TitledBorder(null, "Client Management",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));

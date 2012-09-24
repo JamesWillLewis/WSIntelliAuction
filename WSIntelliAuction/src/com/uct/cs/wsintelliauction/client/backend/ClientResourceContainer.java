@@ -1,15 +1,22 @@
 package com.uct.cs.wsintelliauction.client.backend;
 
 import com.uct.cs.wsintelliauction.client.backend.net.ClientMessageParser;
-import com.uct.cs.wsintelliauction.client.backend.net.ClientNetworkManager;
+import com.uct.cs.wsintelliauction.client.backend.net.ClientNetworkDriver;
+import com.uct.cs.wsintelliauction.client.backend.net.Server;
 import com.uct.cs.wsintelliauction.client.backend.net.StorableServerList;
-import com.uct.cs.wsintelliauction.client.frontend.ClientWindowManager;
-import com.uct.cs.wsintelliauction.db.orm.DatabaseManager;
+import com.uct.cs.wsintelliauction.client.frontend.ClientWindowDriver;
 import com.uct.cs.wsintelliauction.net.MessageParser;
-import com.uct.cs.wsintelliauction.util.ResourceManager;
-import com.uct.cs.wsintelliauction.util.ThreadManager;
+import com.uct.cs.wsintelliauction.server.backend.net.ServerMessageParser;
+import com.uct.cs.wsintelliauction.util.ResourceContainer;
+import com.uct.cs.wsintelliauction.util.ThreadHandler;
 
-public class ClientResourceManager extends ResourceManager {
+public class ClientResourceContainer extends ResourceContainer {
+
+	/*
+	 * General resources:
+	 */
+
+	private Server server;
 
 	/*
 	 * Manager resources:
@@ -18,12 +25,12 @@ public class ClientResourceManager extends ResourceManager {
 	/**
 	 * Window manager for server-side administrator GUI.
 	 */
-	private ClientWindowManager windowManager;
+	private ClientWindowDriver windowManager;
 	/**
 	 * Server network manager.
 	 */
-	private ClientNetworkManager networkManager;
-	
+	private ClientNetworkDriver networkManager;
+
 	/**
 	 * Client message parser
 	 */
@@ -38,20 +45,25 @@ public class ClientResourceManager extends ResourceManager {
 	 */
 	private StorableServerList storableServerList;
 
-	public ClientResourceManager(String[] args) {
+	public ClientResourceContainer(String[] args) {
 		super(args);
+	}
+
+	@Override
+	protected void loadInstanceResources() {
+		server = null;
 	}
 
 	@Override
 	public void initManagers() {
 		splashLoader.updateLoader("Establishing database connection", 40);
-		
+
 		splashLoader.updateLoader("Configuring network interface", 60);
-		networkManager = new ClientNetworkManager(this);
-		
+		networkManager = new ClientNetworkDriver(this, server);
+
 		splashLoader.updateLoader("Initializing graphical user interface", 80);
-		windowManager = new ClientWindowManager(this);
-		
+		windowManager = new ClientWindowDriver(this);
+
 		splashLoader.updateLoader("Initializing message parser", 90);
 		clientMessageParser = new ClientMessageParser(this);
 	}
@@ -67,15 +79,13 @@ public class ClientResourceManager extends ResourceManager {
 		storableServerList.store();
 	}
 
-	public ClientWindowManager getWindowManager() {
+	public ClientWindowDriver getWindowManager() {
 		return windowManager;
 	}
 
-
-	public ClientNetworkManager getNetworkManager() {
+	public ClientNetworkDriver getNetworkManager() {
 		return networkManager;
 	}
-
 
 	public StorableServerList getStorableServerList() {
 		return storableServerList;
@@ -85,11 +95,11 @@ public class ClientResourceManager extends ResourceManager {
 	public void close() {
 		storeSerializedResources();
 		networkManager.close();
-		ThreadManager.closeThreads();
+		ThreadHandler.closeThreads();
 	}
 
 	@Override
-	public MessageParser getMessageParser() {
+	public ServerMessageParser getMessageParser() {
 		// TODO Auto-generated method stub
 		return null;
 	}

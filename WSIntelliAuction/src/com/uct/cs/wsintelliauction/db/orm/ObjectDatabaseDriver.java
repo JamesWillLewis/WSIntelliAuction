@@ -33,7 +33,7 @@ import com.uct.cs.wsintelliauction.util.ErrorLogger;
  * @author James Lewis
  * 
  */
-public class DatabaseManager {
+public class ObjectDatabaseDriver {
 
 	/**
 	 * Session factory for this manager.
@@ -49,7 +49,7 @@ public class DatabaseManager {
 	 * factory for this instance is configured from the configuration file as
 	 * specified by <b>CONFIG_FILE</b>
 	 */
-	public DatabaseManager() {
+	public ObjectDatabaseDriver() {
 		configureSessionFactory();
 	}
 
@@ -98,14 +98,21 @@ public class DatabaseManager {
 	 * 
 	 * @param stm
 	 *            Statement to execute
-	 * @return Result set
+	 * @return Result set, or null if HQL error.
 	 */
+	@SuppressWarnings("unchecked")
 	public <E> ArrayList<E> query(String stm) {
 		Session session = newSession();
 		Transaction transaction = session.beginTransaction();
 
-		@SuppressWarnings("unchecked")
-		List<E> table = session.createQuery(stm).list();
+		
+		List<E> table;
+		try{
+			table = session.createQuery(stm).list();
+		} catch(HibernateException e){
+			ErrorLogger.log(e.getMessage());
+			table = null;
+		}
 
 		transaction.commit();
 		session.close();
@@ -199,11 +206,8 @@ public class DatabaseManager {
 					configuration.getProperties()).buildServiceRegistry();
 			sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 		} catch (HibernateException e) {
-			JOptionPane
-					.showMessageDialog(
-							null,
-							e.toString(),
-							"Fatal Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, e.toString(), "Fatal Error",
+					JOptionPane.ERROR_MESSAGE);
 			ErrorLogger.log(e.getMessage());
 			System.exit(1);
 		}

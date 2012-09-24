@@ -14,7 +14,7 @@ import com.uct.cs.wsintelliauction.net.message.ConnectionMessage;
 import com.uct.cs.wsintelliauction.net.message.Message;
 import com.uct.cs.wsintelliauction.util.ErrorLogger;
 import com.uct.cs.wsintelliauction.util.EventLogger;
-import com.uct.cs.wsintelliauction.util.ThreadManager;
+import com.uct.cs.wsintelliauction.util.ThreadHandler;
 
 /**
  * Represent a single network connection, linking one source (the application)
@@ -116,7 +116,7 @@ public class NetworkConnection {
 	/**
 	 * The network manager which created this connection
 	 */
-	private NetworkManager<?> networkManager;
+	private NetworkDriver<?> networkDriver;
 
 	/**
 	 * Establishes a network connection given a recipient. A new socket is
@@ -128,11 +128,11 @@ public class NetworkConnection {
 	 *             If an error occurs while opening the socket.
 	 */
 	public NetworkConnection(Recipient recipient,
-			MessageParser<?> messageParser, NetworkManager<?> networkManager)
+			MessageParser<?> messageParser, NetworkDriver<?> networkManager)
 			throws IOException {
 		socket = new MessageSocket(recipient);
 		this.messageParser = messageParser;
-		this.networkManager = networkManager;
+		this.networkDriver = networkManager;
 		initConnection();
 		beginIOListening();
 		recipient.setConnected(true);
@@ -148,10 +148,10 @@ public class NetworkConnection {
 	 *             If an error occurs while opening the socket.
 	 */
 	public NetworkConnection(Socket s, MessageParser<?> messageParser,
-			NetworkManager<?> networkManager) {
+			NetworkDriver<?> networkManager) {
 		socket = new MessageSocket(s);
 		this.messageParser = messageParser;
-		this.networkManager = networkManager;
+		this.networkDriver = networkManager;
 		initConnection();
 		beginIOListening();
 	}
@@ -206,9 +206,9 @@ public class NetworkConnection {
 				}
 			};
 
-			ThreadManager.assignThread(dispatchThread);
-			ThreadManager.assignThread(receiveThread);
-			ThreadManager.assignThread(submitToMessageParserThread);
+			ThreadHandler.assignThread(dispatchThread);
+			ThreadHandler.assignThread(receiveThread);
+			ThreadHandler.assignThread(submitToMessageParserThread);
 		} else {
 			ErrorLogger
 					.log("Attempting to begin IO parsing on closed connection.");
@@ -331,12 +331,12 @@ public class NetworkConnection {
 			// acknowledge the disconnect (if the recipient didn't locse contact).
 			if (((CloseConnectionMessage) m).isInitializer
 					&& !((CloseConnectionMessage) m).communicationFail) {
-				tellRecipientToDisconnect(false);
+				requestDestToDisconnect(false);
 			}
 			closeConnection();
 			// inform the network manager that this connection was closed
 			// (externally)
-			networkManager.connectionWasClosed(this,
+			networkDriver.connectionWasClosed(this,
 					((CloseConnectionMessage) m).isInitializer);
 		}
 	}
@@ -347,7 +347,7 @@ public class NetworkConnection {
 	 * @param isInitializer
 	 *            True if THIS application initialized the disconnect.
 	 */
-	public void tellRecipientToDisconnect(boolean isInitializer) {
+	public void requestDestToDisconnect(boolean isInitializer) {
 		EventLogger.log("Informing recipient: "
 				+ socket.getInetAddress().getHostName()
 				+ " of connection closure.");

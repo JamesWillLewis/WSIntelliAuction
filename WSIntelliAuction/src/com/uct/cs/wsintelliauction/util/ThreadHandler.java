@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  * @author James Lewis
  * 
  */
-public final class ThreadManager {
+public final class ThreadHandler {
 
 	/**
 	 * Number of worker threads in the thread pool.
@@ -38,7 +38,7 @@ public final class ThreadManager {
 	/**
 	 * Prevent construction of this class.
 	 */
-	private ThreadManager() {
+	private ThreadHandler() {
 	}
 
 	/**

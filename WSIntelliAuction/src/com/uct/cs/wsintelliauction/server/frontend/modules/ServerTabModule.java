@@ -2,16 +2,16 @@ package com.uct.cs.wsintelliauction.server.frontend.modules;
 
 
 import com.uct.cs.wsintelliauction.gui.Module;
-import com.uct.cs.wsintelliauction.server.backend.ServerResourceManager;
+import com.uct.cs.wsintelliauction.server.backend.ServerResourceContainer;
 import com.uct.cs.wsintelliauction.server.frontend.controls.ServerTabController;
 import com.uct.cs.wsintelliauction.server.frontend.models.ServerTabModel;
 import com.uct.cs.wsintelliauction.server.frontend.views.ServerTabView;
-import com.uct.cs.wsintelliauction.util.ResourceManager;
+import com.uct.cs.wsintelliauction.util.ResourceContainer;
 
 public class ServerTabModule extends
 		Module<ServerTabModel, ServerTabView, ServerTabController> {
 
-	public ServerTabModule(ServerResourceManager resourceManager) {
+	public ServerTabModule(ServerResourceContainer resourceManager) {
 		super(resourceManager);
 		
 		model = new ServerTabModel(resourceManager);

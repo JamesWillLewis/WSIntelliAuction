@@ -111,7 +111,7 @@ public class ServerTabView extends View<ServerTabModel> {
 				"Accept Connections");
 		chckbxAcceptConnections_1.setHorizontalAlignment(SwingConstants.CENTER);
 		add(chckbxAcceptConnections_1, "cell 2 7,alignx right");
-
+		refreshServerStats();
 	}
 
 	@Override

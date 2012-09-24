@@ -2,11 +2,11 @@ package com.uct.cs.wsintelliauction.server.frontend.modules;
 
 import com.uct.cs.wsintelliauction.gui.Module;
 import com.uct.cs.wsintelliauction.gui.modules.ConsoleTabModule;
-import com.uct.cs.wsintelliauction.server.backend.ServerResourceManager;
+import com.uct.cs.wsintelliauction.server.backend.ServerResourceContainer;
 import com.uct.cs.wsintelliauction.server.frontend.controls.MainWindowController;
 import com.uct.cs.wsintelliauction.server.frontend.models.MainWindowModel;
 import com.uct.cs.wsintelliauction.server.frontend.views.MainWindowView;
-import com.uct.cs.wsintelliauction.util.ResourceManager;
+import com.uct.cs.wsintelliauction.util.ResourceContainer;
 
 
 public class MainWindowModule extends
@@ -21,7 +21,7 @@ public class MainWindowModule extends
 	private ServerTabModule serverTabModule;
 	private ConsoleTabModule consoleTabModule;
 
-	public MainWindowModule(ServerResourceManager resourceManager) {
+	public MainWindowModule(ServerResourceContainer resourceManager) {
 		super(resourceManager);
 		model = new MainWindowModel(resourceManager);
 		view = new MainWindowView(model);

@@ -1,4 +1,6 @@
-package com.uct.cs.wsintelliauction.dev;
+package com.uct.cs.wsintelliauction.db.orm.tables;
+
+import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,15 +11,17 @@ import org.hibernate.annotations.GenericGenerator;
 
 
 @Entity
-public class Channel 
+@Table (name="T_CHANNELS")
+public class Channel
 {
+	
 	private Long id;
 	/*
 	 * Self explanatory attributes.
 	 */
-	private int ChannelNumber, LowerBound, UpperBound;
-	private double PowerLimitation;
-	boolean PUOwned;
+	private int channelNumber, lowerBound, upperBound;
+	private double powerLimitation;
+	private boolean puOwned;
 	
 	/**
 	 * Constructs a channel with the specified properties.
@@ -30,11 +34,11 @@ public class Channel
 	 */
 	public Channel(int ChannelNumber,boolean PUState,int LowerBound,int UpperBound,double PowerLimitation)
 	{
-		this.ChannelNumber = ChannelNumber;
-		this.PUOwned = PUState;
-		this.LowerBound = LowerBound;
-		this.UpperBound = UpperBound;
-		this.PowerLimitation = PowerLimitation;
+		this.channelNumber = ChannelNumber;
+		this.puOwned = PUState;
+		this.lowerBound = LowerBound;
+		this.upperBound = UpperBound;
+		this.powerLimitation = PowerLimitation;
 	}
 	
 	/**
@@ -51,53 +55,47 @@ public class Channel
 	}
 
 	public int getChannelNumber() {
-		return ChannelNumber;
+		return channelNumber;
 	}
 
 	public void setChannelNumber(int channelNumber) {
-		ChannelNumber = channelNumber;
+		this.channelNumber = channelNumber;
 	}
 
 	public int getLowerBound() {
-		return LowerBound;
+		return lowerBound;
 	}
 
 	public void setLowerBound(int lowerBound) {
-		LowerBound = lowerBound;
+		this.lowerBound = lowerBound;
 	}
 
 	public int getUpperBound() {
-		return UpperBound;
+		return upperBound;
 	}
 
 	public void setUpperBound(int upperBound) {
-		UpperBound = upperBound;
+		this.upperBound = upperBound;
 	}
 
 	public double getPowerLimitation() {
-		return PowerLimitation;
+		return powerLimitation;
 	}
 
 	public void setPowerLimitation(double powerLimitation) {
-		PowerLimitation = powerLimitation;
+		this.powerLimitation = powerLimitation;
 	}
 
 	public boolean isPUOwned() {
-		return PUOwned;
+		return puOwned;
 	}
 
-	public void setPUOwned(boolean pUState) {
-		PUOwned = pUState;
+	public void setPUOwned(boolean puOwned) {
+		this.puOwned = puOwned;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	
-	
-	
-	
-	
-	
 }

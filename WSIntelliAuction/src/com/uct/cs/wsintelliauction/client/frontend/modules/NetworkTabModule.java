@@ -1,6 +1,6 @@
 package com.uct.cs.wsintelliauction.client.frontend.modules;
 
-import com.uct.cs.wsintelliauction.client.backend.ClientResourceManager;
+import com.uct.cs.wsintelliauction.client.backend.ClientResourceContainer;
 import com.uct.cs.wsintelliauction.client.frontend.controls.NetworkTabController;
 import com.uct.cs.wsintelliauction.client.frontend.models.NetworkTabModel;
 import com.uct.cs.wsintelliauction.client.frontend.views.NetworkTabView;
@@ -11,7 +11,7 @@ public class NetworkTabModule extends
 		Module<NetworkTabModel, NetworkTabView, NetworkTabController> {
 
 	
-	public NetworkTabModule(ClientResourceManager resourceManager) {
+	public NetworkTabModule(ClientResourceContainer resourceManager) {
 		super(resourceManager);
 		model = new NetworkTabModel(resourceManager);
 		view = new NetworkTabView(model);

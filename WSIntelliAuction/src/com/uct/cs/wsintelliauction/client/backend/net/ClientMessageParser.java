@@ -1,12 +1,12 @@
 package com.uct.cs.wsintelliauction.client.backend.net;
 
-import com.uct.cs.wsintelliauction.client.backend.ClientResourceManager;
+import com.uct.cs.wsintelliauction.client.backend.ClientResourceContainer;
 import com.uct.cs.wsintelliauction.net.MessageParser;
-import com.uct.cs.wsintelliauction.util.ResourceManager;
+import com.uct.cs.wsintelliauction.util.ResourceContainer;
 
-public class ClientMessageParser extends MessageParser<ClientResourceManager> {
+public class ClientMessageParser extends MessageParser<ClientResourceContainer> {
 
-	public ClientMessageParser(ClientResourceManager resourceManager) {
+	public ClientMessageParser(ClientResourceContainer resourceManager) {
 		super(resourceManager);
 	}
 

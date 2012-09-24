@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.uct.cs.wsintelliauction.net.message.CloseConnectionMessage;
 import com.uct.cs.wsintelliauction.net.message.Message;
-import com.uct.cs.wsintelliauction.util.ResourceManager;
+import com.uct.cs.wsintelliauction.util.ResourceContainer;
 
 /**
  * Identifies various {@link Message} class types of a particular message
@@ -18,7 +18,7 @@ import com.uct.cs.wsintelliauction.util.ResourceManager;
  * @author James Lewis
  * 
  */
-public abstract class MessageParser<T extends ResourceManager> {
+public abstract class MessageParser<T extends ResourceContainer> {
 
 	/**
 	 * If this parser is servicing incoming messages from the network manager

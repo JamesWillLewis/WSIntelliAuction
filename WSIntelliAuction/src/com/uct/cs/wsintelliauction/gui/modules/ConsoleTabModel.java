@@ -1,16 +1,16 @@
 package com.uct.cs.wsintelliauction.gui.modules;
 
 import com.uct.cs.wsintelliauction.gui.Model;
-import com.uct.cs.wsintelliauction.util.ResourceManager;
+import com.uct.cs.wsintelliauction.util.ResourceContainer;
 
-public class ConsoleTabModel extends Model<ResourceManager> {
+public class ConsoleTabModel extends Model<ResourceContainer> {
 
 	private String eventLogConsoleText;
 
 	private String errorLogConsoleText;
 
-	public ConsoleTabModel(ResourceManager resourceManager) {
-		super(resourceManager);
+	public ConsoleTabModel(ResourceContainer resourceContainer) {
+		super(resourceContainer);
 	}
 
 	@Override

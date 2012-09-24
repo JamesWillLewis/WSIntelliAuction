@@ -11,7 +11,7 @@ import com.uct.cs.wsintelliauction.net.MessageParser;
  * 
  * @author James Lewis
  */
-public abstract class ResourceManager {
+public abstract class ResourceContainer {
 
 	/**
 	 * Splash loader screen
@@ -23,9 +23,10 @@ public abstract class ResourceManager {
 	 */
 	protected RuntimeParamParser paramParser;
 
-	public ResourceManager(String[] args) {
+	public ResourceContainer(String[] args) {
 		splashLoader = new Splash();
 		paramParser = new RuntimeParamParser(args);
+		loadInstanceResources();
 		loadSerializedResources();
 		initManagers();
 	}
@@ -34,9 +35,11 @@ public abstract class ResourceManager {
 		return paramParser;
 	}
 	
-	public abstract void initManagers();
+	protected abstract void loadInstanceResources();
 	
-	public abstract void loadSerializedResources();
+	protected abstract void initManagers();
+	
+	protected abstract void loadSerializedResources();
 
 	public abstract void storeSerializedResources();
 	

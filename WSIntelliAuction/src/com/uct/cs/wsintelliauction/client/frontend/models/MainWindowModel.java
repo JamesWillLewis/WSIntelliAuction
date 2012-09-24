@@ -1,12 +1,12 @@
 package com.uct.cs.wsintelliauction.client.frontend.models;
 
-import com.uct.cs.wsintelliauction.client.backend.ClientResourceManager;
+import com.uct.cs.wsintelliauction.client.backend.ClientResourceContainer;
 import com.uct.cs.wsintelliauction.gui.Model;
 
 
-public class MainWindowModel extends Model<ClientResourceManager> {
+public class MainWindowModel extends Model<ClientResourceContainer> {
 
-	public MainWindowModel(ClientResourceManager resourceManager) {
+	public MainWindowModel(ClientResourceContainer resourceManager) {
 		super(resourceManager);
 		// TODO Auto-generated constructor stub
 	}
@@ -17,7 +17,7 @@ public class MainWindowModel extends Model<ClientResourceManager> {
 		
 	}
 
-	public ClientResourceManager getResourceManager() {
+	public ClientResourceContainer getResourceManager() {
 		return resourceManager;
 	}
 

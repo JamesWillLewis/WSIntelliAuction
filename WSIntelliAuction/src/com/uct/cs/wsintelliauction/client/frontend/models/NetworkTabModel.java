@@ -7,18 +7,18 @@ import java.net.UnknownHostException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-import com.uct.cs.wsintelliauction.client.backend.ClientResourceManager;
+import com.uct.cs.wsintelliauction.client.backend.ClientResourceContainer;
 import com.uct.cs.wsintelliauction.gui.Model;
 import com.uct.cs.wsintelliauction.net.Recipient;
 import com.uct.cs.wsintelliauction.util.AppConfig;
 import com.uct.cs.wsintelliauction.util.ErrorLogger;
 import com.uct.cs.wsintelliauction.util.EventLogger;
 
-public class NetworkTabModel extends Model<ClientResourceManager> {
+public class NetworkTabModel extends Model<ClientResourceContainer> {
 
 	private NetworkTableModel registeredServersTableModel;
 
-	public NetworkTabModel(ClientResourceManager resourceManager) {
+	public NetworkTabModel(ClientResourceContainer resourceManager) {
 		super(resourceManager);
 	}
 

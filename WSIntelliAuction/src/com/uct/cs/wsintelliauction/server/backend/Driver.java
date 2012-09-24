@@ -1,21 +1,21 @@
 package com.uct.cs.wsintelliauction.server.backend;
 
-import com.uct.cs.wsintelliauction.client.backend.ClientResourceManager;
+import com.uct.cs.wsintelliauction.client.backend.ClientResourceContainer;
 import com.uct.cs.wsintelliauction.util.AbstractDriver;
 
 public class Driver extends AbstractDriver {
 
-private ServerResourceManager serverResourceManager;
+private ServerResourceContainer serverResourceContainer;
 	
 
 	public Driver(String[] args) {
 		super(args);
-		serverResourceManager = new ServerResourceManager(args);
+		serverResourceContainer = new ServerResourceContainer(args);
 	}
 
 	@Override
 	public void exec() {
-		serverResourceManager.getServerWindowManager().launchMainWindow();
+		serverResourceContainer.getServerWindowManager().launchMainWindow();
 	}
 
 

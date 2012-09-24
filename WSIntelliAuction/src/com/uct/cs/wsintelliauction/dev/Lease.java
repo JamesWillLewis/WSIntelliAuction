@@ -1,5 +1,7 @@
 package com.uct.cs.wsintelliauction.dev;
 
+import com.uct.cs.wsintelliauction.db.orm.tables.Channel;
+
 /**
  * This class serves as a lease for channel connections, 
  * it stores the SUs data about the lease they own.

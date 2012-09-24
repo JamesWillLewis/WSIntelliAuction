@@ -1,6 +1,6 @@
 package com.uct.cs.wsintelliauction.gui;
 
-import com.uct.cs.wsintelliauction.util.ResourceManager;
+import com.uct.cs.wsintelliauction.util.ResourceContainer;
 
 
 
@@ -14,7 +14,7 @@ import com.uct.cs.wsintelliauction.util.ResourceManager;
  * @author James Lewis
  *
  */
-public abstract class Model <E extends ResourceManager>{
+public abstract class Model <E extends ResourceContainer>{
 	
 	protected E resourceManager;
 

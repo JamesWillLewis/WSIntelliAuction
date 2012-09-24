@@ -1,10 +1,10 @@
 package com.uct.cs.wsintelliauction.client.frontend;
 
-import com.uct.cs.wsintelliauction.client.backend.ClientResourceManager;
+import com.uct.cs.wsintelliauction.client.backend.ClientResourceContainer;
 import com.uct.cs.wsintelliauction.client.frontend.modules.MainWindowModule;
-import com.uct.cs.wsintelliauction.gui.WindowManager;
+import com.uct.cs.wsintelliauction.gui.WindowDriver;
 
-public class ClientWindowManager extends WindowManager {
+public class ClientWindowDriver extends WindowDriver {
 
 
 	public MainWindowModule mainWindowModule;
@@ -15,7 +15,7 @@ public class ClientWindowManager extends WindowManager {
 	 * @param taskmanager
 	 *            Task manager.
 	 */
-	public ClientWindowManager(ClientResourceManager resourceManager) {
+	public ClientWindowDriver(ClientResourceContainer resourceManager) {
 		super(resourceManager);
 		mainWindowModule = new MainWindowModule(resourceManager);
 	}

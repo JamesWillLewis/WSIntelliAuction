@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.SplashScreen;
 
 import com.uct.cs.wsintelliauction.util.EventLogger;
-import com.uct.cs.wsintelliauction.util.ThreadManager;
+import com.uct.cs.wsintelliauction.util.ThreadHandler;
 
 /**
  * This class is intended to be a super class to a main class. That is, the
@@ -111,7 +111,7 @@ public class Splash implements Runnable {
 		renderSplashFrame(g);
 
 		// Begin the splash screen thread.
-		ThreadManager.assignThread(this);
+		ThreadHandler.assignThread(this);
 
 	}
 
@@ -122,7 +122,7 @@ public class Splash implements Runnable {
 			// Render the splash frame
 			renderSplashFrame(g);
 			// Then pause for UPDATE_SPEED milliseconds
-			ThreadManager.pauseThisForMillis(UPDATE_SPEED);
+			ThreadHandler.pauseThisForMillis(UPDATE_SPEED);
 		}
 		// Finally close the splash display.
 		splashScreen.close();

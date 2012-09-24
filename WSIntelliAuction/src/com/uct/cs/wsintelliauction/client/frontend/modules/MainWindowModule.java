@@ -1,12 +1,12 @@
 package com.uct.cs.wsintelliauction.client.frontend.modules;
 
-import com.uct.cs.wsintelliauction.client.backend.ClientResourceManager;
+import com.uct.cs.wsintelliauction.client.backend.ClientResourceContainer;
 import com.uct.cs.wsintelliauction.client.frontend.controls.MainWindowController;
 import com.uct.cs.wsintelliauction.client.frontend.models.MainWindowModel;
 import com.uct.cs.wsintelliauction.client.frontend.views.MainWindowView;
 import com.uct.cs.wsintelliauction.gui.Module;
 import com.uct.cs.wsintelliauction.gui.modules.ConsoleTabModule;
-import com.uct.cs.wsintelliauction.util.ResourceManager;
+import com.uct.cs.wsintelliauction.util.ResourceContainer;
 
 public class MainWindowModule extends
 		Module<MainWindowModel, MainWindowView, MainWindowController> {
@@ -14,7 +14,7 @@ public class MainWindowModule extends
 	private NetworkTabModule networkTabModule;
 	private ConsoleTabModule consoleTabModule;
 
-	public MainWindowModule(ClientResourceManager resourceManager) {
+	public MainWindowModule(ClientResourceContainer resourceManager) {
 		super(resourceManager);
 
 		model = new MainWindowModel(resourceManager);

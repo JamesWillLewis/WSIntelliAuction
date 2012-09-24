@@ -13,14 +13,14 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.uct.cs.wsintelliauction.net.NetworkConnection;
-import com.uct.cs.wsintelliauction.net.NetworkManager;
-import com.uct.cs.wsintelliauction.server.backend.ServerResourceManager;
+import com.uct.cs.wsintelliauction.net.NetworkDriver;
+import com.uct.cs.wsintelliauction.server.backend.ServerResourceContainer;
 import com.uct.cs.wsintelliauction.util.AppConfig;
 import com.uct.cs.wsintelliauction.util.ErrorLogger;
 import com.uct.cs.wsintelliauction.util.EventLogger;
-import com.uct.cs.wsintelliauction.util.ThreadManager;
+import com.uct.cs.wsintelliauction.util.ThreadHandler;
 
-public class ServerNetworkManager extends NetworkManager<ServerResourceManager> {
+public class ServerNetworkDriver extends NetworkDriver<ServerResourceContainer> {
 
 	/**
 	 * If server is running
@@ -29,7 +29,7 @@ public class ServerNetworkManager extends NetworkManager<ServerResourceManager> 
 	/**
 	 * Arraylist of client connections wrapped in a synchronized container.
 	 */
-	private List<NetworkConnection> clientObjects;
+	private List<Client> clientObjects;
 
 	/**
 	 * Maximum amount of concurrently connected clients
@@ -46,11 +46,9 @@ public class ServerNetworkManager extends NetworkManager<ServerResourceManager> 
 	 * 
 	 * @param resourceManager
 	 */
-	public ServerNetworkManager(ServerResourceManager resourceManager) {
+	public ServerNetworkDriver(ServerResourceContainer resourceManager, List<Client> clientObjects) {
 		super(resourceManager);
-		clientObjects = Collections
-				.synchronizedList(new ArrayList<NetworkConnection>(
-						MAX_CLIENT_CONNECTIONS));
+		this.clientObjects = clientObjects;
 		serverActive = new AtomicBoolean(false);
 	}
 
@@ -85,8 +83,8 @@ public class ServerNetworkManager extends NetworkManager<ServerResourceManager> 
 				// stop accepting incoming connection requests
 				serverSocket.close();
 
-				for (NetworkConnection con : clientObjects) {
-					con.tellRecipientToDisconnect(true);
+				for (Client con : clientObjects) {
+					con.getConnection().requestDestToDisconnect(true);
 				}
 				EventLogger
 						.log("Server has informed all connected clients of server shutdown.");
@@ -108,7 +106,7 @@ public class ServerNetworkManager extends NetworkManager<ServerResourceManager> 
 				acceptClientCycle();
 			}
 		};
-		ThreadManager.assignThread(acceptTask);
+		ThreadHandler.assignThread(acceptTask);
 	}
 
 	/**
@@ -132,7 +130,7 @@ public class ServerNetworkManager extends NetworkManager<ServerResourceManager> 
 					// accept the connection
 					NetworkConnection connection = new NetworkConnection(
 							incoming, resourceManager.getMessageParser(), this);
-					clientObjects.add(connection);
+					clientObjects.add(new Client(connection));
 					resourceManager.getServerWindowManager()
 							.getMainWindowModule().getClientsTabModule()
 							.getController().newClientConnected();
@@ -186,10 +184,6 @@ public class ServerNetworkManager extends NetworkManager<ServerResourceManager> 
 
 	public int getNumberOfConnections() {
 		return clientObjects.size();
-	}
-
-	public List<NetworkConnection> getClientConnections() {
-		return clientObjects;
 	}
 
 	@Override

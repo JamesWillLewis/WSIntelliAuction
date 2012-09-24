@@ -18,6 +18,7 @@ import javax.swing.border.TitledBorder;
 import com.uct.cs.wsintelliauction.gui.View;
 
 import net.miginfocom.swing.MigLayout;
+import java.awt.SystemColor;
 
 public class ConsoleTabView extends View<ConsoleTabModel> {
 
@@ -62,10 +63,9 @@ public class ConsoleTabView extends View<ConsoleTabModel> {
 		eventPanel.add(scrollPane, "cell 0 0 2 1,grow");
 
 		eventTextPane = new JTextArea();
-		eventTextPane.setBackground(new Color(0, 0, 128));
-		eventTextPane.setFont(new Font("Dialog", Font.PLAIN, 12));
+		eventTextPane.setFont(new Font("Dialog", Font.BOLD, 12));
 		eventTextPane.setEditable(false);
-		eventTextPane.setForeground(new Color(124, 252, 0));
+		eventTextPane.setForeground(new Color(0, 128, 0));
 		eventTextPane.setText(model.getEventLogConsoleText());
 		scrollPane.setViewportView(eventTextPane);
 
@@ -87,9 +87,8 @@ public class ConsoleTabView extends View<ConsoleTabModel> {
 		errorPanel.add(scrollPane_1, "cell 0 0 2 1,grow");
 
 		errorTextPane = new JTextArea();
-		errorTextPane.setBackground(new Color(0, 0, 128));
 		errorTextPane.setEditable(false);
-		errorTextPane.setFont(new Font("Dialog", Font.PLAIN, 12));
+		errorTextPane.setFont(new Font("Dialog", Font.BOLD, 12));
 		errorTextPane.setForeground(new Color(255, 0, 0));
 		errorTextPane.setText(model.getErrorLogConsoleText());
 		scrollPane_1.setViewportView(errorTextPane);

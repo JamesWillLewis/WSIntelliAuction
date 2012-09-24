@@ -2,7 +2,7 @@ package wsintelliauction.misc;
 
 import java.util.concurrent.Callable;
 
-import com.uct.cs.wsintelliauction.util.ThreadManager;
+import com.uct.cs.wsintelliauction.util.ThreadHandler;
 
 
 public class TestThreadManager {
@@ -15,7 +15,7 @@ public class TestThreadManager {
 			public void run() {
 				System.out.println(">>BEFORE DELAY 1<<");
 
-				ThreadManager.pauseThisForSeconds(5);
+				ThreadHandler.pauseThisForSeconds(5);
 
 				System.out.println(">>AFTER DELAY 1<<");
 			}
@@ -26,7 +26,7 @@ public class TestThreadManager {
 			public void run() {
 				System.out.println(">>BEFORE DELAY 2<<");
 
-				ThreadManager.pauseThisForSecondsIgnoreInterupt(10);
+				ThreadHandler.pauseThisForSecondsIgnoreInterupt(10);
 
 				System.out.println(">>AFTER DELAY 2<<");
 			}
@@ -39,9 +39,9 @@ public class TestThreadManager {
 		 * The second runnable should ignore the interupt and delay for 10 seconds.
 		 */
 		
-		ThreadManager.assignThread(r);
-		ThreadManager.assignThread(r2);
-		ThreadManager.killThreads(); 
+		ThreadHandler.assignThread(r);
+		ThreadHandler.assignThread(r2);
+		ThreadHandler.killThreads(); 
 	}
 
 }

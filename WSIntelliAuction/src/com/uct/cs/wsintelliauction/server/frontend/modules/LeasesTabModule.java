@@ -4,14 +4,14 @@ import com.uct.cs.wsintelliauction.gui.Module;
 import com.uct.cs.wsintelliauction.server.frontend.controls.LeasesTabController;
 import com.uct.cs.wsintelliauction.server.frontend.models.LeasesTabModel;
 import com.uct.cs.wsintelliauction.server.frontend.views.LeasesTabView;
-import com.uct.cs.wsintelliauction.util.ResourceManager;
+import com.uct.cs.wsintelliauction.util.ResourceContainer;
 
 public class LeasesTabModule extends
 		Module<LeasesTabModel, LeasesTabView, LeasesTabController> {
 
-	public LeasesTabModule(ResourceManager resourceManager) {
-		super(resourceManager);
-		model = new LeasesTabModel(resourceManager);
+	public LeasesTabModule(ResourceContainer resourceContainer) {
+		super(resourceContainer);
+		model = new LeasesTabModel(resourceContainer);
 		view = new LeasesTabView(model);
 		controller = new LeasesTabController(view, model);
 	}

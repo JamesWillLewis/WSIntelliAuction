@@ -1,6 +1,6 @@
 package com.uct.cs.wsintelliauction.gui;
 
-import com.uct.cs.wsintelliauction.util.ResourceManager;
+import com.uct.cs.wsintelliauction.util.ResourceContainer;
 
 
 
@@ -15,12 +15,12 @@ import com.uct.cs.wsintelliauction.util.ResourceManager;
  * @author James Lewis
  * 
  */
-public abstract class WindowManager {
+public abstract class WindowDriver {
 	
-	protected ResourceManager resourceManager;
+	protected ResourceContainer resourceContainer;
 
-	public WindowManager(ResourceManager resourceManager) {
-		this.resourceManager = resourceManager;
+	public WindowDriver(ResourceContainer resourceContainer) {
+		this.resourceContainer = resourceContainer;
 	}
 	
 	

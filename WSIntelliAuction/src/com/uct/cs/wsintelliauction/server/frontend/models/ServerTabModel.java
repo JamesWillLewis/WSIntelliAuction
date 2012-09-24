@@ -3,9 +3,9 @@ package com.uct.cs.wsintelliauction.server.frontend.models;
 import java.net.InetAddress;
 
 import com.uct.cs.wsintelliauction.gui.Model;
-import com.uct.cs.wsintelliauction.server.backend.ServerResourceManager;
+import com.uct.cs.wsintelliauction.server.backend.ServerResourceContainer;
 
-public class ServerTabModel extends Model<ServerResourceManager> {
+public class ServerTabModel extends Model<ServerResourceContainer> {
 
 	private boolean serverOn;
 
@@ -15,7 +15,7 @@ public class ServerTabModel extends Model<ServerResourceManager> {
 	private String portField;
 	private String connectionsField;
 
-	public ServerTabModel(ServerResourceManager resourceManager) {
+	public ServerTabModel(ServerResourceContainer resourceManager) {
 		super(resourceManager);
 	}
 

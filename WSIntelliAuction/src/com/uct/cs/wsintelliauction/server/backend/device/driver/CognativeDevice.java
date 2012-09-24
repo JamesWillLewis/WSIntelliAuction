@@ -1,6 +1,6 @@
 package com.uct.cs.wsintelliauction.server.backend.device.driver;
 
-import com.uct.cs.wsintelliauction.dev.Channel;
+import com.uct.cs.wsintelliauction.db.orm.tables.Channel;
 import com.uct.cs.wsintelliauction.dev.ChannelShadow;
 
 /**

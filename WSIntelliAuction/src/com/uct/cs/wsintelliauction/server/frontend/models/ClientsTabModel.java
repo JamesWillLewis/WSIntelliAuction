@@ -5,27 +5,26 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 import com.uct.cs.wsintelliauction.gui.Model;
-import com.uct.cs.wsintelliauction.net.NetworkConnection;
-import com.uct.cs.wsintelliauction.server.backend.ServerResourceManager;
+import com.uct.cs.wsintelliauction.server.backend.ServerResourceContainer;
+import com.uct.cs.wsintelliauction.server.backend.net.Client;
 
-public class ClientsTabModel extends Model<ServerResourceManager> {
+public class ClientsTabModel extends Model<ServerResourceContainer> {
 
 	/**
 	 * Client table list model
 	 */
 	private ClientTableModel clientTableModel;
 
-	private List<NetworkConnection> clients;
+	private List<Client> clients;
 
-	public ClientsTabModel(ServerResourceManager resourceManager) {
+	public ClientsTabModel(ServerResourceContainer resourceManager) {
 		super(resourceManager);
 	}
 
 	@Override
 	public void reset() {
 		clientTableModel = new ClientTableModel();
-		clients = resourceManager.getServerNetworkManager()
-				.getClientConnections();
+		clients = resourceManager.getClients();
 	}
 
 	class ClientTableModel extends DefaultTableModel {
@@ -53,16 +52,17 @@ public class ClientsTabModel extends Model<ServerResourceManager> {
 			if (clients != null) {
 				switch (column) {
 				case 0:
-					return clients.get(row).getRecipientAddress().getHostName();
+					return clients.get(row).getConnection()
+							.getRecipientAddress().getHostName();
 				case 1:
-					return clients.get(row).getRecipientAddress()
-							.getHostAddress();
+					return clients.get(row).getConnection()
+							.getRecipientAddress().getHostAddress();
 				case 2:
 					return 0;
 				case 3:
 					return 0;
 				case 4:
-					return clients.get(row).isConnectionActive() ? "CONNECTED"
+					return clients.get(row).getConnection().isConnectionActive() ? "CONNECTED"
 							: "DISCONNCETED";
 				default:
 					return "???";

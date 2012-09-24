@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.uct.cs.wsintelliauction.server.backend.device.driver.CognativeDevice;
 import com.uct.cs.wsintelliauction.util.AbstractDriver;
-import com.uct.cs.wsintelliauction.util.ThreadManager;
+import com.uct.cs.wsintelliauction.util.ThreadHandler;
 
 
 public class Driver extends AbstractDriver implements Runnable
@@ -35,7 +35,7 @@ public class Driver extends AbstractDriver implements Runnable
 	 */
 	public void exec() 
 	{
-		ThreadManager.assignThread(this);
+		ThreadHandler.assignThread(this);
 		Running.set(true);
 	}
 
@@ -58,7 +58,7 @@ public class Driver extends AbstractDriver implements Runnable
 		while(Running.get())
 		{
 			//Pause this thread for 600ms to achieve to achieve the approximate frequency defined.
-			ThreadManager.pauseThisForMillis(60000/Dev.getDefaultUpdateSpeed()); 
+			ThreadHandler.pauseThisForMillis(60000/Dev.getDefaultUpdateSpeed()); 
 
 			Dev.update();
 			for(int i = Dev.getAmountChannels() ; i >= 0 ; i--)

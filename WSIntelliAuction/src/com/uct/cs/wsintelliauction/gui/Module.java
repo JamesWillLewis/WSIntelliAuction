@@ -1,6 +1,6 @@
 package com.uct.cs.wsintelliauction.gui;
 
-import com.uct.cs.wsintelliauction.util.ResourceManager;
+import com.uct.cs.wsintelliauction.util.ResourceContainer;
 
 public abstract class Module<M extends Model, V extends View<?>, C extends Controller<?, ?>> {
 
@@ -8,10 +8,10 @@ public abstract class Module<M extends Model, V extends View<?>, C extends Contr
 	protected V view;
 	protected C controller;
 
-	protected ResourceManager resourceManager;
+	protected ResourceContainer resourceContainer;
 
-	public Module(ResourceManager resourceManager) {
-		this.resourceManager = resourceManager;
+	public Module(ResourceContainer resourceContainer) {
+		this.resourceContainer = resourceContainer;
 	}
 
 	/**

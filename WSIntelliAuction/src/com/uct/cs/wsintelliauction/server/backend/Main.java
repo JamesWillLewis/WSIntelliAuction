@@ -1,7 +1,6 @@
 package com.uct.cs.wsintelliauction.server.backend;
 
 
-import com.uct.cs.wsintelliauction.gui.Splash;
 
 public class Main{
 	

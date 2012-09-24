@@ -1,6 +1,6 @@
 package com.uct.cs.wsintelliauction.net;
 
-import com.uct.cs.wsintelliauction.util.ResourceManager;
+import com.uct.cs.wsintelliauction.util.ResourceContainer;
 
 /**
  * Interface defining an application's network manager.
@@ -11,12 +11,12 @@ import com.uct.cs.wsintelliauction.util.ResourceManager;
  * @author James Lewis
  *
  */
-public abstract class NetworkManager<E extends ResourceManager> {
+public abstract class NetworkDriver<E extends ResourceContainer> {
 	
 	
 	protected E resourceManager;
 
-	public NetworkManager(E resourceManager) {
+	public NetworkDriver(E resourceManager) {
 		this.resourceManager = resourceManager;
 	}
 	

@@ -1,12 +1,12 @@
 package com.uct.cs.wsintelliauction.server.frontend.models;
 
 import com.uct.cs.wsintelliauction.gui.Model;
-import com.uct.cs.wsintelliauction.util.ResourceManager;
+import com.uct.cs.wsintelliauction.util.ResourceContainer;
 
 public class AuctionTabModel extends Model {
 
-	public AuctionTabModel(ResourceManager resourceManager) {
-		super(resourceManager);
+	public AuctionTabModel(ResourceContainer resourceContainer) {
+		super(resourceContainer);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -10,7 +10,7 @@ import com.uct.cs.wsintelliauction.util.ErrorLogger;
 import com.uct.cs.wsintelliauction.util.EventLogger;
 
 
-public class DatabaseManager{
+public class RawDatabaseDriver{
 
 	/**
 	 * Local Variables for our database
@@ -31,7 +31,7 @@ public class DatabaseManager{
 	 * @param Username
 	 * @param Password
 	 */
-	public DatabaseManager(String URL, String Username, String Password)
+	public RawDatabaseDriver(String URL, String Username, String Password)
 	{
 		this.DBName = null;
 		this.Username = Username;
@@ -48,7 +48,7 @@ public class DatabaseManager{
 	 * @param Password
 	 * @param DBName
 	 */
-	public DatabaseManager(String URL, String Username, String Password, String DBName)
+	public RawDatabaseDriver(String URL, String Username, String Password, String DBName)
 	{
 		this.DBName = DBName;
 		this.Username = Username;

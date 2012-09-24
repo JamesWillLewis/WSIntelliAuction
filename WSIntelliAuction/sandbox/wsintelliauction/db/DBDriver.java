@@ -1,13 +1,13 @@
 package wsintelliauction.db;
 
-import com.uct.cs.wsintelliauction.db.raw.DatabaseManager;
+import com.uct.cs.wsintelliauction.db.raw.RawDatabaseDriver;
 import com.uct.cs.wsintelliauction.db.raw.ResultMatrix;
 
 
 public class DBDriver
 {
 	//Our Database Manajer Object
-	DatabaseManager DBManager; 
+	RawDatabaseDriver DBManager; 
 	
 	public DBDriver()
 	{
@@ -22,7 +22,7 @@ public class DBDriver
 		 * 
 		 */
 		
-		DBManager = new DatabaseManager("jdbc:mysql://localhost:3306/", "root", "s1lentk1ll");
+		DBManager = new RawDatabaseDriver("jdbc:mysql://localhost:3306/", "root", "s1lentk1ll");
 		DBManager.startConnection();
 		DBManager.openDatabase("wsintelliauction");
 		/*

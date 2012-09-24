@@ -3,30 +3,31 @@ package com.uct.cs.wsintelliauction.client.backend.net;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.uct.cs.wsintelliauction.client.backend.ClientResourceManager;
+import com.uct.cs.wsintelliauction.client.backend.ClientResourceContainer;
 import com.uct.cs.wsintelliauction.net.NetworkConnection;
-import com.uct.cs.wsintelliauction.net.NetworkManager;
+import com.uct.cs.wsintelliauction.net.NetworkDriver;
 import com.uct.cs.wsintelliauction.net.Recipient;
 import com.uct.cs.wsintelliauction.net.message.Message;
 import com.uct.cs.wsintelliauction.util.ErrorLogger;
 import com.uct.cs.wsintelliauction.util.EventLogger;
-import com.uct.cs.wsintelliauction.util.ResourceManager;
+import com.uct.cs.wsintelliauction.util.ResourceContainer;
 
-public class ClientNetworkManager extends NetworkManager<ClientResourceManager> {
+public class ClientNetworkDriver extends NetworkDriver<ClientResourceContainer> {
 
 	/**
 	 * Network connection to central server
 	 */
-	private NetworkConnection serverConnection;
+	private Server serverConnection;
 
 	/**
 	 * If connection is active
 	 */
 	private AtomicBoolean connected;
 
-	public ClientNetworkManager(ClientResourceManager resourceManager) {
+	public ClientNetworkDriver(ClientResourceContainer resourceManager,
+			Server server) {
 		super(resourceManager);
-		serverConnection = null;
+		this.serverConnection = server;
 		connected = new AtomicBoolean(false);
 	}
 
@@ -39,8 +40,8 @@ public class ClientNetworkManager extends NetworkManager<ClientResourceManager> 
 	 */
 	public boolean connectTo(Recipient server) {
 		try {
-			serverConnection = new NetworkConnection(server,
-					resourceManager.getMessageParser(), this);
+			serverConnection = new Server(new NetworkConnection(server,
+					resourceManager.getMessageParser(), this));
 			EventLogger.log("Client now connected to server: "
 					+ server.getIPAddressString() + " on port: "
 					+ server.getPortNumber());
@@ -57,14 +58,9 @@ public class ClientNetworkManager extends NetworkManager<ClientResourceManager> 
 	 */
 	public void disconnect() {
 		if (connected.get()) {
-			serverConnection.tellRecipientToDisconnect(true);
+			serverConnection.getConnection().requestDestToDisconnect(true);
 			connected.set(false);
 		}
-	}
-
-	public void dispatchMessage(Message m) {
-		if (connected.get())
-			serverConnection.enqueueMessage(m);
 	}
 
 	@Override
@@ -75,7 +71,7 @@ public class ClientNetworkManager extends NetworkManager<ClientResourceManager> 
 	@Override
 	public void connectionWasClosed(NetworkConnection connection,
 			boolean recipientInitialized) {
-		if(recipientInitialized)
+		if (recipientInitialized)
 			resourceManager.getWindowManager().getMainWindowModule()
 					.getNetworkTabModule().getModel().serverDisconnected();
 	}

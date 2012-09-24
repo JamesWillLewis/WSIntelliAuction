@@ -2,13 +2,13 @@ package wsintelliauction.db;
 
 import java.util.ArrayList;
 
-import com.uct.cs.wsintelliauction.db.orm.DatabaseManager;
+import com.uct.cs.wsintelliauction.db.orm.ObjectDatabaseDriver;
 
 
 public class TestHibernate {
 
 	public static void main(String[] args) {
-		DatabaseManager manager = new DatabaseManager();
+		ObjectDatabaseDriver manager = new ObjectDatabaseDriver();
 
 
 		manager.close();

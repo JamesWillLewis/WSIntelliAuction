@@ -37,7 +37,7 @@ Implementations:
 
 	How leases are divided:																					Side effects.
 	
-		->  Idea 1:		Leases are sold on a time basis in terms of amount of time.			|	Lease states then need to be saved.
+		->  Idea 1:		--Leases are sold on a time basis in terms of amount of time.			|	Lease states then need to be saved.
 						So a specific amount of time is promised and it may be reclaimed	|	This also increases complexity in 
 						whenever the PU goes off-line.										|	terms of triggering the auction because a SU
 																							|	might be entitled to the line and this check 
@@ -50,7 +50,7 @@ Implementations:
 		
 	Selling of leases:																	
 	
-		->	Idea 1:		Leases are sold when the PU goes off-line.							|	If the auction lasts too long the spectrum is 
+		->	Idea 1:		--Leases are sold when the PU goes off-line.						|	If the auction lasts too long the spectrum is 
 																							|	not utilized well.
 			
 		->  Idea 2:		Leases are pre-sold. And leases claimed when the PU goes off-line	|	Increased complexity with dealing with leases 
@@ -58,7 +58,7 @@ Implementations:
 	
 	Dealing with a PU that comes back online while a lease is being claimed:
 	
-		->  Idea 1:		The SU is disconnected from the line, their lease contract 			|	Increased complexity with saving lease states.
+		->  Idea 1:		--The SU is disconnected from the line, their lease contract 			|	Increased complexity with saving lease states.
 						saved to be claimed later.											|	
 	
 		->  Idea 2:		The SU is disconnected and loses out on the lease. (the lease gets 	|	This solves the leave state problem.

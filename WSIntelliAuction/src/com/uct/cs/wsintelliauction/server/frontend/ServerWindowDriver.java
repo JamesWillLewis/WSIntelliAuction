@@ -2,10 +2,10 @@ package com.uct.cs.wsintelliauction.server.frontend;
 
 
 
-import com.uct.cs.wsintelliauction.gui.WindowManager;
-import com.uct.cs.wsintelliauction.server.backend.ServerResourceManager;
+import com.uct.cs.wsintelliauction.gui.WindowDriver;
+import com.uct.cs.wsintelliauction.server.backend.ServerResourceContainer;
 import com.uct.cs.wsintelliauction.server.frontend.modules.MainWindowModule;
-import com.uct.cs.wsintelliauction.util.ResourceManager;
+import com.uct.cs.wsintelliauction.util.ResourceContainer;
 
 /**
  * Implementation of 
@@ -13,7 +13,7 @@ import com.uct.cs.wsintelliauction.util.ResourceManager;
  * @author James Lewis
  *
  */
-public class ServerWindowManager extends WindowManager {
+public class ServerWindowDriver extends WindowDriver {
 
 	
 	public MainWindowModule mainWindowModule;
@@ -22,7 +22,7 @@ public class ServerWindowManager extends WindowManager {
 	 * Construct new window manager.
 	 * @param taskmanager Task manager.
 	 */
-	public ServerWindowManager(ServerResourceManager resourceManager) {
+	public ServerWindowDriver(ServerResourceContainer resourceManager) {
 		super(resourceManager);
 		mainWindowModule = new MainWindowModule(resourceManager);
 	}
