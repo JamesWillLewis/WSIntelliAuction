@@ -5,9 +5,9 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JOptionPane;
 
-import com.uct.cs.wsintelliauction.gui.Controller;
 import com.uct.cs.wsintelliauction.server.frontend.models.MainWindowModel;
 import com.uct.cs.wsintelliauction.server.frontend.views.MainWindowView;
+import com.uct.cs.wsintelliauction.window.Controller;
 
 public class MainWindowController extends
 		Controller<MainWindowModel, MainWindowView> {

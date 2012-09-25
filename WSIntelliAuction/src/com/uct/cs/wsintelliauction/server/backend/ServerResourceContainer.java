@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.uct.cs.wsintelliauction.db.orm.ObjectDatabaseDriver;
-import com.uct.cs.wsintelliauction.net.MessageParser;
-import com.uct.cs.wsintelliauction.server.backend.net.Client;
-import com.uct.cs.wsintelliauction.server.backend.net.ServerMessageParser;
-import com.uct.cs.wsintelliauction.server.backend.net.ServerNetworkDriver;
+import com.uct.cs.wsintelliauction.database.persistent.ObjectDatabaseDriver;
+import com.uct.cs.wsintelliauction.network.MessageParser;
+import com.uct.cs.wsintelliauction.server.backend.network.Client;
+import com.uct.cs.wsintelliauction.server.backend.network.ServerMessageParser;
+import com.uct.cs.wsintelliauction.server.backend.network.ServerNetworkDriver;
 import com.uct.cs.wsintelliauction.server.frontend.ServerWindowDriver;
-import com.uct.cs.wsintelliauction.util.ResourceContainer;
-import com.uct.cs.wsintelliauction.util.ThreadHandler;
+import com.uct.cs.wsintelliauction.utility.ResourceContainer;
+import com.uct.cs.wsintelliauction.utility.ThreadHandler;
 
 public class ServerResourceContainer extends ResourceContainer {
 

@@ -5,13 +5,13 @@ import java.io.ObjectInputStream;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-import com.uct.cs.wsintelliauction.client.backend.net.ClientNetworkDriver;
-import com.uct.cs.wsintelliauction.client.backend.net.StorableServerList;
+import com.uct.cs.wsintelliauction.client.backend.network.ClientNetworkDriver;
+import com.uct.cs.wsintelliauction.client.backend.network.StorableServerList;
 import com.uct.cs.wsintelliauction.client.frontend.ClientWindowDriver;
-import com.uct.cs.wsintelliauction.db.orm.ObjectDatabaseDriver;
-import com.uct.cs.wsintelliauction.net.Recipient;
-import com.uct.cs.wsintelliauction.util.AbstractDriver;
-import com.uct.cs.wsintelliauction.util.ThreadHandler;
+import com.uct.cs.wsintelliauction.database.persistent.ObjectDatabaseDriver;
+import com.uct.cs.wsintelliauction.network.Recipient;
+import com.uct.cs.wsintelliauction.utility.AbstractDriver;
+import com.uct.cs.wsintelliauction.utility.ThreadHandler;
 
 public class Driver extends AbstractDriver {
 

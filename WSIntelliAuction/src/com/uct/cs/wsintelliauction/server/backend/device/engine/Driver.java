@@ -3,8 +3,8 @@ package com.uct.cs.wsintelliauction.server.backend.device.engine;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.uct.cs.wsintelliauction.server.backend.device.driver.CognativeDevice;
-import com.uct.cs.wsintelliauction.util.AbstractDriver;
-import com.uct.cs.wsintelliauction.util.ThreadHandler;
+import com.uct.cs.wsintelliauction.utility.AbstractDriver;
+import com.uct.cs.wsintelliauction.utility.ThreadHandler;
 
 
 public class Driver extends AbstractDriver implements Runnable

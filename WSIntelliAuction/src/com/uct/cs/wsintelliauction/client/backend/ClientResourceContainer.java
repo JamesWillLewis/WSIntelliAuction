@@ -1,14 +1,14 @@
 package com.uct.cs.wsintelliauction.client.backend;
 
-import com.uct.cs.wsintelliauction.client.backend.net.ClientMessageParser;
-import com.uct.cs.wsintelliauction.client.backend.net.ClientNetworkDriver;
-import com.uct.cs.wsintelliauction.client.backend.net.Server;
-import com.uct.cs.wsintelliauction.client.backend.net.StorableServerList;
+import com.uct.cs.wsintelliauction.client.backend.network.ClientMessageParser;
+import com.uct.cs.wsintelliauction.client.backend.network.ClientNetworkDriver;
+import com.uct.cs.wsintelliauction.client.backend.network.Server;
+import com.uct.cs.wsintelliauction.client.backend.network.StorableServerList;
 import com.uct.cs.wsintelliauction.client.frontend.ClientWindowDriver;
-import com.uct.cs.wsintelliauction.net.MessageParser;
-import com.uct.cs.wsintelliauction.server.backend.net.ServerMessageParser;
-import com.uct.cs.wsintelliauction.util.ResourceContainer;
-import com.uct.cs.wsintelliauction.util.ThreadHandler;
+import com.uct.cs.wsintelliauction.network.MessageParser;
+import com.uct.cs.wsintelliauction.server.backend.network.ServerMessageParser;
+import com.uct.cs.wsintelliauction.utility.ResourceContainer;
+import com.uct.cs.wsintelliauction.utility.ThreadHandler;
 
 public class ClientResourceContainer extends ResourceContainer {
 

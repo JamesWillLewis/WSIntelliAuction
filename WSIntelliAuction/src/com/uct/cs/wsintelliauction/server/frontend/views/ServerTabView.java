@@ -16,8 +16,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.uct.cs.wsintelliauction.gui.View;
 import com.uct.cs.wsintelliauction.server.frontend.models.ServerTabModel;
+import com.uct.cs.wsintelliauction.window.View;
 
 import net.miginfocom.swing.MigLayout;
 

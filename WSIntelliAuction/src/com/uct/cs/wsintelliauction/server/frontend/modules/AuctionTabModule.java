@@ -1,10 +1,10 @@
 package com.uct.cs.wsintelliauction.server.frontend.modules;
 
-import com.uct.cs.wsintelliauction.gui.Module;
 import com.uct.cs.wsintelliauction.server.frontend.controls.AuctionTabController;
 import com.uct.cs.wsintelliauction.server.frontend.models.AuctionTabModel;
 import com.uct.cs.wsintelliauction.server.frontend.views.AuctionTabView;
-import com.uct.cs.wsintelliauction.util.ResourceContainer;
+import com.uct.cs.wsintelliauction.utility.ResourceContainer;
+import com.uct.cs.wsintelliauction.window.Module;
 
 public class AuctionTabModule extends
 		Module<AuctionTabModel, AuctionTabView, AuctionTabController> {

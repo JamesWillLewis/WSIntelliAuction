@@ -2,10 +2,10 @@ package com.uct.cs.wsintelliauction.server.frontend;
 
 
 
-import com.uct.cs.wsintelliauction.gui.WindowDriver;
 import com.uct.cs.wsintelliauction.server.backend.ServerResourceContainer;
 import com.uct.cs.wsintelliauction.server.frontend.modules.MainWindowModule;
-import com.uct.cs.wsintelliauction.util.ResourceContainer;
+import com.uct.cs.wsintelliauction.utility.ResourceContainer;
+import com.uct.cs.wsintelliauction.window.WindowDriver;
 
 /**
  * Implementation of 

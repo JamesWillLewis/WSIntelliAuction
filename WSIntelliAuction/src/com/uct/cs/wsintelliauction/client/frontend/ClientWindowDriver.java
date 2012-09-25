@@ -2,7 +2,7 @@ package com.uct.cs.wsintelliauction.client.frontend;
 
 import com.uct.cs.wsintelliauction.client.backend.ClientResourceContainer;
 import com.uct.cs.wsintelliauction.client.frontend.modules.MainWindowModule;
-import com.uct.cs.wsintelliauction.gui.WindowDriver;
+import com.uct.cs.wsintelliauction.window.WindowDriver;
 
 public class ClientWindowDriver extends WindowDriver {
 

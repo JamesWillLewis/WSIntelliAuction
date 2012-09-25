@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
-import com.uct.cs.wsintelliauction.gui.Model;
 import com.uct.cs.wsintelliauction.server.backend.ServerResourceContainer;
-import com.uct.cs.wsintelliauction.server.backend.net.Client;
+import com.uct.cs.wsintelliauction.server.backend.network.Client;
+import com.uct.cs.wsintelliauction.window.Model;
 
 public class ClientsTabModel extends Model<ServerResourceContainer> {
 

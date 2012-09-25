@@ -2,8 +2,8 @@ package com.uct.cs.wsintelliauction.server.frontend.models;
 
 import java.net.InetAddress;
 
-import com.uct.cs.wsintelliauction.gui.Model;
 import com.uct.cs.wsintelliauction.server.backend.ServerResourceContainer;
+import com.uct.cs.wsintelliauction.window.Model;
 
 public class ServerTabModel extends Model<ServerResourceContainer> {
 

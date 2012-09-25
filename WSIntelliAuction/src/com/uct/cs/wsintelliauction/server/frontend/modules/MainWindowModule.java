@@ -1,12 +1,12 @@
 package com.uct.cs.wsintelliauction.server.frontend.modules;
 
-import com.uct.cs.wsintelliauction.gui.Module;
-import com.uct.cs.wsintelliauction.gui.modules.ConsoleTabModule;
 import com.uct.cs.wsintelliauction.server.backend.ServerResourceContainer;
 import com.uct.cs.wsintelliauction.server.frontend.controls.MainWindowController;
 import com.uct.cs.wsintelliauction.server.frontend.models.MainWindowModel;
 import com.uct.cs.wsintelliauction.server.frontend.views.MainWindowView;
-import com.uct.cs.wsintelliauction.util.ResourceContainer;
+import com.uct.cs.wsintelliauction.utility.ResourceContainer;
+import com.uct.cs.wsintelliauction.window.Module;
+import com.uct.cs.wsintelliauction.window.modules.ConsoleTabModule;
 
 
 public class MainWindowModule extends

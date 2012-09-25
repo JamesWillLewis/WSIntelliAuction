@@ -9,8 +9,8 @@ import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.uct.cs.wsintelliauction.gui.View;
 import com.uct.cs.wsintelliauction.server.frontend.models.ChannelTabModel;
+import com.uct.cs.wsintelliauction.window.View;
 
 import net.miginfocom.swing.MigLayout;
 

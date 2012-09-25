@@ -8,11 +8,11 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import com.uct.cs.wsintelliauction.client.backend.ClientResourceContainer;
-import com.uct.cs.wsintelliauction.gui.Model;
-import com.uct.cs.wsintelliauction.net.Recipient;
-import com.uct.cs.wsintelliauction.util.AppConfig;
-import com.uct.cs.wsintelliauction.util.ErrorLogger;
-import com.uct.cs.wsintelliauction.util.EventLogger;
+import com.uct.cs.wsintelliauction.network.Recipient;
+import com.uct.cs.wsintelliauction.utility.AppConfig;
+import com.uct.cs.wsintelliauction.utility.ErrorLogger;
+import com.uct.cs.wsintelliauction.utility.EventLogger;
+import com.uct.cs.wsintelliauction.window.Model;
 
 public class NetworkTabModel extends Model<ClientResourceContainer> {
 

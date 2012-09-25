@@ -1,11 +1,11 @@
 package com.uct.cs.wsintelliauction.server.frontend.modules;
 
-import com.uct.cs.wsintelliauction.gui.Module;
 import com.uct.cs.wsintelliauction.server.backend.ServerResourceContainer;
 import com.uct.cs.wsintelliauction.server.frontend.controls.DatabaseTabController;
 import com.uct.cs.wsintelliauction.server.frontend.models.DatabaseTabModel;
 import com.uct.cs.wsintelliauction.server.frontend.views.DatabaseTabView;
-import com.uct.cs.wsintelliauction.util.ResourceContainer;
+import com.uct.cs.wsintelliauction.utility.ResourceContainer;
+import com.uct.cs.wsintelliauction.window.Module;
 
 public class DatabaseTabModule extends
 		Module<DatabaseTabModel, DatabaseTabView, DatabaseTabController> {

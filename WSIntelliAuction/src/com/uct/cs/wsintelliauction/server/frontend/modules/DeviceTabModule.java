@@ -1,10 +1,10 @@
 package com.uct.cs.wsintelliauction.server.frontend.modules;
 
-import com.uct.cs.wsintelliauction.gui.Module;
 import com.uct.cs.wsintelliauction.server.frontend.controls.DeviceTabController;
 import com.uct.cs.wsintelliauction.server.frontend.models.DeviceTabModel;
 import com.uct.cs.wsintelliauction.server.frontend.views.DeviceTabView;
-import com.uct.cs.wsintelliauction.util.ResourceContainer;
+import com.uct.cs.wsintelliauction.utility.ResourceContainer;
+import com.uct.cs.wsintelliauction.window.Module;
 
 public class DeviceTabModule extends
 		Module<DeviceTabModel, DeviceTabView, DeviceTabController> {

@@ -1,7 +1,7 @@
 package com.uct.cs.wsintelliauction.server.backend.device.driver;
 
-import com.uct.cs.wsintelliauction.db.orm.tables.Channel;
-import com.uct.cs.wsintelliauction.dev.ChannelShadow;
+import com.uct.cs.wsintelliauction.database.persistent.tables.Channel;
+import com.uct.cs.wsintelliauction.device.ChannelShadow;
 
 /**
  * This class serves as the simulator for the cognitive device we would use.

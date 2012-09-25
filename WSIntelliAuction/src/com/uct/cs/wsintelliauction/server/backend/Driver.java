@@ -1,7 +1,7 @@
 package com.uct.cs.wsintelliauction.server.backend;
 
 import com.uct.cs.wsintelliauction.client.backend.ClientResourceContainer;
-import com.uct.cs.wsintelliauction.util.AbstractDriver;
+import com.uct.cs.wsintelliauction.utility.AbstractDriver;
 
 public class Driver extends AbstractDriver {
 

@@ -1,8 +1,8 @@
 package com.uct.cs.wsintelliauction.server.frontend.controls;
 
-import com.uct.cs.wsintelliauction.gui.Controller;
 import com.uct.cs.wsintelliauction.server.frontend.models.AuctionTabModel;
 import com.uct.cs.wsintelliauction.server.frontend.views.AuctionTabView;
+import com.uct.cs.wsintelliauction.window.Controller;
 
 public class AuctionTabController extends
 		Controller<AuctionTabModel, AuctionTabView> {

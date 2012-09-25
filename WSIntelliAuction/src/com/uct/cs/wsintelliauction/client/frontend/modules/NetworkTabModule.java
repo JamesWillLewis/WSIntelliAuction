@@ -4,7 +4,7 @@ import com.uct.cs.wsintelliauction.client.backend.ClientResourceContainer;
 import com.uct.cs.wsintelliauction.client.frontend.controls.NetworkTabController;
 import com.uct.cs.wsintelliauction.client.frontend.models.NetworkTabModel;
 import com.uct.cs.wsintelliauction.client.frontend.views.NetworkTabView;
-import com.uct.cs.wsintelliauction.gui.Module;
+import com.uct.cs.wsintelliauction.window.Module;
 
 
 public class NetworkTabModule extends

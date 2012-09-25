@@ -2,7 +2,7 @@ package wsintelliauction.db;
 
 import java.util.ArrayList;
 
-import com.uct.cs.wsintelliauction.db.orm.ObjectDatabaseDriver;
+import com.uct.cs.wsintelliauction.database.persistent.ObjectDatabaseDriver;
 
 
 public class TestHibernate {

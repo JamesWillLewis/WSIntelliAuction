@@ -1,9 +1,9 @@
 package wsintelliauction.net;
 
-import com.uct.cs.wsintelliauction.net.message.CloseConnectionMessage;
-import com.uct.cs.wsintelliauction.net.message.ConnectionMessage;
-import com.uct.cs.wsintelliauction.net.message.InfoMessage;
-import com.uct.cs.wsintelliauction.net.message.Message;
+import com.uct.cs.wsintelliauction.network.message.CloseConnectionMessage;
+import com.uct.cs.wsintelliauction.network.message.ConnectionMessage;
+import com.uct.cs.wsintelliauction.network.message.InfoMessage;
+import com.uct.cs.wsintelliauction.network.message.Message;
 
 public class ParseMessageTest {
 

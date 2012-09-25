@@ -1,11 +1,11 @@
 
 package com.uct.cs.wsintelliauction.server.frontend.modules;
 
-import com.uct.cs.wsintelliauction.gui.Module;
 import com.uct.cs.wsintelliauction.server.frontend.controls.ChannelTabController;
 import com.uct.cs.wsintelliauction.server.frontend.models.ChannelTabModel;
 import com.uct.cs.wsintelliauction.server.frontend.views.ChannelTabView;
-import com.uct.cs.wsintelliauction.util.ResourceContainer;
+import com.uct.cs.wsintelliauction.utility.ResourceContainer;
+import com.uct.cs.wsintelliauction.window.Module;
 
 public class ChannelTabModule extends
 		Module<ChannelTabModel, ChannelTabView, ChannelTabController> {

@@ -14,8 +14,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import com.uct.cs.wsintelliauction.gui.View;
 import com.uct.cs.wsintelliauction.server.frontend.models.DeviceTabModel;
+import com.uct.cs.wsintelliauction.window.View;
 
 import net.miginfocom.swing.MigLayout;
 

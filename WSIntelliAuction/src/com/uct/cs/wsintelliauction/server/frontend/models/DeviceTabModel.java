@@ -1,7 +1,7 @@
 package com.uct.cs.wsintelliauction.server.frontend.models;
 
-import com.uct.cs.wsintelliauction.gui.Model;
-import com.uct.cs.wsintelliauction.util.ResourceContainer;
+import com.uct.cs.wsintelliauction.utility.ResourceContainer;
+import com.uct.cs.wsintelliauction.window.Model;
 
 public class DeviceTabModel  extends Model {
 

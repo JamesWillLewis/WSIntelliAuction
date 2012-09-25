@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.uct.cs.wsintelliauction.util.RuntimeParamParser;
+import com.uct.cs.wsintelliauction.utility.RuntimeParamParser;
 
 
 public class RuntimeParamParserTest {

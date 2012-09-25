@@ -1,7 +1,7 @@
 package com.uct.cs.wsintelliauction.client.frontend.models;
 
 import com.uct.cs.wsintelliauction.client.backend.ClientResourceContainer;
-import com.uct.cs.wsintelliauction.gui.Model;
+import com.uct.cs.wsintelliauction.window.Model;
 
 
 public class MainWindowModel extends Model<ClientResourceContainer> {

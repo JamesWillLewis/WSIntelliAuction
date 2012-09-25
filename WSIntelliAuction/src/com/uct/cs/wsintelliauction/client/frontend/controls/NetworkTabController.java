@@ -10,9 +10,9 @@ import javax.swing.JOptionPane;
 
 import com.uct.cs.wsintelliauction.client.frontend.models.NetworkTabModel;
 import com.uct.cs.wsintelliauction.client.frontend.views.NetworkTabView;
-import com.uct.cs.wsintelliauction.gui.Controller;
-import com.uct.cs.wsintelliauction.net.Recipient;
-import com.uct.cs.wsintelliauction.util.AppConfig;
+import com.uct.cs.wsintelliauction.network.Recipient;
+import com.uct.cs.wsintelliauction.utility.AppConfig;
+import com.uct.cs.wsintelliauction.window.Controller;
 
 public class NetworkTabController extends
 		Controller<NetworkTabModel, NetworkTabView> {

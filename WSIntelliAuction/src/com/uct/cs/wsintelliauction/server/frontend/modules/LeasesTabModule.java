@@ -1,10 +1,10 @@
 package com.uct.cs.wsintelliauction.server.frontend.modules;
 
-import com.uct.cs.wsintelliauction.gui.Module;
 import com.uct.cs.wsintelliauction.server.frontend.controls.LeasesTabController;
 import com.uct.cs.wsintelliauction.server.frontend.models.LeasesTabModel;
 import com.uct.cs.wsintelliauction.server.frontend.views.LeasesTabView;
-import com.uct.cs.wsintelliauction.util.ResourceContainer;
+import com.uct.cs.wsintelliauction.utility.ResourceContainer;
+import com.uct.cs.wsintelliauction.window.Module;
 
 public class LeasesTabModule extends
 		Module<LeasesTabModel, LeasesTabView, LeasesTabController> {

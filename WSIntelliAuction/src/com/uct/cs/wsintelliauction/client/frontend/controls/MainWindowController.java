@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 
 import com.uct.cs.wsintelliauction.client.frontend.models.MainWindowModel;
 import com.uct.cs.wsintelliauction.client.frontend.views.MainWindowView;
-import com.uct.cs.wsintelliauction.gui.Controller;
+import com.uct.cs.wsintelliauction.window.Controller;
 
 public class MainWindowController extends
 		Controller<MainWindowModel, MainWindowView> {

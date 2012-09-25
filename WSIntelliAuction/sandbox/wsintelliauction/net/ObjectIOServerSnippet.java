@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 
-import com.uct.cs.wsintelliauction.net.NetworkConnection;
-import com.uct.cs.wsintelliauction.net.message.InfoMessage;
-import com.uct.cs.wsintelliauction.server.backend.net.ServerNetworkDriver;
-import com.uct.cs.wsintelliauction.util.ThreadHandler;
+import com.uct.cs.wsintelliauction.network.NetworkConnection;
+import com.uct.cs.wsintelliauction.network.message.InfoMessage;
+import com.uct.cs.wsintelliauction.server.backend.network.ServerNetworkDriver;
+import com.uct.cs.wsintelliauction.utility.ThreadHandler;
 
 /**
  * Code snippet for creating a server which can send and receive objects over a

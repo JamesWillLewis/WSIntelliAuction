@@ -13,7 +13,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import com.uct.cs.wsintelliauction.client.frontend.models.NetworkTabModel;
-import com.uct.cs.wsintelliauction.gui.View;
+import com.uct.cs.wsintelliauction.window.View;
 
 import net.miginfocom.swing.MigLayout;
 

@@ -1,8 +1,8 @@
 package com.uct.cs.wsintelliauction.server.frontend.controls;
 
-import com.uct.cs.wsintelliauction.gui.Controller;
 import com.uct.cs.wsintelliauction.server.frontend.models.DeviceTabModel;
 import com.uct.cs.wsintelliauction.server.frontend.views.DeviceTabView;
+import com.uct.cs.wsintelliauction.window.Controller;
 
 public class DeviceTabController extends
 		Controller<DeviceTabModel, DeviceTabView> {

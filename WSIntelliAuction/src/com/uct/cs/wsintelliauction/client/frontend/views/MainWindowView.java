@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import com.uct.cs.wsintelliauction.client.frontend.models.MainWindowModel;
-import com.uct.cs.wsintelliauction.gui.View;
+import com.uct.cs.wsintelliauction.window.View;
 
 
 public class MainWindowView extends View<MainWindowModel> {
