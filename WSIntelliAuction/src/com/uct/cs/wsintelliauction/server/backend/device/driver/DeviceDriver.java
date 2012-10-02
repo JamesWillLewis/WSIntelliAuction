@@ -1,6 +1,6 @@
 package com.uct.cs.wsintelliauction.server.backend.device.driver;
 
-import com.uct.cs.wsintelliauction.database.persistent.tables.Channel;
+import com.uct.cs.wsintelliauction.database.persistent.tables.Location;
 
 
 /**
@@ -24,7 +24,7 @@ public interface DeviceDriver
 	 * @param index
 	 * @return Specified channel
 	 */
-	public Channel getChannelStatus(int index); 
+	public Location getChannelStatus(int index); 
 	
 	/**
 	 * Returns the default device refresh speed in Hz.

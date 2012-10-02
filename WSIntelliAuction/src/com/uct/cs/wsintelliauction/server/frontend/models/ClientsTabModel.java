@@ -30,8 +30,7 @@ public class ClientsTabModel extends Model<ServerResourceContainer> {
 	class ClientTableModel extends DefaultTableModel {
 
 		public ClientTableModel() {
-			super(new String[] { "Host name", "IP Address", "Bids Placed",
-					"Leases Held", "Status" }, 0);
+			super(new String[] { "Host name", "IP Address", "Status" }, 0);
 		}
 
 		@Override
@@ -58,12 +57,9 @@ public class ClientsTabModel extends Model<ServerResourceContainer> {
 					return clients.get(row).getConnection()
 							.getRecipientAddress().getHostAddress();
 				case 2:
-					return 0;
-				case 3:
-					return 0;
-				case 4:
-					return clients.get(row).getConnection().isConnectionActive() ? "CONNECTED"
-							: "DISCONNCETED";
+					return clients.get(row).getConnection()
+							.isConnectionActive() ? "CONNECTED"
+							: "DISCONNECTED";
 				default:
 					return "???";
 				}

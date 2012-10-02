@@ -1,8 +1,5 @@
 package com.uct.cs.wsintelliauction.network;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import com.uct.cs.wsintelliauction.network.message.CloseConnectionMessage;
 import com.uct.cs.wsintelliauction.network.message.Message;
 import com.uct.cs.wsintelliauction.utility.ResourceContainer;
 
@@ -21,28 +18,22 @@ import com.uct.cs.wsintelliauction.utility.ResourceContainer;
 public abstract class MessageParser<T extends ResourceContainer> {
 
 	/**
-	 * If this parser is servicing incoming messages from the network manager
+	 * Application resource manager
 	 */
-	private AtomicBoolean servicingMessages;
-
-	private T resourceManager;
+	protected T resourceManager;
 
 	public MessageParser(T resourceManager) {
 		this.resourceManager = resourceManager;
-		servicingMessages = new AtomicBoolean(true);
 	}
 
-	public void parseMessage(Message message) {
+	/**
+	 * Handle the supplied message.
+	 * 
+	 * @param message Message to parse
+	 * @param con Connection responsible for the message.
+	 */
+	public abstract void parseMessage(Message message, NetworkConnection con);
 	
-	}
-	
-	
-	public AtomicBoolean isServicingMessages() {
-		return servicingMessages;
-	}
 
-	public void setServicingMessages(AtomicBoolean servicingMessages) {
-		this.servicingMessages = servicingMessages;
-	}
 
 }

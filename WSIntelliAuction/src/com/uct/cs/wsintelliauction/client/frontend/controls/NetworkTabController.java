@@ -45,7 +45,8 @@ public class NetworkTabController extends
 			String address = JOptionPane.showInputDialog(view,
 					"Enter the server address (Host address or IP address):",
 					"Register New Server", JOptionPane.QUESTION_MESSAGE);
-			model.registerServer(address);
+			if (address != null && !address.equals(""))
+				model.registerServer(address);
 		}
 	}
 
@@ -73,24 +74,24 @@ public class NetworkTabController extends
 		}
 
 	}
-	
-	private class ConnectToServerHandle implements ActionListener{
+
+	private class ConnectToServerHandle implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int select = view.getSelectedServer();
 			model.connectTo(select);
 		}
-		
+
 	}
-	
-	private class DisconnectHandle implements ActionListener{
+
+	private class DisconnectHandle implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			model.disconnect();
 		}
-		
+
 	}
 
 }

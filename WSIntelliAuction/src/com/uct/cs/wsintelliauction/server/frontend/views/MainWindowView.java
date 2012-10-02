@@ -23,9 +23,6 @@ public class MainWindowView extends View<MainWindowModel> {
 	private JFrame frame;
 	private JTabbedPane tabs;
 
-	private JMenuBar menuBar;
-	private JMenu fileMenu, editMenu, optionsMenu, helpMenu;
-
 	/**
 	 * Create the application.
 	 */
@@ -40,18 +37,6 @@ public class MainWindowView extends View<MainWindowModel> {
 	 */
 	protected void initialize() {
 		frame = new JFrame("WSIntelliAuction Server");
-
-		menuBar = new JMenuBar();
-		frame.setJMenuBar(menuBar);
-		fileMenu = new JMenu("File");
-		editMenu = new JMenu("Edit");
-		optionsMenu = new JMenu("Options");
-		helpMenu = new JMenu("Help");
-
-		menuBar.add(fileMenu);
-		menuBar.add(editMenu);
-		menuBar.add(optionsMenu);
-		menuBar.add(helpMenu);
 
 		frame.setContentPane(this);
 		setLayout(new BorderLayout(0, 0));

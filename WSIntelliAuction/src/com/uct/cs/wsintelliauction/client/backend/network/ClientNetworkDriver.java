@@ -24,10 +24,8 @@ public class ClientNetworkDriver extends NetworkDriver<ClientResourceContainer> 
 	 */
 	private AtomicBoolean connected;
 
-	public ClientNetworkDriver(ClientResourceContainer resourceManager,
-			Server server) {
+	public ClientNetworkDriver(ClientResourceContainer resourceManager) {
 		super(resourceManager);
-		this.serverConnection = server;
 		connected = new AtomicBoolean(false);
 	}
 
@@ -74,6 +72,10 @@ public class ClientNetworkDriver extends NetworkDriver<ClientResourceContainer> 
 		if (recipientInitialized)
 			resourceManager.getWindowManager().getMainWindowModule()
 					.getNetworkTabModule().getModel().serverDisconnected();
+	}
+	
+	public Server getServerConnection() {
+		return serverConnection;
 	}
 
 }

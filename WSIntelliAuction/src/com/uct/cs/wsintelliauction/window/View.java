@@ -67,6 +67,7 @@ public abstract class View<M extends Model<?>> extends JPanel{
 			ErrorLogger.log(e.getMessage());
 		} 
 	}
+	
 
 	/**
 	 * Construct a new window frame, and set some default standard properties.

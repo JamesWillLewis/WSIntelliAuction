@@ -11,6 +11,7 @@ import com.uct.cs.wsintelliauction.network.NetworkConnection;
 public class Client {
 
 	private NetworkConnection connection;
+	
 
 	public Client(NetworkConnection connection) {
 		this.connection = connection;
@@ -19,5 +20,6 @@ public class Client {
 	public NetworkConnection getConnection() {
 		return connection;
 	}
+
 	
 }

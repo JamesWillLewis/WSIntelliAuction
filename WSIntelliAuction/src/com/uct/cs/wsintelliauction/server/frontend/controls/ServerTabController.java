@@ -12,7 +12,6 @@ public class ServerTabController extends
 
 	public ServerTabController(ServerTabView view, ServerTabModel model) {
 		super(view, model);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

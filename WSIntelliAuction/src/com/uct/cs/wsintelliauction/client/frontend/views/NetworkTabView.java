@@ -21,7 +21,6 @@ public class NetworkTabView extends View<NetworkTabModel> {
 
 	public NetworkTabView(NetworkTabModel model) {
 		super(model);
-		// TODO Auto-generated constructor stub
 	}
 
 	private JTable serversTable;
@@ -85,21 +84,6 @@ public class NetworkTabView extends View<NetworkTabModel> {
 
 		btnPing = new JButton("Ping");
 		registeredServersPanel.add(btnPing, "cell 1 1");
-
-		JPanel connectionInfoPanel = new JPanel();
-		connectionInfoPanel.setBorder(new TitledBorder(null,
-				"Connection Information", TitledBorder.LEADING,
-				TitledBorder.TOP, null, null));
-		add(connectionInfoPanel, "cell 0 1,grow");
-		connectionInfoPanel.setLayout(new MigLayout("", "[80px][grow]",
-				"[16px]"));
-
-		JLabel lblServerStatus = new JLabel("Server status:");
-		connectionInfoPanel.add(lblServerStatus,
-				"cell 0 0,alignx left,aligny top");
-
-		JLabel lblRunning = new JLabel("RUNNING");
-		connectionInfoPanel.add(lblRunning, "cell 1 0,alignx center");
 	}
 
 

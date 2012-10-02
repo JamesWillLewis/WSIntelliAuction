@@ -36,4 +36,9 @@ public class MainWindowController extends
 
 	}
 
+	public void setWindowEnabled(boolean b) {
+		view.getFrame().setEnabled(b);
+	}
+
+
 }

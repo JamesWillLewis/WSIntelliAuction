@@ -26,7 +26,7 @@ public class MainWindowView extends View<MainWindowModel> {
 	 * @wbp.parser.entryPoint
 	 */
 	protected void initialize() {
-		frame = new JFrame("Client Application");
+		frame = new JFrame("WSIntelliAuction Client");
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.setContentPane(this);
 		setLayout(new BorderLayout(0, 0));

@@ -13,7 +13,6 @@ public class ServerTabModel extends Model<ServerResourceContainer> {
 	private String hostAddressField;
 	private String hostIPField;
 	private String portField;
-	private String connectionsField;
 
 	public ServerTabModel(ServerResourceContainer resourceManager) {
 		super(resourceManager);
@@ -36,14 +35,11 @@ public class ServerTabModel extends Model<ServerResourceContainer> {
 			hostAddressField = addr.getCanonicalHostName();
 			hostIPField = addr.getHostAddress();
 			portField = String.valueOf(portNum);
-			connectionsField = String.valueOf(resourceManager
-					.getServerNetworkManager().getNumberOfConnections());
 		} else {
 			hostNameField = "";
 			hostAddressField = "";
 			hostIPField = "";
 			portField = "";
-			connectionsField = "";
 		}
 	}
 
@@ -81,7 +77,4 @@ public class ServerTabModel extends Model<ServerResourceContainer> {
 		return portField;
 	}
 
-	public String getConnectionsField() {
-		return connectionsField;
-	}
 }

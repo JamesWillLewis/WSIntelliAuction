@@ -7,8 +7,13 @@ import java.util.Iterator;
 import com.uct.cs.wsintelliauction.network.Recipient;
 import com.uct.cs.wsintelliauction.utility.FileStorable;
 
-public class StorableServerList extends FileStorable<StorableServerList> implements
-		Serializable {
+/**
+ * 
+ * Stored list of server registrations.
+ * 
+ */
+public class StorableServerList extends FileStorable<StorableServerList>
+		implements Serializable {
 
 	private static final long serialVersionUID = 1556501003509513387L;
 
@@ -33,7 +38,7 @@ public class StorableServerList extends FileStorable<StorableServerList> impleme
 	public Iterator<Recipient> iterator() {
 		return serverList.iterator();
 	}
-	
+
 	public ArrayList<Recipient> getServerList() {
 		return serverList;
 	}

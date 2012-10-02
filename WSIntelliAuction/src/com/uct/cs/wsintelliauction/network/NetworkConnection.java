@@ -182,9 +182,7 @@ public class NetworkConnection {
 			Runnable dispatchThread = new Runnable() {
 
 				@Override
-				public void run() {
-					acceptEnqueue.set(true);
-					dispatching.set(true);
+				public void run() {	
 					dispatchListen();
 				}
 			};
@@ -192,7 +190,6 @@ public class NetworkConnection {
 
 				@Override
 				public void run() {
-					receiving.set(true);
 					recieveListen();
 				}
 			};
@@ -201,14 +198,17 @@ public class NetworkConnection {
 
 				@Override
 				public void run() {
-					acceptConsume.set(true);
 					submitToMessageParserRoutine();
 				}
 			};
-
+			acceptEnqueue.set(true);
+			dispatching.set(true);
+			receiving.set(true);
+			acceptConsume.set(true);
 			ThreadHandler.assignThread(dispatchThread);
 			ThreadHandler.assignThread(receiveThread);
 			ThreadHandler.assignThread(submitToMessageParserThread);
+
 		} else {
 			ErrorLogger
 					.log("Attempting to begin IO parsing on closed connection.");
@@ -231,7 +231,7 @@ public class NetworkConnection {
 					waitForCacheEmptyLatch.countDown();
 				} else if (parseNext != null && messageParser != null) {
 					// service message
-					messageParser.parseMessage(parseNext);
+					messageParser.parseMessage(parseNext, this);
 				}
 			} catch (InterruptedException e) {
 				ErrorLogger.log(e.getMessage());

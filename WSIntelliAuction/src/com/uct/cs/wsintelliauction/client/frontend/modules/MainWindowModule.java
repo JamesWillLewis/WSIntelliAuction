@@ -4,7 +4,6 @@ import com.uct.cs.wsintelliauction.client.backend.ClientResourceContainer;
 import com.uct.cs.wsintelliauction.client.frontend.controls.MainWindowController;
 import com.uct.cs.wsintelliauction.client.frontend.models.MainWindowModel;
 import com.uct.cs.wsintelliauction.client.frontend.views.MainWindowView;
-import com.uct.cs.wsintelliauction.utility.ResourceContainer;
 import com.uct.cs.wsintelliauction.window.Module;
 import com.uct.cs.wsintelliauction.window.modules.ConsoleTabModule;
 
@@ -13,6 +12,8 @@ public class MainWindowModule extends
 
 	private NetworkTabModule networkTabModule;
 	private ConsoleTabModule consoleTabModule;
+	private AuctionTabModule auctionTabModule;
+	private LeasesTabModule leasesTabModule;
 
 	public MainWindowModule(ClientResourceContainer resourceManager) {
 		super(resourceManager);
@@ -23,12 +24,16 @@ public class MainWindowModule extends
 
 		networkTabModule = new NetworkTabModule(resourceManager);
 		consoleTabModule = new ConsoleTabModule(resourceManager);
+		auctionTabModule = new AuctionTabModule(resourceManager);
+		leasesTabModule = new LeasesTabModule(resourceManager);
 
 		initTabs();
 	}
 
 	private void initTabs() {
 		view.addTab(networkTabModule.getView());
+		view.addTab(auctionTabModule.getView());
+		view.addTab(leasesTabModule.getView());
 		view.addTab(consoleTabModule.getView());
 	}
 
@@ -41,6 +46,12 @@ public class MainWindowModule extends
 		return networkTabModule;
 	}
 	
+	public AuctionTabModule getAuctionTabModule() {
+		return auctionTabModule;
+	}
 	
+	public LeasesTabModule getLeasesTabModule() {
+		return leasesTabModule;
+	}
 
 }

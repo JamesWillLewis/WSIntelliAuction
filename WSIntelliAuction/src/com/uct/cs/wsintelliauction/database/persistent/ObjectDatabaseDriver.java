@@ -3,6 +3,7 @@ package com.uct.cs.wsintelliauction.database.persistent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.swing.JOptionPane;
 
@@ -48,6 +49,9 @@ public class ObjectDatabaseDriver {
 	 * Configuration for this driver
 	 */
 	private Configuration configuration;
+	
+	private ReentrantLock accessLock;
+	
 
 	/**
 	 * Constructs a new Object-Relational database layer manager. The session
@@ -55,6 +59,7 @@ public class ObjectDatabaseDriver {
 	 * specified by <b>CONFIG_FILE</b>
 	 */
 	public ObjectDatabaseDriver() {
+		accessLock = new ReentrantLock(true);
 		configureSessionFactory();
 	}
 
@@ -77,11 +82,13 @@ public class ObjectDatabaseDriver {
 	 *            Object to save or update
 	 */
 	public void saveOrUpdate(Object tuple) {
+		accessLock.lock();
 		Session session = newSession();
 		Transaction transaction = session.beginTransaction();
 		session.saveOrUpdate(tuple);
 		transaction.commit();
 		session.close();
+		accessLock.unlock();
 	}
 
 	/**
@@ -107,6 +114,8 @@ public class ObjectDatabaseDriver {
 	 */
 	@SuppressWarnings("unchecked")
 	public <E> ArrayList<E> query(String stm) {
+		accessLock.lock();
+		
 		Session session = newSession();
 		Transaction transaction = session.beginTransaction();
 
@@ -121,6 +130,9 @@ public class ObjectDatabaseDriver {
 
 		transaction.commit();
 		session.close();
+		
+		accessLock.unlock();
+		
 		return (ArrayList<E>) table;
 	}
 
@@ -133,11 +145,13 @@ public class ObjectDatabaseDriver {
 	 *            Object to remove.
 	 */
 	public void deleteObject(Object tuple) {
+		accessLock.lock();
 		Session session = newSession();
 		Transaction transaction = session.beginTransaction();
 		session.delete(tuple);
 		transaction.commit();
 		session.close();
+		accessLock.unlock();
 	}
 
 	/**
@@ -149,6 +163,7 @@ public class ObjectDatabaseDriver {
 	 * @return List of all tuples in the table, or null if table doesn't exist.
 	 */
 	public <E> ArrayList<E> getTable(Class<E> schema) {
+		accessLock.lock();
 		Session session = newSession();
 		Transaction transaction = session.beginTransaction();
 		@SuppressWarnings("unchecked")
@@ -157,6 +172,7 @@ public class ObjectDatabaseDriver {
 
 		transaction.commit();
 		session.close();
+		accessLock.unlock();
 		return (ArrayList<E>) table;
 	}
 
@@ -170,11 +186,13 @@ public class ObjectDatabaseDriver {
 	 * @return True if exists, false otherwise.
 	 */
 	public <E> boolean containsID(Class<E> schema, Long id) {
+		accessLock.lock();
 		Session session = newSession();
 		Transaction transaction = session.beginTransaction();
 		boolean contains = loadByID(schema, id) == null ? false : true;
 		transaction.commit();
 		session.close();
+		accessLock.unlock();
 		return contains;
 	}
 
@@ -189,11 +207,13 @@ public class ObjectDatabaseDriver {
 	 * @return Object from the database which matches the above criteria.
 	 */
 	public <E> E loadByID(Class<E> schema, Long id) {
+		accessLock.lock();
 		Session session = newSession();
 		Transaction transaction = session.beginTransaction();
 		E obj = (E) session.get(schema, id);
 		transaction.commit();
 		session.close();
+		accessLock.unlock();
 		return obj;
 	}
 
@@ -224,7 +244,9 @@ public class ObjectDatabaseDriver {
 	 */
 	public void close() {
 		if (sessionFactory != null) {
+			accessLock.lock();
 			sessionFactory.close();
+			accessLock.unlock();
 		}
 	}
 

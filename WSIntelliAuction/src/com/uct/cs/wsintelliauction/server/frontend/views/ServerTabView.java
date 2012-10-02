@@ -32,7 +32,6 @@ public class ServerTabView extends View<ServerTabModel> {
 	private JTextField IPAddressField;
 	private JTextField portField;
 	private JTextField stateField;
-	private JTextField connectionsField;
 	private JButton btnNewButton;
 
 	/**
@@ -90,11 +89,6 @@ public class ServerTabView extends View<ServerTabModel> {
 		JLabel lblConnections = new JLabel("Connections:");
 		add(lblConnections, "cell 0 5,alignx right");
 
-		connectionsField = new JTextField();
-		connectionsField.setEditable(false);
-		add(connectionsField, "cell 2 5,alignx right");
-		connectionsField.setColumns(20);
-
 		JSeparator separator = new JSeparator();
 		add(separator, "cell 0 6 3 1,grow");
 
@@ -107,10 +101,6 @@ public class ServerTabView extends View<ServerTabModel> {
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
 		add(btnNewButton, "cell 0 7,aligny bottom");
 
-		JCheckBox chckbxAcceptConnections_1 = new JCheckBox(
-				"Accept Connections");
-		chckbxAcceptConnections_1.setHorizontalAlignment(SwingConstants.CENTER);
-		add(chckbxAcceptConnections_1, "cell 2 7,alignx right");
 		refreshServerStats();
 	}
 
@@ -129,7 +119,6 @@ public class ServerTabView extends View<ServerTabModel> {
 		IPAddressField.setText(model.getHostIPField());
 		portField.setText(model.getPortField());
 		stateField.setText(model.isServerOn() ? "ONLINE" : "OFFLINE");
-		connectionsField.setText(model.getConnectionsField());
 	}
 
 }

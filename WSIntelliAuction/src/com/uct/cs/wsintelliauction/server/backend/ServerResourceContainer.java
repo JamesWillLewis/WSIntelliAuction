@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.uct.cs.wsintelliauction.auction.SpectrumBroker;
 import com.uct.cs.wsintelliauction.database.persistent.ObjectDatabaseDriver;
 import com.uct.cs.wsintelliauction.network.MessageParser;
 import com.uct.cs.wsintelliauction.server.backend.network.Client;
@@ -35,7 +36,14 @@ public class ServerResourceContainer extends ResourceContainer {
 	 */
 	private ServerMessageParser serverMessageParser;
 
+	/**
+	 * List of connected clients
+	 */
 	private List<Client> clients;
+	/**
+	 * The currently active auction
+	 */
+	private SpectrumBroker spectrumBroker;
 
 	public ServerResourceContainer(String[] args) {
 		super(args);
@@ -48,6 +56,9 @@ public class ServerResourceContainer extends ResourceContainer {
 
 	@Override
 	public void initManagers() {
+		splashLoader.updateLoader("Initializing spectrum broker", 20);
+		spectrumBroker = new SpectrumBroker(this);
+		
 		splashLoader.updateLoader("Establishing database connection", 40);
 		objectDatabaseDriver = new ObjectDatabaseDriver();
 
@@ -59,6 +70,10 @@ public class ServerResourceContainer extends ResourceContainer {
 
 		splashLoader.updateLoader("Initializing message parser", 90);
 		serverMessageParser = new ServerMessageParser(this);
+		
+		
+		
+		splashLoader.updateLoader("Initializing server", 99);
 	}
 
 	public ServerNetworkDriver getServerNetworkManager() {
@@ -94,11 +109,16 @@ public class ServerResourceContainer extends ResourceContainer {
 		storeSerializedResources();
 		objectDatabaseDriver.close();
 		serverNetworkDriver.close();
+		spectrumBroker.close();
 		ThreadHandler.closeThreads();
 	}
 	
 	public List<Client> getClients() {
 		return clients;
+	}
+	
+	public SpectrumBroker getSpectrumBroker() {
+		return spectrumBroker;
 	}
 
 }

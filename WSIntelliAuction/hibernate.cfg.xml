@@ -1,6 +1,6 @@
 <!DOCTYPE hibernate-configuration PUBLIC
 "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
 <hibernate-configuration>
 	<session-factory>
@@ -12,11 +12,9 @@
 		<property name="hibernate.connection.password">s1lentk1ll</property>
 		<property name="hibernate.hbm2ddl.auto">update</property>
 
-		<mapping class="com.uct.cs.wsintelliauction.database.persistent.tables.Channel"/>
-		<mapping class="com.uct.cs.wsintelliauction.database.persistent.tables.Auction"/>
+		<mapping class="com.uct.cs.wsintelliauction.database.persistent.tables.Location"/>
+		<mapping class="com.uct.cs.wsintelliauction.database.persistent.tables.Segment"/>
 		<mapping class="com.uct.cs.wsintelliauction.database.persistent.tables.Lease"/>
-		<mapping class="com.uct.cs.wsintelliauction.database.persistent.tables.PrimaryUser"/>
-		<mapping class="com.uct.cs.wsintelliauction.database.persistent.tables.SecondaryUser"/>
 		
   </session-factory>
 </hibernate-configuration> 

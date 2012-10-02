@@ -42,5 +42,7 @@ public abstract class Module<M extends Model, V extends View<?>, C extends Contr
 	public void setController(C controller) {
 		this.controller = controller;
 	}
+	
+	
 
 }

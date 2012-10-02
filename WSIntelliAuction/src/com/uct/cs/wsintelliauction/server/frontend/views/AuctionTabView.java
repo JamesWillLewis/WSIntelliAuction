@@ -1,74 +1,153 @@
 package com.uct.cs.wsintelliauction.server.frontend.views;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import net.miginfocom.swing.MigLayout;
+
+import com.uct.cs.wsintelliauction.auction.Auction;
 import com.uct.cs.wsintelliauction.server.frontend.models.AuctionTabModel;
 import com.uct.cs.wsintelliauction.window.View;
 
-import net.miginfocom.swing.MigLayout;
-
 public class AuctionTabView extends View<AuctionTabModel> {
+	private JButton btnInitiateNewAuction;
+	private JTextField startTimeField;
+	private JTextField endTimeField;
+	private JTextField locationField;
+	private JTextField spectrumField;
+	private JTextField lowerBoundField;
+	private JTextField upperBoundField;
+	private JTextField leaseStartField;
+	private JTextField leaseEndField;
+	private JTextField maxPowerField;
+	private JTable table;
+
 	public AuctionTabView(AuctionTabModel model) {
 		super(model);
-		// TODO Auto-generated constructor stub
-	}
+		setLayout(new MigLayout("", "[grow]", "[grow][]"));
 
-	private JTable table;
+		JPanel auctionPanel = new JPanel();
+		auctionPanel.setBorder(new TitledBorder(null, "Current Auction",
+				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		add(auctionPanel, "cell 0 0,grow");
+		auctionPanel.setLayout(new MigLayout("", "[55px,grow][][grow]",
+				"[16px][][][][][][][][][][grow]"));
+
+		JLabel lblNewLabel = new JLabel("Start Time:");
+		auctionPanel.add(lblNewLabel, "cell 0 0,alignx left,aligny top");
+
+		startTimeField = new JTextField();
+		startTimeField.setEditable(false);
+		auctionPanel.add(startTimeField, "cell 2 0,alignx right");
+		startTimeField.setColumns(20);
+
+		JLabel lblEndTime = new JLabel("End Time:");
+		auctionPanel.add(lblEndTime, "cell 0 1");
+
+		endTimeField = new JTextField();
+		endTimeField.setEditable(false);
+		auctionPanel.add(endTimeField, "cell 2 1,alignx right");
+		endTimeField.setColumns(20);
+
+		JLabel lblLocation = new JLabel("Location:");
+		auctionPanel.add(lblLocation, "cell 0 2");
+
+		locationField = new JTextField();
+		locationField.setEditable(false);
+		auctionPanel.add(locationField, "cell 2 2,alignx right");
+		locationField.setColumns(20);
+
+		JLabel lblSpectrumAvailable = new JLabel("Spectrum Available:");
+		auctionPanel.add(lblSpectrumAvailable, "cell 0 3");
+
+		spectrumField = new JTextField();
+		spectrumField.setEditable(false);
+		auctionPanel.add(spectrumField, "cell 2 3,alignx right");
+		spectrumField.setColumns(20);
+
+		JLabel lblLowerBound = new JLabel("Lower Bound:");
+		auctionPanel.add(lblLowerBound, "cell 0 4");
+
+		lowerBoundField = new JTextField();
+		lowerBoundField.setEditable(false);
+		auctionPanel.add(lowerBoundField, "cell 2 4,alignx right");
+		lowerBoundField.setColumns(20);
+
+		JLabel lblUpperBound = new JLabel("Upper Bound:");
+		auctionPanel.add(lblUpperBound, "cell 0 5");
+
+		upperBoundField = new JTextField();
+		upperBoundField.setEditable(false);
+		auctionPanel.add(upperBoundField, "cell 2 5,alignx right");
+		upperBoundField.setColumns(20);
+
+		JLabel lblMaxPowerLimit = new JLabel("Max Power Limit:");
+		auctionPanel.add(lblMaxPowerLimit, "cell 0 6");
+
+		maxPowerField = new JTextField();
+		maxPowerField.setEditable(false);
+		auctionPanel.add(maxPowerField, "cell 2 6,alignx right,aligny center");
+		maxPowerField.setColumns(20);
+
+		JLabel lblLeaseStartTime = new JLabel("Lease Start Time:");
+		auctionPanel.add(lblLeaseStartTime, "cell 0 7");
+
+		leaseStartField = new JTextField();
+		leaseStartField.setEditable(false);
+		auctionPanel.add(leaseStartField, "cell 2 7,alignx right");
+		leaseStartField.setColumns(20);
+
+		JLabel lblLeaseEndTime = new JLabel("Lease End Time:");
+		auctionPanel.add(lblLeaseEndTime, "cell 0 8");
+
+		leaseEndField = new JTextField();
+		leaseEndField.setEditable(false);
+		auctionPanel.add(leaseEndField, "cell 2 8,alignx right");
+		leaseEndField.setColumns(20);
+
+		JScrollPane scrollPane = new JScrollPane();
+		auctionPanel.add(scrollPane, "cell 0 10 3 1,growx,aligny bottom");
+
+		table = new JTable();
+		table.setModel(model.getBidTableModel());
+		scrollPane.setViewportView(table);
+
+		btnInitiateNewAuction = new JButton("Initiate new auction");
+		add(btnInitiateNewAuction, "cell 0 1");
+	}
 
 	@Override
 	protected void initialize() {
 		setBorder(new TitledBorder(null, "Auction Management",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		setLayout(new MigLayout("", "[grow]", "[][grow][]"));
-
-		JLabel lblFilter = new JLabel("Filter:");
-		add(lblFilter, "flowx,cell 0 0");
-
-		JScrollPane scrollPane = new JScrollPane();
-		add(scrollPane, "cell 0 1,grow");
-
-		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] { { null, null,
-				null, null, null, null, null }, }, new String[] { "Bid #",
-				"Time placed", "Time outstanding", "Secondary User",
-				"Frequency Band Requested", "Power Limit Requested", "Status" }));
-		table.getColumnModel().getColumn(0).setPreferredWidth(67);
-		table.getColumnModel().getColumn(2).setPreferredWidth(113);
-		table.getColumnModel().getColumn(3).setPreferredWidth(114);
-		table.getColumnModel().getColumn(4).setPreferredWidth(191);
-		table.getColumnModel().getColumn(5).setPreferredWidth(140);
-		scrollPane.setViewportView(table);
-
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] { "All",
-				"Outstanding", "Satisfied" }));
-		add(comboBox, "cell 0 0");
-
-		JPanel auctionControlPanel = new JPanel();
-		auctionControlPanel.setBorder(new TitledBorder(null,
-				"Auction Settings", TitledBorder.LEADING, TitledBorder.TOP,
-				null, null));
-		add(auctionControlPanel, "cell 0 2,grow");
-		auctionControlPanel.setLayout(new MigLayout("", "[251.00px]",
-				"[25px,bottom]"));
-
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Automatic Broker");
-		chckbxNewCheckBox.setSelected(true);
-		auctionControlPanel.add(chckbxNewCheckBox,
-				"cell 0 0,alignx left,aligny center");
 
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Auction";
+	}
+
+	public JButton getBtnInitiateNewAuction() {
+		return btnInitiateNewAuction;
+	}
+
+	public void updateFields() {
+		Auction a = model.getCurrentAuction();
+		startTimeField.setText(a.getAuctionStartTime().toString());
+		endTimeField.setText(a.getAuctionEndTime().toString());
+		locationField.setText(a.getLocation().getRegionCode());
+		spectrumField.setText(a.getLocation().getAvailableSpectrum() + " MHz");
+		lowerBoundField.setText(a.getLocation().getLowerBound() + " MHz");
+		upperBoundField.setText(a.getLocation().getUpperBound() + " MHz");
+		leaseStartField.setText(a.getLeaseStartDate().toString());
+		leaseEndField.setText(a.getLeaseExpireDate().toString());
+		maxPowerField.setText(a.getLocation().getPowerLimit() + " W");
 	}
 }
